@@ -1,4 +1,5 @@
 import Coin from "models/Coin";
+import { SortOrder } from "models/Interface";
 
 export function getFormattedPrice(price: number) {
     const priceDecimalStr = price.toString().split(".");
@@ -39,30 +40,35 @@ function getUnformattedPercent(percent: string) {
         .replace("%", ""));
 }
 
-export function getAscSortedCoinList(coinList: Coin[], sortType: CoinListSortType) {
-    const sortingList = [...coinList];
+export function sortCoinList(
+    coinList: Coin[],
+    sortType: CoinListSortType,
+    direction: SortOrder,
+) {
+    const placementFlag = direction === SortOrder.asc ? 1 : -1;
 
-    return sortType === CoinListSortType.priceUsd
-        ? sortingList.sort((a, b) => getUnformattedPrice(a.priceUsd) >= getUnformattedPrice(b.priceUsd) ? 1 : -1)
-        : sortType === CoinListSortType.marketCapUsd
-            ? sortingList.sort((a, b) => getUnformattedPrice(a.marketCapUsd) >= getUnformattedPrice(b.marketCapUsd) ? 1 : -1)
-            : sortType === CoinListSortType.changePercent24Hr
-                ? sortingList.sort((a, b) => getUnformattedPercent(a.changePercent24Hr) >= getUnformattedPercent(b.changePercent24Hr) ? 1 : -1)
-                : sortType === CoinListSortType.rank
-                    ? sortingList.sort((a, b) => Number(a.rank) >= Number(b.rank) ? 1 : -1)
-                    : sortingList;
-}
-
-export function getDescSortedCoinList(coinList: Coin[], sortType: CoinListSortType) {
-    const sortingList = [...coinList];
-
-    return sortType === CoinListSortType.priceUsd
-        ? sortingList.sort((a, b) => getUnformattedPrice(a.priceUsd) <= getUnformattedPrice(b.priceUsd) ? 1 : -1)
-        : sortType === CoinListSortType.marketCapUsd
-            ? sortingList.sort((a, b) => getUnformattedPrice(a.marketCapUsd) <= getUnformattedPrice(b.marketCapUsd) ? 1 : -1)
-            : sortType === CoinListSortType.changePercent24Hr
-                ? sortingList.sort((a, b) => getUnformattedPercent(a.changePercent24Hr) <= getUnformattedPercent(b.changePercent24Hr) ? 1 : -1)
-                : sortType === CoinListSortType.rank
-                    ? sortingList.sort((a, b) => Number(a.rank) <= Number(b.rank) ? 1 : -1)
-                    : sortingList;
+    switch (sortType) {
+        case CoinListSortType.priceUsd:
+            return coinList.sort((a, b) => getUnformattedPrice(a.priceUsd) > getUnformattedPrice(b.priceUsd)
+                ? placementFlag
+                : -placementFlag
+            );
+        case CoinListSortType.marketCapUsd:
+            return coinList.sort((a, b) => getUnformattedPrice(a.marketCapUsd) > getUnformattedPrice(b.marketCapUsd)
+                ? placementFlag
+                : -placementFlag
+            );
+        case CoinListSortType.changePercent24Hr:
+            return coinList.sort((a, b) => getUnformattedPercent(a.changePercent24Hr) >= getUnformattedPercent(b.changePercent24Hr)
+                ? placementFlag
+                : -placementFlag
+            );
+        case CoinListSortType.rank:
+            return coinList.sort((a, b) => Number(a.rank) >= Number(b.rank)
+                ? placementFlag
+                : -placementFlag
+            );
+        default:
+            return coinList;
+    }
 }

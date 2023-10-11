@@ -5,7 +5,7 @@ export const PageList = {
     coinInfo: "Coin Info",
 }
 
-export type imageSrc = string;
+export type ImageSrc = string;
 export const SEARCH_PLACEHOLDER = "Search by name...";
 
 export enum SortOrder {

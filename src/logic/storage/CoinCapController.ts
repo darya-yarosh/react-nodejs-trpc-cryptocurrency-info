@@ -2,9 +2,9 @@ import Coin from "models/Coin";
 
 import { getFormattedPrice } from "logic/utils/Helper";
 
-type coinHistoryIntervalList = "m1" | "m5" | "m15" | "m30"
+type CoinHistoryIntervalList = "m1" | "m5" | "m15" | "m30"
     | "h1" | "h2" | "h6" | "h12" | "d1";
-type candlesIntervalList = "m1" | "m5" | "m15" | "m30"
+type CandlesIntervalList = "m1" | "m5" | "m15" | "m30"
     | "h1" | "h2" | "h6" | "h12" | "d1" | "w1";
 
 interface StorageCoin {
@@ -28,17 +28,15 @@ class CoinCapController {
             redirect: 'follow'
         };
 
-        const api_url = await fetch("https://api.coincap.io/v2/assets", requestOptions);
-        // if (api_url.status === 200) return ;
+        const apiUrl = await fetch("https://api.coincap.io/v2/assets", requestOptions);
 
-        const api_url_json = await api_url.json();
-        const dataInfo = api_url_json;
+        const dataInfo = await apiUrl.json();
         const data: Coin[] = dataInfo.data.map((cryptocoin: StorageCoin) => {
             const formattedPrice = getFormattedPrice(cryptocoin.priceUsd);
             const formattedMarketCap = new Intl.NumberFormat("en", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(cryptocoin.marketCapUsd);
             const formattedVolumeUsd24Hr = new Intl.NumberFormat("en", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(cryptocoin.volumeUsd24Hr);
-
             const formatterChangePercent24Hr = new Intl.NumberFormat("en", { style: "percent", minimumFractionDigits: 2 }).format(cryptocoin.changePercent24Hr / 100)
+           
             const newCoin: Coin = {
                 id: cryptocoin.id,
                 rank: cryptocoin.rank,
@@ -71,7 +69,7 @@ class CoinCapController {
             .catch(error => console.log('error', error));
     }
 
-    async getCoinHistory(id: string, interval: coinHistoryIntervalList) {
+    async getCoinHistory(id: string, interval: CoinHistoryIntervalList) {
         const requestOptions: RequestInit = {
             method: 'GET',
             redirect: 'follow'
@@ -158,7 +156,7 @@ class CoinCapController {
             .catch(error => console.log('error', error));
     }
 
-    async getCandles(id: string, interval: candlesIntervalList) {
+    async getCandles(id: string, interval: CandlesIntervalList) {
         const requestOptions: RequestInit = {
             method: 'GET',
             redirect: 'follow'

@@ -1,12 +1,12 @@
-type priceCurrency = "$";
-export const PRICE_CURRENCY_VALUE: priceCurrency = "$";
+type PriceCurrency = "$";
+export const PRICE_CURRENCY_VALUE: PriceCurrency = "$";
 
 export interface Price {
-    currency: priceCurrency,
+    currency: PriceCurrency,
     value: Number,
 }
 
 export interface MarketCap {
-    currency: priceCurrency,
+    currency: PriceCurrency,
     value: Number
 }

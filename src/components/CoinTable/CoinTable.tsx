@@ -1,50 +1,60 @@
 import { useEffect, useMemo, useState } from "react";
 
-import Coin from "models/Coin";
+import Coin, { CoinTableLabels } from "models/Coin";
 import { SortOrder } from "models/Interface";
-import { CoinTableLabels } from 'models/CoinTable';
 
-import { CoinListSortType, getAscSortedCoinList, getDescSortedCoinList } from "logic/utils/Helper";
+import { CoinListSortType, sortCoinList } from "logic/utils/Helper";
 
 import styles from "components/CoinTable/CoinTable.module.scss";
 import SortIcon from "components/SortIcon/SortIcon";
 import IconButton from "components/general/IconButton/IconButton";
 
 interface CoinTableProps {
-    coinList: Coin[]
+    coinList: Coin[],
+    coinsPerList?: number,
 }
 
+const COINS_PER_PAGE = 10;
+
 export default function CoinTable({
-    coinList
+    coinList,
+    coinsPerList = COINS_PER_PAGE,
 }: CoinTableProps) {
     const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.asc);
-    const [sortType, setSortType] = useState<CoinListSortType>(CoinListSortType.rank)
-    const sortedList = useMemo(() => getSortedList(sortType), [sortOrder, coinList]);
-
-    const COINS_ON_PAGE = 10;
-
-    const [currentPageInd, setCurrentPageInd] = useState<number>(0);
-    const currentPageCoinList = useMemo(() => sortedList.slice(COINS_ON_PAGE * currentPageInd, COINS_ON_PAGE * currentPageInd + COINS_ON_PAGE), [sortedList, currentPageInd]);
-
-    const pageListCount = useMemo(() => Math.ceil(sortedList.length / COINS_ON_PAGE), [sortedList]);
-    const pageList = useMemo(() => (new Array(pageListCount).fill(0)).map((e, i) => Number(i)), [pageListCount]);
-
-    function getSortedList(selectedSortType: CoinListSortType) {
-        const newSortedList = sortOrder === SortOrder.desc
-            ? getDescSortedCoinList([...coinList], selectedSortType)
-            : getAscSortedCoinList([...coinList], selectedSortType);
-        return newSortedList
-    }
-
-    function handlerUpdateSortType(selectedType: CoinListSortType) {
+    const [sortType, setSortType] = useState<CoinListSortType>(CoinListSortType.rank);
+    
+    const [pageIndex, setPageIndex] = useState<number>(0);
+    
+    function changeSortType(selectedType: CoinListSortType) {
         setSortType(selectedType);
-        setSortOrder(currentValue => currentValue === SortOrder.asc
-            ? SortOrder.desc
-            : SortOrder.asc);
+        if (selectedType === sortType) {
+            setSortOrder(currentValue => currentValue === SortOrder.asc
+                ? SortOrder.desc
+                : SortOrder.asc);
+        }
     }
+
+    const sortedCoins = useMemo(
+        () => [...sortCoinList(coinList, sortType, sortOrder)],
+        [coinList, sortType, sortOrder]
+    );
+
+    const currentPageCoins = useMemo(
+        () => sortedCoins.slice(coinsPerList * pageIndex, coinsPerList * pageIndex + coinsPerList),
+        [sortedCoins, coinsPerList, pageIndex]
+    );
+
+    const pageCount = useMemo(
+        () => Math.ceil(sortedCoins.length / coinsPerList),
+        [coinsPerList, sortedCoins.length]
+    );
+    const pages = useMemo(
+        () => (new Array(pageCount).fill(0)).map((e, i) => Number(i)),
+        [pageCount]
+    );
 
     useEffect(() => {
-        setCurrentPageInd(0);
+        setPageIndex(0);
     }, [coinList]);
 
     return <div className={styles.table__wrapper}>
@@ -53,8 +63,9 @@ export default function CoinTable({
                 <tr>
                     <th>
                         <div className={styles.columnName__withSort}>
-                            <input id={CoinListSortType.rank}
-                                onClick={() => handlerUpdateSortType(CoinListSortType.rank)}
+                            <input
+                                id={CoinListSortType.rank}
+                                onClick={() => changeSortType(CoinListSortType.rank)}
                             />
                             <label className={styles.columnName__withSort} htmlFor={CoinListSortType.rank}>
                                 <span>{CoinTableLabels.rank}</span>
@@ -73,7 +84,7 @@ export default function CoinTable({
                     <th>
                         <div className={styles.columnName__withSort}>
                             <input id={CoinListSortType.priceUsd}
-                                onClick={() => handlerUpdateSortType(CoinListSortType.priceUsd)}
+                                onClick={() => changeSortType(CoinListSortType.priceUsd)}
                             />
                             <label htmlFor={CoinListSortType.priceUsd}>
                                 <span>{CoinTableLabels.priceUsd}</span>
@@ -89,7 +100,7 @@ export default function CoinTable({
                     <th>
                         <div className={styles.columnName__withSort}>
                             <input id={CoinListSortType.marketCapUsd}
-                                onClick={() => handlerUpdateSortType(CoinListSortType.marketCapUsd)}
+                                onClick={() => changeSortType(CoinListSortType.marketCapUsd)}
                             />
                             <label htmlFor={CoinListSortType.marketCapUsd}>
                                 <span>{CoinTableLabels.marketCapUsd}</span>
@@ -106,7 +117,7 @@ export default function CoinTable({
                     <th>
                         <div className={styles.columnName__withSort}>
                             <input id={CoinListSortType.changePercent24Hr}
-                                onClick={() => handlerUpdateSortType(CoinListSortType.changePercent24Hr)}
+                                onClick={() => changeSortType(CoinListSortType.changePercent24Hr)}
                             />
                             <label htmlFor={CoinListSortType.changePercent24Hr}>
                                 <span>{CoinTableLabels.volumeUsd24Hr}</span>
@@ -122,7 +133,7 @@ export default function CoinTable({
                     </th>
                     <th>{CoinTableLabels.navigation}</th>
                 </tr>
-                {currentPageCoinList.map((coinInfo: Coin, index) =>
+                {currentPageCoins.map((coinInfo: Coin, index) =>
                     <tr key={coinInfo.id} className={styles.note__wrapper}>
                         <td><p>{coinInfo.rank}</p></td>
                         <td><p>{coinInfo.symbol}</p></td>
@@ -136,9 +147,9 @@ export default function CoinTable({
                 )}
             </tbody>
         </table>
-        <nav className={styles.pagination}>{pageList.map(pageNum => {
-            const className = pageNum === currentPageInd ? styles.pageNum__current : styles.pageNum;
-            return <button key={pageNum} className={className} onClick={() => setCurrentPageInd(pageNum)}>{pageNum + 1}</button>
+        <nav className={styles.pagination}>{pages.map(pageNum => {
+            const className = pageNum === pageIndex ? styles.pageNum__current : styles.pageNum;
+            return <button key={pageNum} className={className} onClick={() => setPageIndex(pageNum)}>{pageNum + 1}</button>
         })}</nav>
     </div>
 }

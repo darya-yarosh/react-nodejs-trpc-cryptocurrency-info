@@ -1,0 +1,40 @@
+@import "App";
+
+$button-bg: $color-first;
+$button-border: $color-third;
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0px;
+
+  color: $button-border;
+  background-color: $button-bg;
+  border-width: 2px;
+  border-style: solid;
+  border-color: $button-bg;
+  border-radius: 8px;
+
+  .icon {
+    display: block;
+    margin: 0;
+
+    filter: $filter-first;
+    cursor: pointer;
+  }
+
+  &:hover {
+    color: $button-bg;
+    box-shadow: $filter-third;
+    .icon {
+      filter: $filter-third;
+    }
+  }
+
+  &:active {
+    box-shadow: 0px 0px 0px 2px var(--shadow-object);
+    box-shadow: 0px 0px 1px 1px $color-third;
+  }
+}

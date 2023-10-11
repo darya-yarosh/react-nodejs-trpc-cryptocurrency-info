@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.scss';
+import { useEffect, useState } from 'react';
+
+import Coin from 'models/Coin';
+
+import 'App.scss';
+import CoinListPage from 'components/pages/CoinListPage/CoinListPage';
+import coinCapController from 'logic/storage/CoinCapController';
 
 function App() {
+  const [coinList, setCoinList] = useState<Coin[]>([]);
+
+  async function loadStorage() {
+    const loadedData = await coinCapController.getCoinList();
+
+    if (loadedData === undefined) {
+      window.alert("Error");
+    } else {
+      setCoinList(loadedData);
+    }
+  }
+
+  useEffect(() => {
+    loadStorage();
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="app__wrapper">
+        <header className="header"></header>
+        <CoinListPage coinList={coinList} />
+        <footer className="footer"></footer>
+      </div>
     </div>
   );
 }

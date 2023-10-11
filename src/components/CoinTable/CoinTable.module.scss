@@ -1,0 +1,121 @@
+@import "App";
+
+.table__wrapper {
+  display: grid;
+  justify-items: center;
+
+  grid-gap: 8px;
+}
+
+.note__wrapper {
+}
+
+table {
+  background-color: $color-second;
+  border: 4px solid $color-second;
+  border-radius: 8px;
+  padding: 0px 4px;
+
+  box-shadow: $box-shadow;
+}
+
+tbody {
+  gap: 4px;
+  color: $color-font;
+  font-weight: 500;
+}
+
+table,
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
+  color: $color-font;
+  font-weight: 500;
+}
+
+tr {
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr 4fr 7fr 8fr 6fr 3fr;
+  grid-template-columns: 3fr 3fr 2fr 6fr 9fr 10fr 8fr 4fr;
+
+  border-bottom: 2px solid $color-third;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+th,
+td {
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  align-items: center;
+  text-align: center;
+
+  border: none;
+  text-wrap: balance;
+}
+
+.button__link {
+  border: none;
+  background: none;
+  cursor: pointer;
+  &:hover {
+    color: gray;
+  }
+}
+
+.columnName {
+  color: $color-font;
+  font-weight: 500;
+
+  &__withSort {
+    input {
+      display: none;
+    }
+
+    label {
+      display: flex;
+      cursor: pointer;
+    }
+
+    &:hover {
+      span:first-child {
+        text-shadow: 1px 1px 0px $color-third !important;
+      }
+      span:last-child {
+        filter: $filter-third;
+      }
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  gap: 4px;
+
+  .pageNum {
+    font-family: $font-family;
+    font-size: 14px;
+
+    border: none;
+    background: none;
+    color: $color-second;
+    cursor: pointer;
+    &:hover {
+      text-shadow: 1px 1px 0px $color-third !important;
+    }
+
+    &__current {
+      font-family: $font-family;
+      font-size: 14px;
+
+      border: none;
+      background: none;
+
+      color: $color-third;
+      cursor: default;
+    }
+  }
+}

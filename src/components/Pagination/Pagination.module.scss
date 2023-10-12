@@ -1,0 +1,30 @@
+@import "App";
+
+.pagination {
+  display: flex;
+  gap: 4px;
+
+  .pageNum {
+    font-family: $font-family;
+    font-size: 14px;
+
+    border: none;
+    background: none;
+    color: $color-second;
+    cursor: pointer;
+    &:hover {
+      text-shadow: 1px 1px 0px $color-third !important;
+    }
+
+    &__current {
+      font-family: $font-family;
+      font-size: 14px;
+
+      border: none;
+      background: none;
+
+      color: $color-third;
+      cursor: default;
+    }
+  }
+}

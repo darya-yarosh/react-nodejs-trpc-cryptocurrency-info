@@ -5,7 +5,7 @@ import { SortOrder } from "models/Interface";
 
 import SortIcon from "components/SortIcon/SortIcon";
 import CoinNote from "components/CoinNote/CoinNote";
-import Pagination from "components/Pagination/Pagination";
+import Pagination from "components/general/Pagination/Pagination";
 
 import { CoinListSortType, sortCoinList } from "logic/utils/Helper";
 

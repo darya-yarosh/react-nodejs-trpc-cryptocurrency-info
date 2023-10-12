@@ -1,4 +1,4 @@
-import styles from "components/Pagination/Pagination.module.scss";
+import styles from "components/general/Pagination/Pagination.module.scss";
 
 interface PaginationProps {
   pages: number[];

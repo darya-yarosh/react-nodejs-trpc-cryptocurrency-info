@@ -1,4 +1,4 @@
-import styles from "components/Select/Select.module.scss";
+import styles from "components/general/Select/Select.module.scss";
 
 interface SelectProps {
   label?: string;

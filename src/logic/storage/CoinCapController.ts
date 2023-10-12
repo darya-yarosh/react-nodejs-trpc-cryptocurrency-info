@@ -1,6 +1,6 @@
 import Coin from "models/Coin";
 
-import { getFormattedPrice } from "logic/utils/Helper";
+import { formatChangePercent24Hr, formatMarketCap, formatPrice, formatSupply, formatVolumeUsd24Hr } from "logic/utils/Helper";
 
 type CoinHistoryIntervalList =
   | "m1"
@@ -51,41 +51,25 @@ class CoinCapController {
     );
 
     const dataInfo = await apiUrl.json();
-    const data: Coin[] = dataInfo.data.map((cryptocoin: StorageCoin) => {
-      const formattedPrice = getFormattedPrice(cryptocoin.priceUsd);
-      const formattedMarketCap = new Intl.NumberFormat("en", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0,
-      }).format(cryptocoin.marketCapUsd);
-      const formattedVolumeUsd24Hr = new Intl.NumberFormat("en", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0,
-      }).format(cryptocoin.volumeUsd24Hr);
-      const formatterChangePercent24Hr = new Intl.NumberFormat("en", {
-        style: "percent",
-        minimumFractionDigits: 2,
-      }).format(cryptocoin.changePercent24Hr / 100);
-
-      const newCoin: Coin = {
-        id: cryptocoin.id,
-        rank: cryptocoin.rank,
-        symbol: cryptocoin.symbol,
-        name: cryptocoin.name,
-        supply: cryptocoin.supply,
-        maxSupply: cryptocoin.maxSupply,
-        marketCapUsd: formattedMarketCap,
-        volumeUsd24Hr: formattedVolumeUsd24Hr,
-        priceUsd: formattedPrice,
-        changePercent24Hr: formatterChangePercent24Hr,
-        vwap24Hr: cryptocoin.vwap24Hr,
-        logo: `images/coins/${cryptocoin.symbol.toLowerCase()}.svg`,
+    const coinList: Coin[] = dataInfo.data.map((storageCoin: StorageCoin) => {
+      const coin: Coin = {
+        id: storageCoin.id,
+        rank: storageCoin.rank,
+        symbol: storageCoin.symbol,
+        name: storageCoin.name,
+        supply: formatSupply(storageCoin.supply, storageCoin.symbol),
+        maxSupply: formatSupply(storageCoin.maxSupply, storageCoin.symbol),
+        marketCapUsd: formatMarketCap(storageCoin.marketCapUsd),
+        volumeUsd24Hr: formatVolumeUsd24Hr(storageCoin.volumeUsd24Hr),
+        priceUsd: formatPrice(storageCoin.priceUsd),
+        changePercent24Hr: formatChangePercent24Hr(storageCoin.changePercent24Hr),
+        vwap24Hr: storageCoin.vwap24Hr,
+        logo: `images/coins/${storageCoin.symbol.toLowerCase()}.svg`,
       };
 
-      return newCoin;
+      return coin;
     });
-    return data;
+    return coinList;
   }
 
   async getCoinById(id: string) {
@@ -94,10 +78,28 @@ class CoinCapController {
       redirect: "follow",
     };
 
-    await fetch(`api.coincap.io/v2/assets/${id}`, requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    const apiUrl = await fetch(
+      `https://api.coincap.io/v2/assets/${id}`,
+      requestOptions,
+    );
+    const dataInfo = await apiUrl.json();
+    const storageCoin: StorageCoin = dataInfo.data;
+    const coin: Coin = {
+      id: storageCoin.id,
+      rank: storageCoin.rank,
+      symbol: storageCoin.symbol,
+      name: storageCoin.name,
+      supply: formatSupply(storageCoin.supply, storageCoin.symbol),
+      maxSupply: formatSupply(storageCoin.maxSupply, storageCoin.symbol),
+      marketCapUsd: formatMarketCap(storageCoin.marketCapUsd),
+      volumeUsd24Hr: formatVolumeUsd24Hr(storageCoin.volumeUsd24Hr),
+      priceUsd: formatPrice(storageCoin.priceUsd),
+      changePercent24Hr: formatChangePercent24Hr(storageCoin.changePercent24Hr),
+      vwap24Hr: storageCoin.vwap24Hr,
+      logo: `images/coins/${storageCoin.symbol.toLowerCase()}.svg`,
+    };
+
+    return coin;
   }
 
   async getCoinHistory(id: string, interval: CoinHistoryIntervalList) {

@@ -6,8 +6,8 @@ export default interface Coin {
   rank: number;
   symbol: string;
   name: string;
-  supply: number;
-  maxSupply: number;
+  supply: string;
+  maxSupply: string;
   marketCapUsd: string;
   volumeUsd24Hr: string;
   priceUsd: string;

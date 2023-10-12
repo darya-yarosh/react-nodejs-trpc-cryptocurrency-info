@@ -1,0 +1,25 @@
+@import "App";
+
+.wrapper {
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  font-family: $font-family;
+  background-color: $color-first;
+  border: 2px solid $color-first;
+  border-radius: 4px;
+  color: $color-second;
+
+  transition: all 0.1s;
+  &:hover {
+    color: $color-second;
+    border-color: $color-third;
+    background-color: $color-third;
+  }
+
+  &:active {
+    color: $color-second;
+    border-color: $color-second;
+    background-color: $color-third;
+  }
+}

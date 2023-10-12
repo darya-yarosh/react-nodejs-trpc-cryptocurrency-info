@@ -18,6 +18,7 @@ $button-border: $color-third;
 
     filter: $filter-second;
     cursor: pointer;
+    transition: all 0.1s;
   }
 
   &:hover {

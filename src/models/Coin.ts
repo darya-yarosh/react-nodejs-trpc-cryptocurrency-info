@@ -16,7 +16,7 @@ export default interface Coin {
   logo: ImageSrc;
 }
 
-export const CoinTableLabels = {
+export const CoinLabels = {
   rank: "Rank",
   symbol: "Symbol",
   logo: "Logo",
@@ -25,10 +25,13 @@ export const CoinTableLabels = {
   marketCapUsd: `MarketCap ${PRICE_CURRENCY_VALUE}`,
   volumeUsd24Hr: `24h %`,
   navigation: "Add in Portfolio",
+  marketCap: "Market Cap",
+  supply: "Supply",
+  maxSupply: "MaxSupply",
 };
 
 export interface CoinHistory {
-  priceUsd: number,
-  time: number,
-  date: Date
+  priceUsd: number;
+  time: number;
+  date: Date;
 }

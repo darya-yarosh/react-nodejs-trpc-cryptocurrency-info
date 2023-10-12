@@ -5,9 +5,10 @@ interface ButtonProps {
   onClick: () => void;
 }
 
-export default function Button({
-  label,
-  onClick
-}: ButtonProps) {
-  return <button className={styles.wrapper} onClick={onClick}>{label}</button>;
+export default function Button({ label, onClick }: ButtonProps) {
+  return (
+    <button className={styles.wrapper} onClick={onClick}>
+      {label}
+    </button>
+  );
 }

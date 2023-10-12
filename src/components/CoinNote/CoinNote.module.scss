@@ -1,3 +1,15 @@
-.note__wrapper {
+@import "App";
+
+.wrapper {
   cursor: pointer;
+}
+a {
+  text-decoration: none;
+}
+
+.negativeText {
+  color: red;
+}
+.positiveText {
+  color: green;
 }

@@ -43,7 +43,10 @@ tr {
   grid-template-columns: 3fr 3fr 2fr 6fr 9fr 10fr 8fr 4fr;
 
   border-bottom: 2px solid $color-third;
-  &:last-child {
+}
+table a {
+  border-bottom: 2px solid $color-third;
+  &:last-child tr {
     border-bottom: none;
   }
 }

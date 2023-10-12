@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import Coin, { CoinTableLabels } from "models/Coin";
+import Coin, { CoinLabels } from "models/Coin";
 import { SortOrder } from "models/Interface";
 
 import SortIcon from "components/SortIcon/SortIcon";
@@ -80,7 +80,7 @@ export default function CoinTable({
                   className={styles.columnName__withSort}
                   htmlFor={CoinListSortType.rank}
                 >
-                  <span>{CoinTableLabels.rank}</span>
+                  <span>{CoinLabels.rank}</span>
                   <span>
                     <SortIcon
                       sortType={CoinListSortType.rank}
@@ -93,13 +93,13 @@ export default function CoinTable({
               </div>
             </th>
             <th>
-              <p className={styles.columnName}>{CoinTableLabels.symbol}</p>
+              <p className={styles.columnName}>{CoinLabels.symbol}</p>
             </th>
             <th>
-              <p className={styles.columnName}>{CoinTableLabels.logo}</p>
+              <p className={styles.columnName}>{CoinLabels.logo}</p>
             </th>
             <th>
-              <p className={styles.columnName}>{CoinTableLabels.name}</p>
+              <p className={styles.columnName}>{CoinLabels.name}</p>
             </th>
             <th>
               <div className={styles.columnName__withSort}>
@@ -108,7 +108,7 @@ export default function CoinTable({
                   onClick={() => changeSortType(CoinListSortType.priceUsd)}
                 />
                 <label htmlFor={CoinListSortType.priceUsd}>
-                  <span>{CoinTableLabels.priceUsd}</span>
+                  <span>{CoinLabels.priceUsd}</span>
                   <span>
                     <SortIcon
                       sortType={CoinListSortType.priceUsd}
@@ -127,7 +127,7 @@ export default function CoinTable({
                   onClick={() => changeSortType(CoinListSortType.marketCapUsd)}
                 />
                 <label htmlFor={CoinListSortType.marketCapUsd}>
-                  <span>{CoinTableLabels.marketCapUsd}</span>
+                  <span>{CoinLabels.marketCapUsd}</span>
                   <span>
                     <SortIcon
                       sortType={CoinListSortType.marketCapUsd}
@@ -148,7 +148,7 @@ export default function CoinTable({
                   }
                 />
                 <label htmlFor={CoinListSortType.changePercent24Hr}>
-                  <span>{CoinTableLabels.volumeUsd24Hr}</span>
+                  <span>{CoinLabels.volumeUsd24Hr}</span>
                   <span>
                     <SortIcon
                       sortType={CoinListSortType.changePercent24Hr}
@@ -162,10 +162,10 @@ export default function CoinTable({
                 </label>
               </div>
             </th>
-            <th>{CoinTableLabels.navigation}</th>
+            <th>{CoinLabels.navigation}</th>
           </tr>
           {currentPageCoins.map((coinInfo: Coin) => (
-            <CoinNote coin={coinInfo} />
+            <CoinNote key={coinInfo.id} coin={coinInfo} />
           ))}
         </tbody>
       </table>

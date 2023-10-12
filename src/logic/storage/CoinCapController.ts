@@ -1,6 +1,12 @@
 import Coin, { CoinHistory } from "models/Coin";
 
-import { formatChangePercent24Hr, formatMarketCap, formatPrice, formatSupply, formatVolumeUsd24Hr } from "logic/utils/Helper";
+import {
+  formatChangePercent24Hr,
+  formatMarketCap,
+  formatPrice,
+  formatSupply,
+  formatVolumeUsd24Hr,
+} from "logic/utils/Helper";
 
 export type CoinHistoryIntervalList =
   | "m1"
@@ -62,7 +68,9 @@ class CoinCapController {
         marketCapUsd: formatMarketCap(storageCoin.marketCapUsd),
         volumeUsd24Hr: formatVolumeUsd24Hr(storageCoin.volumeUsd24Hr),
         priceUsd: formatPrice(storageCoin.priceUsd),
-        changePercent24Hr: formatChangePercent24Hr(storageCoin.changePercent24Hr),
+        changePercent24Hr: formatChangePercent24Hr(
+          storageCoin.changePercent24Hr,
+        ),
         vwap24Hr: storageCoin.vwap24Hr,
         logo: `images/coins/${storageCoin.symbol.toLowerCase()}.svg`,
       };

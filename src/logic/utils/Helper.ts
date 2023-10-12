@@ -4,8 +4,8 @@ import { SortOrder } from "models/Interface";
 export function filterCoinList(coinList: Coin[], filter: string) {
   return filter.trim().length > 0 && coinList.length > 0
     ? coinList.filter((coin) =>
-      coin.name.toLowerCase().includes(filter.trim().toLowerCase()),
-    )
+        coin.name.toLowerCase().includes(filter.trim().toLowerCase()),
+      )
     : coinList;
 }
 
@@ -36,23 +36,27 @@ export function formatPrice(price: number) {
 
   return nonZeroIndex < 2
     ? new Intl.NumberFormat("en", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(price)
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(price)
     : new Intl.NumberFormat("en", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: nonZeroIndex + 3,
-      maximumFractionDigits: nonZeroIndex + 3,
-    }).format(price);
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: nonZeroIndex + 3,
+        maximumFractionDigits: nonZeroIndex + 3,
+      }).format(price);
 }
 
 export function formatSupply(supply: number, symbol: string) {
-  return new Intl.NumberFormat("en", {
-    maximumFractionDigits: 0,
-  }).format(supply) + " " + symbol;
+  return (
+    new Intl.NumberFormat("en", {
+      maximumFractionDigits: 0,
+    }).format(supply) +
+    " " +
+    symbol
+  );
 }
 
 export function formatMarketCap(marketCap: number) {
@@ -83,15 +87,15 @@ export function formatChangePercent24Hr(changePercent24Hr: number) {
 
   return nonZeroIndex <= 2
     ? new Intl.NumberFormat("en", {
-      style: "percent",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(changePercent24Hr / 100)
+        style: "percent",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(changePercent24Hr / 100)
     : new Intl.NumberFormat("en", {
-      style: "percent",
-      minimumFractionDigits: nonZeroIndex + 3,
-      maximumFractionDigits: nonZeroIndex + 3,
-    }).format(changePercent24Hr / 100);
+        style: "percent",
+        minimumFractionDigits: nonZeroIndex + 3,
+        maximumFractionDigits: nonZeroIndex + 3,
+      }).format(changePercent24Hr / 100);
 }
 
 export function sortCoinList(
@@ -110,15 +114,14 @@ export function sortCoinList(
       );
     case CoinListSortType.marketCapUsd:
       return coinList.sort((a, b) =>
-        unformatPrice(a.marketCapUsd) >
-          unformatPrice(b.marketCapUsd)
+        unformatPrice(a.marketCapUsd) > unformatPrice(b.marketCapUsd)
           ? placementFlag
           : -placementFlag,
       );
     case CoinListSortType.changePercent24Hr:
       return coinList.sort((a, b) =>
         unformatPercent(a.changePercent24Hr) >=
-          unformatPercent(b.changePercent24Hr)
+        unformatPercent(b.changePercent24Hr)
           ? placementFlag
           : -placementFlag,
       );

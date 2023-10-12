@@ -1,8 +1,8 @@
-import Coin from "models/Coin";
+import Coin, { CoinHistory } from "models/Coin";
 
 import { formatChangePercent24Hr, formatMarketCap, formatPrice, formatSupply, formatVolumeUsd24Hr } from "logic/utils/Helper";
 
-type CoinHistoryIntervalList =
+export type CoinHistoryIntervalList =
   | "m1"
   | "m5"
   | "m15"
@@ -12,7 +12,7 @@ type CoinHistoryIntervalList =
   | "h6"
   | "h12"
   | "d1";
-type CandlesIntervalList =
+export type CandlesIntervalList =
   | "m1"
   | "m5"
   | "m15"
@@ -108,13 +108,13 @@ class CoinCapController {
       redirect: "follow",
     };
 
-    fetch(
-      `api.coincap.io/v2/assets/${id}/history?interval=${interval}`,
+    const apiUrl = await fetch(
+      `https://api.coincap.io/v2/assets/${id}/history?interval=${interval}`,
       requestOptions,
-    )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    );
+    const dataInfo = await apiUrl.json();
+    const coinHistory: CoinHistory = dataInfo.data;
+    return coinHistory;
   }
 
   async getCoinMarkets(id: string) {

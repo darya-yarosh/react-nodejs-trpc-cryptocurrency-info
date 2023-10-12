@@ -26,3 +26,9 @@ export const CoinTableLabels = {
   volumeUsd24Hr: `24h %`,
   navigation: "Add in Portfolio",
 };
+
+export interface CoinHistory {
+  priceUsd: number,
+  time: number,
+  date: Date
+}

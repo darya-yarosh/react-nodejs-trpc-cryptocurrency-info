@@ -5,6 +5,7 @@ import { SortOrder } from "models/Interface";
 
 import SortIcon from "components/SortIcon/SortIcon";
 import CoinNote from "components/CoinNote/CoinNote";
+import Pagination from "components/Pagination/Pagination";
 
 import { CoinListSortType, sortCoinList } from "logic/utils/Helper";
 
@@ -139,9 +140,6 @@ export default function CoinTable({
                 )}
             </tbody>
         </table>
-        <nav className={styles.pagination}>{pages.map(pageNum => {
-            const className = pageNum === pageIndex ? styles.pageNum__current : styles.pageNum;
-            return <button key={pageNum} className={className} onClick={() => setPageIndex(pageNum)}>{pageNum + 1}</button>
-        })}</nav>
+        <Pagination pages={pages} currentPage={pageIndex} changePage={setPageIndex} />
     </div>
 }

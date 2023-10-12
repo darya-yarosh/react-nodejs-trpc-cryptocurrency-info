@@ -13,7 +13,7 @@
     brightness(109%) contrast(101%);
   --filter-black: invert(0%) sepia(98%) saturate(0%) hue-rotate(28deg)
     brightness(98%) contrast(105%);
-  --filter-yellow: invert(84%) sepia(20%) saturate(3036%) hue-rotate(340deg) 
+  --filter-yellow: invert(84%) sepia(20%) saturate(3036%) hue-rotate(340deg)
     brightness(101%) contrast(96%);
   --filter-gray: invert(56%) sepia(8%) saturate(15%) hue-rotate(319deg)
     brightness(88%) contrast(87%);
@@ -37,7 +37,8 @@ $filter-second: var(--filter-second);
 $filter-third: var(--filter-third);
 $box-shadow: 0px 0px 4px 0px black;
 
-$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 
 .app {
   position: absolute;
@@ -54,11 +55,10 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     display: grid;
     justify-items: center;
     grid-template-rows: 1fr 10fr 1fr;
-    
+
     margin: auto;
     padding: 20px 24px;
 
     font-family: $font-family;
   }
 }
-

@@ -11,21 +11,28 @@ import { getFilteredCoinList } from "logic/utils/Helper";
 import styles from "components/pages/CoinListPage/CoinListPage.module.scss";
 
 interface CoinListPageProps {
-    coinList: Coin[];
+  coinList: Coin[];
 }
 
-export default function CoinListPage({
-    coinList
-}: CoinListPageProps) {
-    const [searchFilter, setSearchFilter] = useState<string>("");
-    const filteredCoinList = useMemo(() => getFilteredCoinList(coinList, searchFilter), [searchFilter, coinList]);
+export default function CoinListPage({ coinList }: CoinListPageProps) {
+  const [searchFilter, setSearchFilter] = useState<string>("");
+  const filteredCoinList = useMemo(
+    () => getFilteredCoinList(coinList, searchFilter),
+    [searchFilter, coinList],
+  );
 
-    return <div className={styles.wrapper}>
-        <header className={styles.header}>
-            <SearchInput value={searchFilter} placeholderValue={SEARCH_PLACEHOLDER} onChange={setSearchFilter} />
-        </header>
-        <section>
-            <CoinTable coinList={filteredCoinList} />
-        </section>
+  return (
+    <div className={styles.wrapper}>
+      <header className={styles.header}>
+        <SearchInput
+          value={searchFilter}
+          placeholderValue={SEARCH_PLACEHOLDER}
+          onChange={setSearchFilter}
+        />
+      </header>
+      <section>
+        <CoinTable coinList={filteredCoinList} />
+      </section>
     </div>
+  );
 }

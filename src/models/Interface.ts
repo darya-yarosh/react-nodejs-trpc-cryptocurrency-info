@@ -1,14 +1,14 @@
 export const APP_NAME = "Currency Info";
 
 export const PageList = {
-    coinTable: "Coin Table",
-    coinInfo: "Coin Info",
-}
+  coinTable: "Coin Table",
+  coinInfo: "Coin Info",
+};
 
 export type ImageSrc = string;
 export const SEARCH_PLACEHOLDER = "Search by name...";
 
 export enum SortOrder {
-    asc= "ASC",
-    desc="DESC"
+  asc = "ASC",
+  desc = "DESC",
 }

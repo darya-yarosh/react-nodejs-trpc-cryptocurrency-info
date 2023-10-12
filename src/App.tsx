@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import Coin from 'models/Coin';
+import Coin from "models/Coin";
 
-import 'App.scss';
-import CoinListPage from 'components/pages/CoinListPage/CoinListPage';
-import coinCapController from 'logic/storage/CoinCapController';
+import "App.scss";
+import CoinListPage from "components/pages/CoinListPage/CoinListPage";
+import coinCapController from "logic/storage/CoinCapController";
 
 function App() {
   const [coinList, setCoinList] = useState<Coin[]>([]);
-
   async function loadStorage() {
     const loadedData = await coinCapController.getCoinList();
 
@@ -21,7 +20,7 @@ function App() {
 
   useEffect(() => {
     loadStorage();
-  }, [])
+  }, []);
 
   return (
     <div className="app">

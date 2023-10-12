@@ -35,7 +35,7 @@ export default function CoinNote({ coin }: CoinNoteProps) {
       <td>
         <IconButton
           caption={`Button to adding ${coin.name} in portfolio`}
-          iconSVG={"/images/buttons/plus.svg"}
+          iconSVG={"/images/favorite/favorite-unFill.svg"}
           onClick={() => {}}
         />
       </td>

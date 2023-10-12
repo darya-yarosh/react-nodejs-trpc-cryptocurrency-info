@@ -3,11 +3,12 @@ import { useEffect, useMemo, useState } from "react";
 import Coin, { CoinTableLabels } from "models/Coin";
 import { SortOrder } from "models/Interface";
 
+import SortIcon from "components/SortIcon/SortIcon";
+import CoinNote from "components/CoinNote/CoinNote";
+
 import { CoinListSortType, sortCoinList } from "logic/utils/Helper";
 
 import styles from "components/CoinTable/CoinTable.module.scss";
-import SortIcon from "components/SortIcon/SortIcon";
-import IconButton from "components/general/IconButton/IconButton";
 
 interface CoinTableProps {
     coinList: Coin[],
@@ -22,9 +23,9 @@ export default function CoinTable({
 }: CoinTableProps) {
     const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.asc);
     const [sortType, setSortType] = useState<CoinListSortType>(CoinListSortType.rank);
-    
+
     const [pageIndex, setPageIndex] = useState<number>(0);
-    
+
     function changeSortType(selectedType: CoinListSortType) {
         setSortType(selectedType);
         if (selectedType === sortType) {
@@ -133,17 +134,8 @@ export default function CoinTable({
                     </th>
                     <th>{CoinTableLabels.navigation}</th>
                 </tr>
-                {currentPageCoins.map((coinInfo: Coin, index) =>
-                    <tr key={coinInfo.id} className={styles.note__wrapper}>
-                        <td><p>{coinInfo.rank}</p></td>
-                        <td><p>{coinInfo.symbol}</p></td>
-                        <td><img src={`${coinInfo.logo}`} alt={`${coinInfo.id} icon`} width={"25px"}></img></td>
-                        <td><p>{coinInfo.name}</p></td>
-                        <td><p>{coinInfo.priceUsd}</p></td>
-                        <td><p>{coinInfo.marketCapUsd}</p></td>
-                        <td><p>{coinInfo.changePercent24Hr}</p></td>
-                        <td><IconButton caption={`Button to adding ${coinInfo.name} in portfolio`} iconSVG={"/images/buttons/plus.svg"} onClick={() => { }} /></td>
-                    </tr>
+                {currentPageCoins.map((coinInfo: Coin) =>
+                    <CoinNote coin={coinInfo} />
                 )}
             </tbody>
         </table>

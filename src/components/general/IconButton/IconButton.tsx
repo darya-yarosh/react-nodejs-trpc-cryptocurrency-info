@@ -3,7 +3,7 @@ import styles from "components/general/IconButton/IconButton.module.scss";
 interface IconButtonProps {
   iconSVG: string;
   caption: string;
-  onClick: () => void;
+  onClick: (event: React.MouseEvent) => void;
   sizePX?: number;
 }
 

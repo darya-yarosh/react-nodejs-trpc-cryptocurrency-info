@@ -2,6 +2,8 @@ import { useContext } from "react";
 
 import Coin from "models/Coin";
 
+import FavoriteButton from "components/FavoriteButton/FavoriteButton";
+
 import { formatPrice, priceToNumber } from "logic/utils/Helper";
 
 import { Context as CoinsContext } from "providers/coins";
@@ -31,6 +33,7 @@ export default function FavoriteCoin({
             <span>{coin.name}</span>
             <span>{coin.symbol}</span>
             <span>{formatPrice(priceToNumber(coin.priceUsd))}</span>
+            <FavoriteButton coinId={coin.id} />
         </div>
     )
 }

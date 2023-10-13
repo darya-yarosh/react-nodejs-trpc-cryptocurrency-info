@@ -1,3 +1,4 @@
+import Coin from "models/Coin";
 import { Portfolio } from "models/Portfolio";
 
 class UserPortfolioController {
@@ -19,6 +20,29 @@ class UserPortfolioController {
     async setPortfolio(newPortfolio: Portfolio) {
         const stringUpdatedPortfolio = JSON.stringify(newPortfolio)
         localStorage.setItem('portfolio', stringUpdatedPortfolio);
+    }
+
+    async addFavorite(id: Coin['id']) {
+        const portfolio = await this.getPortfolio();
+
+        portfolio.favorites.push(id);
+
+        await this.setPortfolio(portfolio);
+        return portfolio;
+    }
+
+    async removeFavorite(id: Coin['id']) {
+        const portfolio = await this.getPortfolio();
+
+        const newFavorites = portfolio.favorites.filter(favCoin => favCoin !== id);
+
+        const newPortfolio: Portfolio = {
+            ...portfolio,
+            favorites: newFavorites,
+        }
+
+        await this.setPortfolio(newPortfolio);
+        return newPortfolio;
     }
 }
 

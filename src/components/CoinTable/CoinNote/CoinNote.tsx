@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import Coin from "models/Coin";
 
-import IconButton from "components/general/IconButton/IconButton";
+import FavoriteButton from "components/FavoriteButton/FavoriteButton";
 
 import { percentToNumber } from "logic/utils/Helper";
 
@@ -17,6 +17,7 @@ export default function CoinNote({ coin }: CoinNoteProps) {
     percentToNumber(coin.changePercent24Hr) < 0
       ? styles.negativeText
       : styles.positiveText;
+
   return (
     <Link to={`cryptocoins/${coin.id}`}>
       <tr className={styles.wrapper}>
@@ -46,11 +47,7 @@ export default function CoinNote({ coin }: CoinNoteProps) {
           <p>{coin.changePercent24Hr}</p>
         </td>
         <td>
-          <IconButton
-            caption={`Button to adding ${coin.name} in portfolio`}
-            iconSVG={"/images/favorite/favorite-unFill.svg"}
-            onClick={() => { }}
-          />
+          <FavoriteButton coinId={coin.id} />
         </td>
       </tr>
     </Link>

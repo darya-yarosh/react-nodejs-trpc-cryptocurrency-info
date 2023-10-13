@@ -1,10 +1,14 @@
 .wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-    padding: 8px;
+  padding: 8px;
 
-    border: 1px gray solid;
-    border-radius: 4px;
+  border: 1px gray solid;
+  border-radius: 4px;
+
+  :last-child {
+    margin-left: auto;
+  }
 }

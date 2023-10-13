@@ -2,6 +2,7 @@ import Coin, { CoinLabels } from "models/Coin";
 
 import Button from "components/general/Button/Button";
 import IconButton from "components/general/IconButton/IconButton";
+import FavoriteButton from "components/FavoriteButton/FavoriteButton";
 
 import styles from "components/TextCard/TextCard.module.scss";
 
@@ -14,11 +15,6 @@ export default function TextCard({
     coin,
     closePage
 }: TextCardProps) {
-    // TODO : isInPortfolio
-    const favoriteSrc = false
-        ? "/images/favorite/favorite-fill.svg"
-        : "/images/favorite/favorite-unfill.svg";
-
     return <section className={styles.wrapper}>
         <header className={styles.header}>
             <span>
@@ -35,11 +31,7 @@ export default function TextCard({
                 <p className={styles.name}>{coin.name}</p>
                 <p className={styles.symbol}>{coin.symbol}</p>
             </span>
-            <IconButton
-                iconSVG={favoriteSrc}
-                caption={`Button for adding ${coin.name} to user portfolio.`}
-                onClick={() => { }}
-            />
+            <FavoriteButton coinId={coin.id} />
         </header>
         <div className={styles.infoTable}>
             <p className={styles.price}>{coin.priceUsd}</p>

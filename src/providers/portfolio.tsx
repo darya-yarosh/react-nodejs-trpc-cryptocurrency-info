@@ -1,16 +1,22 @@
 import { createContext, useEffect, useState } from "react";
 
+import Coin from "models/Coin";
 import { Portfolio, emptyPortfolio } from "models/Portfolio";
 
 import { portfolioLoader } from "logic/loaders/portfolio";
+import PortfolioController from "logic/storage/UserPortfolioController";
 
 export const Context = createContext<PortfolioContext>({
     loading: false,
     data: emptyPortfolio,
+    addFavorite: () => { },
+    removeFavorite: () => { },
 });
 type PortfolioContext = {
     loading: boolean;
     data: Portfolio;
+    addFavorite: (id: Coin['id']) => void;
+    removeFavorite: (id: Coin['id']) => void;
 }
 
 export default function PortfolioProvider({
@@ -18,6 +24,18 @@ export default function PortfolioProvider({
 }: React.PropsWithChildren) {
     const [data, setData] = useState<Portfolio>(emptyPortfolio);
     const [loading, setLoading] = useState<boolean>(true);
+
+    function addFavorite(id: Coin['id']) {
+        PortfolioController.addFavorite(id)
+            .then((portfolio) => setData(portfolio))
+            .catch((err) => console.error(err))
+    }
+
+    function removeFavorite(id: Coin['id']) {
+        PortfolioController.removeFavorite(id)
+            .then((portfolio) => setData(portfolio))
+            .catch((err) => console.error(err));
+    }
 
     useEffect(
         () => {
@@ -32,7 +50,12 @@ export default function PortfolioProvider({
         []
     )
     return (
-        <Context.Provider value={{ loading, data }}>
+        <Context.Provider value={{
+            loading,
+            data,
+            addFavorite,
+            removeFavorite
+        }}>
             {children}
         </Context.Provider>
     )

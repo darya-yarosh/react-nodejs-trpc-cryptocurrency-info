@@ -1,5 +1,17 @@
 @import "App";
 
 .wrapper {
+  display: flex;
+  justify-content: center;
+
   background-color: $color-second;
+
+  position: relative;
+  height: 40vh;
+  width: 100%;
+}
+
+@media (max-width: 1300px) {
+  .wrapper {
+  }
 }

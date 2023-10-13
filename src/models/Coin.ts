@@ -28,10 +28,16 @@ export const CoinLabels = {
   marketCap: "Market Cap",
   supply: "Supply",
   maxSupply: "MaxSupply",
-};
+}
+
+export interface StorageCoinHistory {
+  priceUsd: number;
+  time: number;
+  date: Date;
+}
 
 export interface CoinHistory {
-  priceUsd: number;
+  priceUsd: string;
   time: number;
   date: Date;
 }

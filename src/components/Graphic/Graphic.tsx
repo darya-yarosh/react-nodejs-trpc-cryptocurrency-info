@@ -1,27 +1,20 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import Chart, { ChartData } from "chart.js/auto";
-
-import { CoinHistoryIntervalList } from "logic/storage/CoinCapController";
 
 import styles from "components/Graphic/Graphic.module.scss";
 
 interface GraphicProps {
   chartData: number[];
-  period: CoinHistoryIntervalList;
+  labels: string[];
 }
 
-// TODO
-export default function Graphic({ chartData, period }: GraphicProps) {
-  const labelCount = 7; // TODO Calculate from period
-
-  const labelList = useMemo(
-    () => new Array(labelCount).fill(0).map((e, i) => Number(i + 1)),
-    [period],
-  );
-
+function Graphic({ chartData, labels }: GraphicProps) {
   const formatData = (data: number[]): ChartData => ({
-    labels: labelList,
-    datasets: [{ data }],
+    labels: labels,
+    datasets: [{
+      label: "Price",
+      data: data
+    }],
   });
 
   const chartRef = useRef<Chart | null>(null);
@@ -38,6 +31,11 @@ export default function Graphic({ chartData, period }: GraphicProps) {
     }
   };
 
+  let chartStatus = Chart.getChart("graphicChart");
+  if (chartStatus !== undefined) {
+    chartStatus.destroy();
+  }
+
   useEffect(() => {
     if (chartRef.current) {
       chartRef.current.data = formatData(chartData);
@@ -47,7 +45,14 @@ export default function Graphic({ chartData, period }: GraphicProps) {
 
   return (
     <div className={styles.wrapper}>
-      <canvas ref={canvasCallback}></canvas>
+      <canvas
+        ref={canvasCallback}
+        id={"graphicChart"}
+        className={styles.graphic} />
     </div>
   );
 }
+
+const PureGraphic = memo(Graphic);
+
+export default PureGraphic;

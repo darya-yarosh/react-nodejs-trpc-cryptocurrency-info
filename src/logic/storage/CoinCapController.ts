@@ -1,4 +1,4 @@
-import Coin, { CoinHistory } from "models/Coin";
+import Coin, { CoinHistory, StorageCoinHistory } from "models/Coin";
 
 import {
   formatChangePercent24Hr,
@@ -110,18 +110,29 @@ class CoinCapController {
     return coin;
   }
 
-  async getCoinHistory(id: string, interval: CoinHistoryIntervalList) {
+  async getCoinHistory(id: string, interval: CoinHistoryIntervalList, end?: Date, start?: Date) {
     const requestOptions: RequestInit = {
       method: "GET",
       redirect: "follow",
     };
 
+    const url = end !== undefined && start !== undefined
+      ? `https://api.coincap.io/v2/assets/${id}/history?interval=${interval}&end=${+end}&start=${+start}`
+      : `https://api.coincap.io/v2/assets/${id}/history?interval=${interval}`
     const apiUrl = await fetch(
-      `https://api.coincap.io/v2/assets/${id}/history?interval=${interval}`,
+      url,
       requestOptions,
     );
     const dataInfo = await apiUrl.json();
-    const coinHistory: CoinHistory = dataInfo.data;
+    const coinHistory: CoinHistory[] = dataInfo.data.map((data: StorageCoinHistory) => {
+
+      const newCoinHistory: CoinHistory = {
+        priceUsd: formatPrice(data.priceUsd),
+        time: data.time,
+        date: data.date
+      }
+      return newCoinHistory;
+    })
     return coinHistory;
   }
 

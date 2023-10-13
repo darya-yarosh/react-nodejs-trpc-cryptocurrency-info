@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { CoinHistory } from "models/Coin";
 
-import Graphic from "components/Graphic/Graphic";
+import Graphic from "components/general/Graphic/Graphic";
 import Select from "components/general/Select/Select";
 
 import { unformatPrice } from "logic/utils/Helper";

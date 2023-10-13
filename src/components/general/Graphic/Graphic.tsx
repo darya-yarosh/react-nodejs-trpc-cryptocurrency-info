@@ -1,7 +1,7 @@
 import { useEffect, useRef, memo } from "react";
 import Chart, { ChartData } from "chart.js/auto";
 
-import styles from "components/Graphic/Graphic.module.scss";
+import styles from "components/general/Graphic/Graphic.module.scss";
 
 interface GraphicProps {
   chartData: number[];

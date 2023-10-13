@@ -6,7 +6,7 @@ import IconButton from "components/general/IconButton/IconButton";
 
 import { unformatPercent } from "logic/utils/Helper";
 
-import styles from "components/CoinNote/CoinNote.module.scss";
+import styles from "components/CoinTable/CoinNote/CoinNote.module.scss";
 
 interface CoinNoteProps {
   coin: Coin;

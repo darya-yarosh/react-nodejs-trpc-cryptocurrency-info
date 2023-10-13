@@ -3,8 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import Coin, { CoinLabels } from "models/Coin";
 import { SortOrder } from "models/Interface";
 
-import SortIcon from "components/SortIcon/SortIcon";
-import CoinNote from "components/CoinNote/CoinNote";
+import SortIcon from "components/general/SortIcon/SortIcon";
+import CoinNote from "components/CoinTable/CoinNote/CoinNote";
 import Pagination from "components/general/Pagination/Pagination";
 
 import { CoinListSortType, sortCoinList } from "logic/utils/Helper";

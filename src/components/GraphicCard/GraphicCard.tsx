@@ -8,7 +8,7 @@ import Select from "components/general/Select/Select";
 import { unformatPrice } from "logic/utils/Helper";
 import coinCapController from "logic/storage/CoinCapController";
 
-import styles from "components/pages/CoinPage/GraphicCard/GraphicCard.module.scss";
+import styles from "components/GraphicCard/GraphicCard.module.scss";
 
 enum GraphicPeriod {
     d1 = "d1",

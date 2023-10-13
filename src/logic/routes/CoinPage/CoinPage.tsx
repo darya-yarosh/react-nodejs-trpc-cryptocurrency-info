@@ -2,10 +2,10 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 
 import Coin from "models/Coin";
 
-import TextCard from "components/pages/CoinPage/TextCard/TextCard";
-import GraphicCard from "components/pages/CoinPage/GraphicCard/GraphicCard";
+import TextCard from "components/TextCard/TextCard";
+import GraphicCard from "components/GraphicCard/GraphicCard";
 
-import styles from "components/pages/CoinPage/CoinPage.module.scss";
+import styles from "logic/routes/CoinPage/CoinPage.module.scss";
 
 export default function CoinPage() {
   const coin: Coin = useLoaderData() as Coin;

@@ -3,7 +3,7 @@ import Coin, { CoinLabels } from "models/Coin";
 import Button from "components/general/Button/Button";
 import IconButton from "components/general/IconButton/IconButton";
 
-import styles from "components/pages/CoinPage/TextCard/TextCard.module.scss";
+import styles from "components/TextCard/TextCard.module.scss";
 
 interface TextCardProps {
     coin: Coin,

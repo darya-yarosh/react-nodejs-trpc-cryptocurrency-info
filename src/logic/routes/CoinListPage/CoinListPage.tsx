@@ -10,7 +10,7 @@ import TrendingCoins from "components/TrendingCoins/TrendingCoins";
 
 import { filterCoinList } from "logic/utils/Helper";
 
-import styles from "components/pages/CoinListPage/CoinListPage.module.scss";
+import styles from "logic/routes/CoinListPage/CoinListPage.module.scss";
 
 export default function CoinListPage() {
   const coinList: Coin[] = useLoaderData() as Coin[];

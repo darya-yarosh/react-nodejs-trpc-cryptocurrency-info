@@ -11,9 +11,9 @@ import reportWebVitals from "reportWebVitals";
 import { coinTableLoader } from "logic/loaders/coinList";
 import { coinLoader } from "logic/loaders/coin";
 
-import CoinListPage from "components/pages/CoinListPage/CoinListPage";
-import CoinPage from "components/pages/CoinPage/CoinPage";
-import ErrorPage from "components/pages/ErrorPage/ErrorPage";
+import CoinListPage from "logic/routes/CoinListPage/CoinListPage";
+import CoinPage from "logic/routes/CoinPage/CoinPage";
+import ErrorPage from "logic/routes/ErrorPage/ErrorPage";
 
 import "App.scss";
 import "index.scss";

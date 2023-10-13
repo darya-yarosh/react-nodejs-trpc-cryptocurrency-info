@@ -8,6 +8,8 @@ import {
   formatVolumeUsd24Hr,
 } from "logic/utils/Helper";
 
+const API = "https://api.coincap.io/v2";
+
 export type CoinHistoryIntervalList =
   | "m1"
   | "m5"
@@ -18,6 +20,7 @@ export type CoinHistoryIntervalList =
   | "h6"
   | "h12"
   | "d1";
+
 export type CandlesIntervalList =
   | "m1"
   | "m5"
@@ -52,7 +55,7 @@ class CoinCapController {
     };
 
     const apiUrl = await fetch(
-      "https://api.coincap.io/v2/assets",
+      API + "/assets",
       requestOptions,
     );
 
@@ -87,7 +90,7 @@ class CoinCapController {
     };
 
     const apiUrl = await fetch(
-      `https://api.coincap.io/v2/assets/${id}`,
+      API + `/assets/${id}`,
       requestOptions,
     );
     const dataInfo = await apiUrl.json();
@@ -117,8 +120,8 @@ class CoinCapController {
     };
 
     const url = end !== undefined && start !== undefined
-      ? `https://api.coincap.io/v2/assets/${id}/history?interval=${interval}&end=${+end}&start=${+start}`
-      : `https://api.coincap.io/v2/assets/${id}/history?interval=${interval}`
+      ? API + `/assets/${id}/history?interval=${interval}&end=${+end}&start=${+start}`
+      : API + `/assets/${id}/history?interval=${interval}`
     const apiUrl = await fetch(
       url,
       requestOptions,
@@ -145,7 +148,7 @@ class CoinCapController {
       redirect: "follow",
     };
 
-    await fetch(`api.coincap.io/v2/assets/${id}/markets`, requestOptions)
+    await fetch(API + `/assets/${id}/markets`, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -157,7 +160,7 @@ class CoinCapController {
       redirect: "follow",
     };
 
-    await fetch("api.coincap.io/v2/rates", requestOptions)
+    await fetch(API + "/rates", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -169,7 +172,7 @@ class CoinCapController {
       redirect: "follow",
     };
 
-    await fetch(`api.coincap.io/v2/rates/${id}`, requestOptions)
+    await fetch(API + `/rates/${id}`, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -181,7 +184,7 @@ class CoinCapController {
       redirect: "follow",
     };
 
-    await fetch("api.coincap.io/v2/exchanges", requestOptions)
+    await fetch(API + "/exchanges", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -193,7 +196,7 @@ class CoinCapController {
       redirect: "follow",
     };
 
-    await fetch(`api.coincap.io/v2/exchanges/${id}`, requestOptions)
+    await fetch(API + `/exchanges/${id}`, requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -205,7 +208,7 @@ class CoinCapController {
       redirect: "follow",
     };
 
-    await fetch("api.coincap.io/v2/markets", requestOptions)
+    await fetch(API + "/markets", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -218,7 +221,7 @@ class CoinCapController {
     };
 
     await fetch(
-      `api.coincap.io/v2/candles?exchange=poloniex&interval=${interval}&baseId=ethereum&quoteId=bitcoin\n`,
+      API + `/candles?exchange=poloniex&interval=${interval}&baseId=ethereum&quoteId=bitcoin\n`,
       requestOptions,
     )
       .then((response) => response.text())

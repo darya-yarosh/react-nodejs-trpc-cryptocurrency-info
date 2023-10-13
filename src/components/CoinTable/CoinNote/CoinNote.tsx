@@ -4,7 +4,7 @@ import Coin from "models/Coin";
 
 import IconButton from "components/general/IconButton/IconButton";
 
-import { unformatPercent } from "logic/utils/Helper";
+import { percentToNumber } from "logic/utils/Helper";
 
 import styles from "components/CoinTable/CoinNote/CoinNote.module.scss";
 
@@ -14,7 +14,7 @@ interface CoinNoteProps {
 
 export default function CoinNote({ coin }: CoinNoteProps) {
   const changePercent24HrClassName =
-    unformatPercent(coin.changePercent24Hr) < 0
+    percentToNumber(coin.changePercent24Hr) < 0
       ? styles.negativeText
       : styles.positiveText;
   return (
@@ -49,7 +49,7 @@ export default function CoinNote({ coin }: CoinNoteProps) {
           <IconButton
             caption={`Button to adding ${coin.name} in portfolio`}
             iconSVG={"/images/favorite/favorite-unFill.svg"}
-            onClick={() => {}}
+            onClick={() => { }}
           />
         </td>
       </tr>

@@ -1,6 +1,6 @@
 import { useRouteError } from "react-router-dom";
 
-import styles from "logic/routes/ErrorPage/ErrorPage.module.scss";
+import styles from "pages/ErrorPage/ErrorPage.module.scss";
 
 interface ErrorPageProps {
   description: string;

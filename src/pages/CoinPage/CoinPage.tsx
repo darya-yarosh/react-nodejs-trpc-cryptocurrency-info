@@ -5,15 +5,15 @@ import Coin from "models/Coin";
 import TextCard from "components/TextCard/TextCard";
 import GraphicCard from "components/GraphicCard/GraphicCard";
 
-import styles from "logic/routes/CoinPage/CoinPage.module.scss";
+import styles from "pages/CoinPage/CoinPage.module.scss";
 
 export default function CoinPage() {
   const coin: Coin = useLoaderData() as Coin;
   const navigate = useNavigate();
-  
+
   return (
     <div className={styles.wrapper}>
-      <TextCard coin={coin} closePage={()=>navigate(-1)}/>
+      <TextCard coin={coin} closePage={() => navigate(-1)} />
       <GraphicCard coinId={coin.id} />
     </div>
   );

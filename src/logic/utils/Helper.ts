@@ -4,8 +4,8 @@ import { SortOrder } from "models/Interface";
 export function filterCoinList(coinList: Coin[], filter: string) {
   return filter.trim().length > 0 && coinList.length > 0
     ? coinList.filter((coin) =>
-        coin.name.toLowerCase().includes(filter.trim().toLowerCase()),
-      )
+      coin.name.toLowerCase().includes(filter.trim().toLowerCase()),
+    )
     : coinList;
 }
 
@@ -16,37 +16,37 @@ export enum CoinListSortType {
   changePercent24Hr = "24h %",
 }
 
-export function unformatPrice(price: string) {
+export function priceToNumber(price: string) {
   return Number(price.replace("$", "").replaceAll(",", ""));
 }
 
-export function unformatPercent(percent: string) {
+export function percentToNumber(percent: string) {
   return Number(percent.replace("%", ""));
 }
 
 export function formatPrice(price: number) {
-  const priceDecimalStr = price.toString().split(".");
+  const priceDecimalStr = String(price).split(".");
 
   let nonZeroIndex = 0;
   let currentNum = "0";
   while (currentNum === "0") {
-    currentNum = priceDecimalStr[1].toString()[nonZeroIndex];
+    currentNum = String(priceDecimalStr[1])[nonZeroIndex];
     nonZeroIndex++;
   }
 
   return nonZeroIndex < 2
     ? new Intl.NumberFormat("en", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(price)
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(price)
     : new Intl.NumberFormat("en", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: nonZeroIndex + 3,
-        maximumFractionDigits: nonZeroIndex + 3,
-      }).format(price);
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: nonZeroIndex + 3,
+      maximumFractionDigits: nonZeroIndex + 3,
+    }).format(price);
 }
 
 export function formatSupply(supply: number, symbol: string) {
@@ -76,26 +76,26 @@ export function formatVolumeUsd24Hr(volumeUsd24Hr: number) {
 }
 
 export function formatChangePercent24Hr(changePercent24Hr: number) {
-  const priceDecimalStr = changePercent24Hr.toString().split(".");
+  const priceDecimalStr = String(changePercent24Hr).split(".");
 
   let nonZeroIndex = 0;
   let currentNum = "0";
   while (currentNum === "0") {
-    currentNum = priceDecimalStr[1].toString()[nonZeroIndex];
+    currentNum = String(priceDecimalStr[1])[nonZeroIndex];
     nonZeroIndex++;
   }
 
   return nonZeroIndex <= 2
     ? new Intl.NumberFormat("en", {
-        style: "percent",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(changePercent24Hr / 100)
+      style: "percent",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(changePercent24Hr / 100)
     : new Intl.NumberFormat("en", {
-        style: "percent",
-        minimumFractionDigits: nonZeroIndex + 3,
-        maximumFractionDigits: nonZeroIndex + 3,
-      }).format(changePercent24Hr / 100);
+      style: "percent",
+      minimumFractionDigits: nonZeroIndex + 3,
+      maximumFractionDigits: nonZeroIndex + 3,
+    }).format(changePercent24Hr / 100);
 }
 
 export function sortCoinList(
@@ -108,20 +108,20 @@ export function sortCoinList(
   switch (sortType) {
     case CoinListSortType.priceUsd:
       return coinList.sort((a, b) =>
-        unformatPrice(a.priceUsd) > unformatPrice(b.priceUsd)
+        priceToNumber(a.priceUsd) > priceToNumber(b.priceUsd)
           ? placementFlag
           : -placementFlag,
       );
     case CoinListSortType.marketCapUsd:
       return coinList.sort((a, b) =>
-        unformatPrice(a.marketCapUsd) > unformatPrice(b.marketCapUsd)
+        priceToNumber(a.marketCapUsd) > priceToNumber(b.marketCapUsd)
           ? placementFlag
           : -placementFlag,
       );
     case CoinListSortType.changePercent24Hr:
       return coinList.sort((a, b) =>
-        unformatPercent(a.changePercent24Hr) >=
-        unformatPercent(b.changePercent24Hr)
+        percentToNumber(a.changePercent24Hr) >=
+          percentToNumber(b.changePercent24Hr)
           ? placementFlag
           : -placementFlag,
       );

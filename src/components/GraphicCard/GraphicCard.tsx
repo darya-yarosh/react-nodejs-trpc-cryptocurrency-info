@@ -5,7 +5,7 @@ import { CoinHistory } from "models/Coin";
 import Graphic from "components/general/Graphic/Graphic";
 import Select from "components/general/Select/Select";
 
-import { unformatPrice } from "logic/utils/Helper";
+import { priceToNumber } from "logic/utils/Helper";
 import coinCapController from "logic/storage/CoinCapController";
 
 import styles from "components/GraphicCard/GraphicCard.module.scss";
@@ -90,7 +90,7 @@ export default function GraphicCard({
     ];
 
     const c = coinHistory.map((value: CoinHistory) => {
-        const unformattedPrice = unformatPrice(value.priceUsd);
+        const unformattedPrice = priceToNumber(value.priceUsd);
         return unformattedPrice;
     })
 

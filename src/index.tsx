@@ -8,14 +8,18 @@ import {
 } from "react-router-dom";
 import reportWebVitals from "reportWebVitals";
 
-import { coinTableLoader } from "logic/loaders/coinList";
+import CoinsProvider from "providers/coins";
+import PortfolioProvider from "providers/portfolio";
+
 import { coinLoader } from "logic/loaders/coin";
 
-import CoinListPage from "logic/routes/CoinListPage/CoinListPage";
-import CoinPage from "logic/routes/CoinPage/CoinPage";
-import ErrorPage from "logic/routes/ErrorPage/ErrorPage";
+import CoinListPage from "pages/CoinListPage/CoinListPage";
+import CoinPage from "pages/CoinPage/CoinPage";
+import ErrorPage from "pages/ErrorPage/ErrorPage";
+import PortfolioPage from "pages/PortfolioPage/PortfolioPage";
 
 import "App.scss";
+import "reset.scss";
 import "index.scss";
 
 export const router = createBrowserRouter(
@@ -26,8 +30,15 @@ export const router = createBrowserRouter(
       errorElement={
         <ErrorPage description="An error occurred on the main page." />
       }
-      loader={coinTableLoader}
-    ></Route>,
+    >
+      <Route
+        path="/portfolio"
+        element={<PortfolioPage />}
+        errorElement={
+          <ErrorPage description="An error occurred on the portfolio page." />
+        }
+      />
+    </Route>,
     <Route
       path="cryptocoins/:id"
       element={<CoinPage />}
@@ -35,7 +46,7 @@ export const router = createBrowserRouter(
         <ErrorPage description="An error occurred on the coin page." />
       }
       loader={coinLoader}
-    ></Route>,
+    />,
   ]),
 );
 
@@ -46,7 +57,11 @@ root.render(
   <React.StrictMode>
     <div className="app">
       <div className="app__wrapper">
-        <RouterProvider router={router} />
+        <PortfolioProvider>
+          <CoinsProvider>
+            <RouterProvider router={router} />
+          </CoinsProvider>
+        </PortfolioProvider>
       </div>
     </div>
   </React.StrictMode>,

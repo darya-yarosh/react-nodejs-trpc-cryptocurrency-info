@@ -44,9 +44,8 @@ tr {
 
   border-bottom: 2px solid $color-third;
 }
-table a {
-  border-bottom: 2px solid $color-third;
-  &:last-child tr {
+tbody {
+  & tr:last-child {
     border-bottom: none;
   }
 }

@@ -15,8 +15,10 @@ interface CoinNoteProps {
 export default function CoinNote({ coin }: CoinNoteProps) {
   const navigate = useNavigate();
 
-  function navigateToCoin() {
-    navigate(`/cryptocoins/${coin.id}`);
+  function handleNavigateToCoinClick(event: React.MouseEvent) {
+    if (!event.isDefaultPrevented()) {
+      navigate(`/cryptocoins/${coin.id}`);
+    }
   }
 
   const changePercent24HrClassName =
@@ -25,7 +27,7 @@ export default function CoinNote({ coin }: CoinNoteProps) {
       : styles.positiveText;
 
   return (
-    <tr className={styles.wrapper} onClick={navigateToCoin}>
+    <tr className={styles.wrapper} onClick={handleNavigateToCoinClick}>
       <td>
         <p>{coin.rank}</p>
       </td>

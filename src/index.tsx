@@ -11,8 +11,6 @@ import reportWebVitals from "reportWebVitals";
 import CoinsProvider from "providers/coins";
 import PortfolioProvider from "providers/portfolio";
 
-import { coinLoader } from "logic/loaders/coin";
-
 import CoinListPage from "pages/CoinListPage/CoinListPage";
 import CoinPage from "pages/CoinPage/CoinPage";
 import ErrorPage from "pages/ErrorPage/ErrorPage";
@@ -46,7 +44,6 @@ export const router = createBrowserRouter(
       errorElement={
         <ErrorPage description="An error occurred on the coin page." />
       }
-      loader={coinLoader}
     />,
     <Route
       path="/purchase/:id?"

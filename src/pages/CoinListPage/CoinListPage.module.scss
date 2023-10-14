@@ -22,7 +22,6 @@
 
   .body {
     display: flex;
-
   }
 }
 
@@ -37,8 +36,8 @@
         flex-direction: row;
         align-items: center;
         gap: 8px;
-       
-        >:last-child{
+
+        > :last-child {
           width: 100%;
         }
       }
@@ -47,8 +46,8 @@
 }
 
 @media (max-width: 480px) {
-  .wrapper .header .section h1{
-    font-size:16px;
+  .wrapper .header .section h1 {
+    font-size: 16px;
     width: auto;
   }
 }

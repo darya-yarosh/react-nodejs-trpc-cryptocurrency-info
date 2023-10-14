@@ -3,14 +3,14 @@ import styles from "components/general/Button/Button.module.scss";
 interface ButtonProps {
   className?: string;
   label: string;
-  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
-  disabled?: React.ButtonHTMLAttributes<HTMLButtonElement>['disabled'];
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  disabled?: React.ButtonHTMLAttributes<HTMLButtonElement>["disabled"];
   onClick?: (event: React.MouseEvent) => void;
 }
 
 export default function Button({
   className,
-  label, 
+  label,
   type,
   disabled,
   onClick,

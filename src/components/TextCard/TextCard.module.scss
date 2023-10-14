@@ -57,13 +57,12 @@
   }
 }
 
-  @media (max-width: 800px) {
-    .wrapper {
-      min-width: 50%;
-      width: 100%;
-    }
+@media (max-width: 800px) {
+  .wrapper {
+    min-width: 50%;
+    width: 100%;
   }
-  
-  @media (max-width: 480px) {
-  }
-  
+}
+
+@media (max-width: 480px) {
+}

@@ -16,12 +16,13 @@ export default function SortIcon({
   isSelected,
 }: SortIconProps) {
   const src = `
-        images/sort/sort-${isEnabled && isSelected
-      ? sortOrder.toLowerCase()
-      : isEnabled
-        ? "enabled"
-        : "disabled"
-    }.svg`;
+        images/sort/sort-${
+          isEnabled && isSelected
+            ? sortOrder.toLowerCase()
+            : isEnabled
+            ? "enabled"
+            : "disabled"
+        }.svg`;
   const alt = `sort icon for ${sortType}`;
 
   return <img className={styles.icon} src={`${src}`} alt={alt} />;

@@ -41,7 +41,6 @@ export default function CoinListPage() {
       </header>
       <section className={styles.body}>
         <CoinTable coinList={filteredCoinList} />
-        
       </section>
       <Outlet />
     </div>

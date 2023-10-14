@@ -9,9 +9,7 @@ export default function Module({ handleDismiss, children }: ModalProps) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.backdrop} onClick={handleDismiss} />
-      <div className={styles.drawer}>
-        {children}
-      </div>
+      <div className={styles.drawer}>{children}</div>
     </div>
   );
 }

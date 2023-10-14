@@ -11,10 +11,12 @@ interface GraphicProps {
 function Graphic({ chartData, labels }: GraphicProps) {
   const formatData = (data: number[]): ChartData => ({
     labels: labels,
-    datasets: [{
-      label: "Price",
-      data: data
-    }],
+    datasets: [
+      {
+        label: "Price",
+        data: data,
+      },
+    ],
   });
 
   const chartRef = useRef<Chart | null>(null);
@@ -48,7 +50,8 @@ function Graphic({ chartData, labels }: GraphicProps) {
       <canvas
         ref={canvasCallback}
         id={"graphicChart"}
-        className={styles.graphic} />
+        className={styles.graphic}
+      />
     </div>
   );
 }

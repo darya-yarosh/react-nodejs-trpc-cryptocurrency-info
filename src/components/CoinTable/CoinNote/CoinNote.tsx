@@ -16,7 +16,7 @@ export default function CoinNote({ coin }: CoinNoteProps) {
   const navigate = useNavigate();
 
   function navigateToCoin() {
-    navigate(`/cryptocoins/${coin.id}`)
+    navigate(`/cryptocoins/${coin.id}`);
   }
 
   const changePercent24HrClassName =
@@ -33,11 +33,7 @@ export default function CoinNote({ coin }: CoinNoteProps) {
         <p>{coin.symbol}</p>
       </td>
       <td>
-        <img
-          src={`${coin.logo}`}
-          alt={`${coin.id} icon`}
-          width={"25px"}
-        ></img>
+        <img src={`${coin.logo}`} alt={`${coin.id} icon`} width={"25px"}></img>
       </td>
       <td>
         <p>{coin.name}</p>

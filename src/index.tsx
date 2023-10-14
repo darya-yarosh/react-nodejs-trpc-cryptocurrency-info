@@ -52,9 +52,9 @@ export const router = createBrowserRouter(
       path="/purchase/:id?"
       element={<TransactionPage />}
       errorElement={
-        <ErrorPage description="An error occurred on the transaction page."  />
+        <ErrorPage description="An error occurred on the transaction page." />
       }
-    />
+    />,
   ]),
 );
 

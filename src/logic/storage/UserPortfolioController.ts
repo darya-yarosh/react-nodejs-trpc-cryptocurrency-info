@@ -2,67 +2,69 @@ import Coin from "models/Coin";
 import { Portfolio, Transaction } from "models/Portfolio";
 
 class UserPortfolioController {
-    async getPortfolio() {
-        const stringData = localStorage.getItem('portfolio');
-        if (stringData === null) {
-            const userPortfolio: Portfolio = {
-                transactionList: [],
-                favorites: [],
-            }
-            this.setPortfolio(userPortfolio);
-            return userPortfolio;
-        }
-
-        const data: Portfolio = JSON.parse(stringData.toString());
-        return data;
+  async getPortfolio() {
+    const stringData = localStorage.getItem("portfolio");
+    if (stringData === null) {
+      const userPortfolio: Portfolio = {
+        transactionList: [],
+        favorites: [],
+      };
+      this.setPortfolio(userPortfolio);
+      return userPortfolio;
     }
 
-    async setPortfolio(newPortfolio: Portfolio) {
-        const stringUpdatedPortfolio = JSON.stringify(newPortfolio)
-        localStorage.setItem('portfolio', stringUpdatedPortfolio);
-    }
+    const data: Portfolio = JSON.parse(stringData.toString());
+    return data;
+  }
 
-    async addFavorite(id: Coin['id']) {
-        const portfolio = await this.getPortfolio();
+  async setPortfolio(newPortfolio: Portfolio) {
+    const stringUpdatedPortfolio = JSON.stringify(newPortfolio);
+    localStorage.setItem("portfolio", stringUpdatedPortfolio);
+  }
 
-        portfolio.favorites.push(id);
+  async addFavorite(id: Coin["id"]) {
+    const portfolio = await this.getPortfolio();
 
-        await this.setPortfolio(portfolio);
-        return portfolio;
-    }
+    portfolio.favorites.push(id);
 
-    async removeFavorite(id: Coin['id']) {
-        const portfolio = await this.getPortfolio();
+    await this.setPortfolio(portfolio);
+    return portfolio;
+  }
 
-        const newFavorites = portfolio.favorites.filter(favCoin => favCoin !== id);
+  async removeFavorite(id: Coin["id"]) {
+    const portfolio = await this.getPortfolio();
 
-        const newPortfolio: Portfolio = {
-            ...portfolio,
-            favorites: newFavorites,
-        }
+    const newFavorites = portfolio.favorites.filter(
+      (favCoin) => favCoin !== id,
+    );
 
-        await this.setPortfolio(newPortfolio);
-        return newPortfolio;
-    }
+    const newPortfolio: Portfolio = {
+      ...portfolio,
+      favorites: newFavorites,
+    };
 
-    async addTransaction(
-        coinId: Coin['id'],
-        coinPrice: number,
-        coinCount: number,
-    ) {
-        const transaction: Transaction = {
-            id: crypto.randomUUID(),
-            coinId: coinId,
-            coinCount: coinCount,
-            coinPrice: coinPrice,
-        }
-    
-        const portfolio = await userPortfolioController.getPortfolio();
-        portfolio.transactionList.push(transaction);
-    
-        userPortfolioController.setPortfolio(portfolio);
-        return portfolio;
-    }
+    await this.setPortfolio(newPortfolio);
+    return newPortfolio;
+  }
+
+  async addTransaction(
+    coinId: Coin["id"],
+    coinPrice: number,
+    coinCount: number,
+  ) {
+    const transaction: Transaction = {
+      id: crypto.randomUUID(),
+      coinId: coinId,
+      coinCount: coinCount,
+      coinPrice: coinPrice,
+    };
+
+    const portfolio = await userPortfolioController.getPortfolio();
+    portfolio.transactionList.push(transaction);
+
+    userPortfolioController.setPortfolio(portfolio);
+    return portfolio;
+  }
 }
 
 const userPortfolioController = new UserPortfolioController();

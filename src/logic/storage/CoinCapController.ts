@@ -54,10 +54,7 @@ class CoinCapController {
       redirect: "follow",
     };
 
-    const apiUrl = await fetch(
-      API + "/assets",
-      requestOptions,
-    );
+    const apiUrl = await fetch(API + "/assets", requestOptions);
 
     const dataInfo = await apiUrl.json();
     const coinList: Coin[] = dataInfo.data.map((storageCoin: StorageCoin) => {
@@ -89,10 +86,7 @@ class CoinCapController {
       redirect: "follow",
     };
 
-    const apiUrl = await fetch(
-      API + `/assets/${id}`,
-      requestOptions,
-    );
+    const apiUrl = await fetch(API + `/assets/${id}`, requestOptions);
     const dataInfo = await apiUrl.json();
     const storageCoin: StorageCoin = dataInfo.data;
     const coin: Coin = {
@@ -113,29 +107,34 @@ class CoinCapController {
     return coin;
   }
 
-  async getCoinHistory(id: string, interval: CoinHistoryIntervalList, end?: Date, start?: Date) {
+  async getCoinHistory(
+    id: string,
+    interval: CoinHistoryIntervalList,
+    end?: Date,
+    start?: Date,
+  ) {
     const requestOptions: RequestInit = {
       method: "GET",
       redirect: "follow",
     };
 
-    const url = end !== undefined && start !== undefined
-      ? API + `/assets/${id}/history?interval=${interval}&end=${+end}&start=${+start}`
-      : API + `/assets/${id}/history?interval=${interval}`
-    const apiUrl = await fetch(
-      url,
-      requestOptions,
-    );
+    const url =
+      end !== undefined && start !== undefined
+        ? API +
+          `/assets/${id}/history?interval=${interval}&end=${+end}&start=${+start}`
+        : API + `/assets/${id}/history?interval=${interval}`;
+    const apiUrl = await fetch(url, requestOptions);
     const dataInfo = await apiUrl.json();
-    const coinHistory: CoinHistory[] = dataInfo.data.map((data: StorageCoinHistory) => {
-
-      const newCoinHistory: CoinHistory = {
-        priceUsd: formatPrice(data.priceUsd),
-        time: data.time,
-        date: data.date
-      }
-      return newCoinHistory;
-    })
+    const coinHistory: CoinHistory[] = dataInfo.data.map(
+      (data: StorageCoinHistory) => {
+        const newCoinHistory: CoinHistory = {
+          priceUsd: formatPrice(data.priceUsd),
+          time: data.time,
+          date: data.date,
+        };
+        return newCoinHistory;
+      },
+    );
     return coinHistory;
   }
 
@@ -221,7 +220,8 @@ class CoinCapController {
     };
 
     await fetch(
-      API + `/candles?exchange=poloniex&interval=${interval}&baseId=ethereum&quoteId=bitcoin\n`,
+      API +
+        `/candles?exchange=poloniex&interval=${interval}&baseId=ethereum&quoteId=bitcoin\n`,
       requestOptions,
     )
       .then((response) => response.text())

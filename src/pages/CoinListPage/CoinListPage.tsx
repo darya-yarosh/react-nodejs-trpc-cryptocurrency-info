@@ -2,7 +2,7 @@ import { useContext, useMemo, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import Coin from "models/Coin";
-import { SEARCH_PLACEHOLDER } from "models/Interface";
+import { APP_NAME, SEARCH_PLACEHOLDER } from "models/Interface";
 
 import CoinTable from "components/CoinTable/CoinTable";
 import SearchInput from "components/general/SearchInput/SearchInput";
@@ -29,7 +29,7 @@ export default function CoinListPage() {
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <section className={styles.section}>
-          <h1>Cryptocoins Info</h1>
+          <h1>{APP_NAME}</h1>
           <SearchInput
             value={searchFilter}
             placeholderValue={SEARCH_PLACEHOLDER}

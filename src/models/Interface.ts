@@ -1,4 +1,4 @@
-export const APP_NAME = "Currency Info";
+export const APP_NAME = "Cryptocurrency Info";
 
 export const PageList = {
   coinTable: "Coin Table",

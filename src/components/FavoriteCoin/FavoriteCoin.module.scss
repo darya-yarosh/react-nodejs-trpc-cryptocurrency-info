@@ -11,4 +11,13 @@
   :last-child {
     margin-left: auto;
   }
+
+  .buyButton {
+    visibility: hidden;
+    width: initial;
+  }
+
+  &:hover .buyButton {
+    visibility: visible;
+  }
 }

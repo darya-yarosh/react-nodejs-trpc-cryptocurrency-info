@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import Coin, { CoinLabels } from "models/Coin";
 
 import Button from "components/general/Button/Button";
@@ -15,6 +17,12 @@ export default function TextCard({
     coin,
     closePage
 }: TextCardProps) {
+    const navigate = useNavigate();
+
+    function handleBuyClick() {
+        navigate("/purchase/" + coin.id);
+    }
+
     return <section className={styles.wrapper}>
         <header className={styles.header}>
             <span>
@@ -50,7 +58,7 @@ export default function TextCard({
             </p>
         </div>
         <footer className={styles.footer}>
-            <Button label="Add to Portfolio" onClick={() => { }} />
+            <Button label="Buy" onClick={handleBuyClick} />
         </footer>
     </section>
 }

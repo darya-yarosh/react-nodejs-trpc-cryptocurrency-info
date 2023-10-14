@@ -1,5 +1,5 @@
 import Coin from "models/Coin";
-import { Portfolio } from "models/Portfolio";
+import { Portfolio, Transaction } from "models/Portfolio";
 
 class UserPortfolioController {
     async getPortfolio() {
@@ -43,6 +43,25 @@ class UserPortfolioController {
 
         await this.setPortfolio(newPortfolio);
         return newPortfolio;
+    }
+
+    async addTransaction(
+        coinId: Coin['id'],
+        coinPrice: number,
+        coinCount: number,
+    ) {
+        const transaction: Transaction = {
+            id: crypto.randomUUID(),
+            coinId: coinId,
+            coinCount: coinCount,
+            coinPrice: coinPrice,
+        }
+    
+        const portfolio = await userPortfolioController.getPortfolio();
+        portfolio.transactionList.push(transaction);
+    
+        userPortfolioController.setPortfolio(portfolio);
+        return portfolio;
     }
 }
 

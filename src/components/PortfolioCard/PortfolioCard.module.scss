@@ -10,6 +10,8 @@
   color: $color-font;
   max-width: 1000px;
   margin: auto;
+  max-height: 90vh;
+  overflow-y: auto;
 
   display: grid;
   gap: 8px;
@@ -37,14 +39,15 @@
 
   display: flex;
   flex-direction: column;
+  font-size: 2.4rem;
+
 
   label {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     color: grey;
   }
 
   span {
-    font-size: 2rem;
     font-weight: bold;
   }
 }
@@ -62,3 +65,10 @@
     color: grey;
   }
 }
+
+.perCoinList {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+

@@ -4,28 +4,6 @@ import { Transaction } from 'models/Portfolio';
 
 import { priceToNumber } from 'logic/utils/Helper';
 
-import userPortfolioController from "logic/storage/UserPortfolioController";
-
-export async function addTransaction(
-    coinId: Coin['id'],
-    coinPrice: number,
-    coinCount: number,
-) {
-    const price = coinPrice * coinCount;
-
-    const transaction: Transaction = {
-        id: crypto.randomUUID(),
-        coinId: coinId,
-        coinCount: coinCount,
-        coinPrice: price
-    }
-
-    const portfolio = await userPortfolioController.getPortfolio();
-    portfolio.transactionList.push(transaction);
-
-    userPortfolioController.setPortfolio(portfolio);
-}
-
 export function getSpentAmount(portfolio: Portfolio) {
     return getTransactionsSum(portfolio.transactionList);
 }

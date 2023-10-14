@@ -11,12 +11,15 @@ export const Context = createContext<PortfolioContext>({
     data: emptyPortfolio,
     addFavorite: () => { },
     removeFavorite: () => { },
+    addTransaction: () => { },
 });
-type PortfolioContext = {
+
+interface PortfolioContext {
     loading: boolean;
     data: Portfolio;
     addFavorite: (id: Coin['id']) => void;
     removeFavorite: (id: Coin['id']) => void;
+    addTransaction: (coinId: Coin['id'], coinPrice: number, coinAmount: number) => void;
 }
 
 export default function PortfolioProvider({
@@ -37,6 +40,23 @@ export default function PortfolioProvider({
             .catch((err) => console.error(err));
     }
 
+    function addTransaction(
+        coinId: Coin['id'],
+        coinPrice: number,
+        coinCount: number,
+    ) {
+        PortfolioController.addTransaction(
+            coinId,
+            coinPrice,
+            coinCount
+        )
+            .then(portfolio => {
+                setData(portfolio);
+                alert("Purchase completed! You can check your balance in your portfolio page");
+            })
+            .catch(err => console.error(err));
+    }
+
     useEffect(
         () => {
             portfolioLoader()
@@ -54,7 +74,8 @@ export default function PortfolioProvider({
             loading,
             data,
             addFavorite,
-            removeFavorite
+            removeFavorite,
+            addTransaction,
         }}>
             {children}
         </Context.Provider>

@@ -2,22 +2,28 @@ import styles from "components/general/Select/Select.module.scss";
 
 interface SelectProps {
   label?: string;
-  selectList: string[];
+  name: string;
+  options: string[];
   selectedOption?: string;
   onChange: (option: string) => void;
 }
 
 export default function Select({
   label,
-  selectList,
-  selectedOption = selectList[0],
+  name,
+  options,
+  selectedOption = options[0],
   onChange,
 }: SelectProps) {
   return (
     <div className={styles.wrapper}>
       {label && <p>{label}</p>}
-      <select value={selectedOption} onChange={(e) => onChange(e.target.value)}>
-        {selectList.map((selectOption, index) => (
+      <select
+        name={name}
+        value={selectedOption}
+        onChange={(e) => onChange(e.target.value)}
+      >
+        {options.map((selectOption, index) => (
           <option key={index} value={selectOption}>
             {selectOption}
           </option>

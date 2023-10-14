@@ -17,6 +17,7 @@ import CoinListPage from "pages/CoinListPage/CoinListPage";
 import CoinPage from "pages/CoinPage/CoinPage";
 import ErrorPage from "pages/ErrorPage/ErrorPage";
 import PortfolioPage from "pages/PortfolioPage/PortfolioPage";
+import TransactionPage from "pages/TransactionPage/TransactionPage";
 
 import "App.scss";
 import "reset.scss";
@@ -47,6 +48,13 @@ export const router = createBrowserRouter(
       }
       loader={coinLoader}
     />,
+    <Route
+      path="/purchase/:id?"
+      element={<TransactionPage />}
+      errorElement={
+        <ErrorPage description="An error occurred on the transaction page."  />
+      }
+    />
   ]),
 );
 

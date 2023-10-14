@@ -1,10 +1,12 @@
 .wrapper {
     display: grid;
     grid-template-rows: 1fr 1fr;
+    position: relative;
 
     border: 1px gray solid;
     border-radius: 4px;
     padding: 8px;
+
     div {
         display: flex;
         align-items: center;
@@ -20,5 +22,19 @@
     .label {
         font-size: 0.8rem;
         color: grey;
+    }
+
+    .buyButton {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px;
+        width: 60px;
+
+        display: none;
+    }
+
+    &:hover .buyButton {
+        display: block
     }
 }

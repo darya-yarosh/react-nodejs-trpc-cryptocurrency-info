@@ -1,0 +1,39 @@
+@import "App";
+
+.wrapper {
+  background-color: $color-second;
+  border: 4px solid $color-second;
+  border-radius: 8px;
+  padding: 20px;
+  padding-top: 12px;
+  min-width: 400px;
+  color: $color-font;
+  max-width: 500px;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+
+    select {
+      width: 100%;
+      border-radius: 0;
+    }
+
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    > label {
+      color: gray;
+      font-size: 0.8rem;
+    }
+  }
+}

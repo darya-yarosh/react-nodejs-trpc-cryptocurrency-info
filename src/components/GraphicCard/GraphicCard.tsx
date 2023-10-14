@@ -116,13 +116,15 @@ export default function GraphicCard({
 
     useEffect(() => {
         loadCoinHistory(coinId, graphicPeriod)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [graphicPeriod]);
 
     return <section className={styles.wrapper}>
         <header className={styles.header}>
             <span>Period per </span>
             <Select
-                selectList={graphicPeriodSelect}
+                name="period"
+                options={graphicPeriodSelect}
                 selectedOption={graphicPeriod}
                 onChange={updateGraphicPeriod} />
         </header>

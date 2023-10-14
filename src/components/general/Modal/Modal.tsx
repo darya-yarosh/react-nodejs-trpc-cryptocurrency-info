@@ -10,7 +10,7 @@ export default function Module({ handleDismiss, children }: ModalProps) {
     <div className={styles.wrapper}>
       <div className={styles.backdrop} onClick={handleDismiss} />
       <div className={styles.drawer}>
-        <span className={styles.content}>{children}</span>
+        {children}
       </div>
     </div>
   );

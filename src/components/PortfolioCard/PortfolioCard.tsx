@@ -8,8 +8,8 @@ import { Context as CoinsContext } from "providers/coins";
 import { Context as PortfolioContext } from "providers/portfolio";
 
 import { Diff } from "components/Diff/Diff";
-import FavoriteCoin from "components/FavoriteCoin/FavoriteCoin";
 import IconButton from 'components/general/IconButton/IconButton';
+import FavoriteCoin from "components/FavoriteCoin/FavoriteCoin";
 import PortfolioCoin from "components/PortfolioCoin/PortfolioCoin";
 
 import styles from "components/PortfolioCard/PortfolioCard.module.scss";
@@ -62,19 +62,18 @@ export default function PortfolioCard() {
                 <section className={styles.priceSummary}>
                     <label>Total price</label>
                     <span>{formatPrice(spentAmount)}</span>
-                    <span>({formatPrice(actualPrice)})</span>
                     <Diff className={styles.diff} original={spentAmount} actual={actualPrice} />
                 </section>
                 <section className={styles.perCoinList}>
                     <label>Details by coin</label>
                     {coinsSummary.map(coin => (
-                        <PortfolioCoin summary={coin} />
+                        <PortfolioCoin key={coin.id} summary={coin} />
                     ))}
                 </section>
                 <section className={styles.favoritesList}>
                     <label>Favorites</label>
                     {portfolio.favorites.map(favorite => (
-                        <FavoriteCoin id={favorite} />
+                        <FavoriteCoin key={favorite} id={favorite} />
                     ))}
                 </section>
             </div>

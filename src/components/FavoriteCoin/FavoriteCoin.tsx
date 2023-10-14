@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import Coin from "models/Coin";
 
+import BuyCoinButton from "components/BuyCoinButton/BuyCoinButton";
 import FavoriteButton from "components/FavoriteButton/FavoriteButton";
 
 import { formatPrice, priceToNumber } from "logic/utils/Helper";
@@ -10,7 +11,7 @@ import { Context as CoinsContext } from "providers/coins";
 
 import styles from "components/FavoriteCoin/FavoriteCoin.module.scss";
 
-type FavoriteCoinProps = {
+interface FavoriteCoinProps {
     id: Coin['id']
 }
 
@@ -33,6 +34,7 @@ export default function FavoriteCoin({
             <span>{coin.name}</span>
             <span>{coin.symbol}</span>
             <span>{formatPrice(priceToNumber(coin.priceUsd))}</span>
+            <BuyCoinButton className={styles.buyButton} coinId={coin.id} />
             <FavoriteButton coinId={coin.id} />
         </div>
     )

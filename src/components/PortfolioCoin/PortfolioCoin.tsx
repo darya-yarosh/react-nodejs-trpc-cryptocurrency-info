@@ -1,6 +1,7 @@
 import { useContext, useMemo } from "react";
 
 import { Diff } from "components/Diff/Diff";
+import BuyCoinButton from "components/BuyCoinButton/BuyCoinButton";
 
 import { CoinSummary } from "logic/utils/PortfolioHelper";
 import { priceToNumber, formatPrice } from 'logic/utils/Helper';
@@ -45,6 +46,7 @@ export default function PortfolioCoin({
                 <span className={styles.label}>Price:</span>
                 <span>{formatPrice(summary.moneySpent)}</span>
                 <Diff original={summary.moneySpent} actual={summary.amount * priceToNumber(coin.priceUsd)} />
+                <BuyCoinButton className={styles.buyButton} coinId={coin.id} />
             </div>
         </div>
     )

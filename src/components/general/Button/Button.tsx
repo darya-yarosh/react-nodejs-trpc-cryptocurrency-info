@@ -1,13 +1,27 @@
 import styles from "components/general/Button/Button.module.scss";
 
 interface ButtonProps {
+  className?: string;
   label: string;
-  onClick: () => void;
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
+  disabled?: React.ButtonHTMLAttributes<HTMLButtonElement>['disabled'];
+  onClick?: (event: React.MouseEvent) => void;
 }
 
-export default function Button({ label, onClick }: ButtonProps) {
+export default function Button({
+  className,
+  label, 
+  type,
+  disabled,
+  onClick,
+}: ButtonProps) {
   return (
-    <button className={styles.wrapper} onClick={onClick}>
+    <button
+      disabled={disabled}
+      type={type}
+      className={`${styles.wrapper} ${className}`}
+      onClick={onClick}
+    >
       {label}
     </button>
   );

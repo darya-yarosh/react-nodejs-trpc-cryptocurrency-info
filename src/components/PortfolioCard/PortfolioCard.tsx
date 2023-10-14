@@ -63,12 +63,14 @@ export default function PortfolioCard() {
         </section>
         <section className={styles.perCoinList}>
           <label>Details by coin</label>
+          {coinsSummary.length === 0 && <span>Empty</span>}
           {coinsSummary.map((coin) => (
             <PortfolioCoin key={coin.id} summary={coin} />
           ))}
         </section>
         <section className={styles.favoritesList}>
           <label>Favorites</label>
+          {portfolio.favorites.length === 0 && <span>Empty</span>}
           {portfolio.favorites.map((favorite) => (
             <FavoriteCoin key={favorite} id={favorite} />
           ))}

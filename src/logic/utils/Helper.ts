@@ -75,13 +75,13 @@ export function formatVolumeUsd24Hr(volumeUsd24Hr: number) {
   }).format(volumeUsd24Hr);
 }
 
-export function formatChangePercent24Hr(changePercent24Hr: number) {
-  const priceDecimalStr = String(changePercent24Hr).split(".");
+export function formatPercent(persent: number) {
+  const percentDecimalStr = String(persent).split(".");
 
   let nonZeroIndex = 0;
   let currentNum = "0";
   while (currentNum === "0") {
-    currentNum = String(priceDecimalStr[1])[nonZeroIndex];
+    currentNum = String(percentDecimalStr[1])[nonZeroIndex];
     nonZeroIndex++;
   }
 
@@ -90,12 +90,12 @@ export function formatChangePercent24Hr(changePercent24Hr: number) {
         style: "percent",
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
-      }).format(changePercent24Hr / 100)
+      }).format(persent / 100)
     : new Intl.NumberFormat("en", {
         style: "percent",
         minimumFractionDigits: nonZeroIndex + 3,
         maximumFractionDigits: nonZeroIndex + 3,
-      }).format(changePercent24Hr / 100);
+      }).format(persent / 100);
 }
 
 export function sortCoinList(

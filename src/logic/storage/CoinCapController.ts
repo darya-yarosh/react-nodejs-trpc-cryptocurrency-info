@@ -1,7 +1,7 @@
 import Coin, { CoinHistory, StorageCoinHistory } from "models/Coin";
 
 import {
-  formatChangePercent24Hr,
+  formatPercent,
   formatMarketCap,
   formatPrice,
   formatSupply,
@@ -68,9 +68,7 @@ class CoinCapController {
         marketCapUsd: formatMarketCap(storageCoin.marketCapUsd),
         volumeUsd24Hr: formatVolumeUsd24Hr(storageCoin.volumeUsd24Hr),
         priceUsd: formatPrice(storageCoin.priceUsd),
-        changePercent24Hr: formatChangePercent24Hr(
-          storageCoin.changePercent24Hr,
-        ),
+        changePercent24Hr: formatPercent(storageCoin.changePercent24Hr),
         vwap24Hr: storageCoin.vwap24Hr,
         logo: `images/coins/${storageCoin.symbol.toLowerCase()}.svg`,
       };
@@ -99,7 +97,7 @@ class CoinCapController {
       marketCapUsd: formatMarketCap(storageCoin.marketCapUsd),
       volumeUsd24Hr: formatVolumeUsd24Hr(storageCoin.volumeUsd24Hr),
       priceUsd: formatPrice(storageCoin.priceUsd),
-      changePercent24Hr: formatChangePercent24Hr(storageCoin.changePercent24Hr),
+      changePercent24Hr: formatPercent(storageCoin.changePercent24Hr),
       vwap24Hr: storageCoin.vwap24Hr,
       logo: `images/coins/${storageCoin.symbol.toLowerCase()}.svg`,
     };

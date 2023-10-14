@@ -43,6 +43,7 @@ function Graphic({ chartData, labels }: GraphicProps) {
       chartRef.current.data = formatData(chartData);
       chartRef.current.update();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chartData]);
 
   return (

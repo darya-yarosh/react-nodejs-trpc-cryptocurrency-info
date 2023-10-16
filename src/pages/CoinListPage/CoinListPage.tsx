@@ -29,7 +29,7 @@ export default function CoinListPage() {
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>
-        <section className={styles.section}>
+        <section className={styles.sectionFirst}>
           <h1>{APP_NAME}</h1>
           <SearchInput
             value={searchFilter}
@@ -37,8 +37,10 @@ export default function CoinListPage() {
             onChange={setSearchFilter}
           />
         </section>
-        <TrendingCoins coinList={coinTopThree} />
-        <PortfolioLiteCard />
+        <section className={styles.sectionSecond}>
+          <TrendingCoins coinList={coinTopThree} />
+          <PortfolioLiteCard />
+        </section>
       </header>
       <section className={styles.body}>
         <CoinTable coinList={filteredCoinList} />

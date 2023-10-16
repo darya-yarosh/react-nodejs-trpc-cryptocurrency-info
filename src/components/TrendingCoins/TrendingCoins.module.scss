@@ -39,6 +39,15 @@
   }
 }
 
+@media (max-width: 800px) {
+  .wrapper {
+    flex-direction: column;
+    .title {
+      width: auto;
+    }
+  }
+}
+
 @media (max-width: 480px) {
   .wrapper {
     flex-direction: column;

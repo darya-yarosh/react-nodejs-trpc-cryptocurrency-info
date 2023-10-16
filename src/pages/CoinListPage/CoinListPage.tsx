@@ -9,7 +9,7 @@ import SearchInput from "components/general/SearchInput/SearchInput";
 import TrendingCoins from "components/TrendingCoins/TrendingCoins";
 import PortfolioLiteCard from "components/PortfolioLiteCard/PortfolioLiteCard";
 
-import { filterCoinList } from "logic/utils/Helper";
+import { filterCoinList, getTopThreeTrendingCoins } from "logic/utils/Helper";
 
 import { Context as CoinsContext } from "providers/coins";
 
@@ -24,7 +24,8 @@ export default function CoinListPage() {
     [searchFilter, coins],
   );
 
-  const coinTopThree: Coin[] = coins.slice(0, 3);
+  const coinTopThree: Coin[] = getTopThreeTrendingCoins(coins);
+
   return (
     <div className={styles.wrapper}>
       <header className={styles.header}>

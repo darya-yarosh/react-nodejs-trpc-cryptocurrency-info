@@ -60,7 +60,7 @@ class CoinCapController {
     const coinList: Coin[] = dataInfo.data.map((storageCoin: StorageCoin) => {
       const coin: Coin = {
         id: storageCoin.id,
-        rank: storageCoin.rank,
+        rank: Number(storageCoin.rank),
         symbol: storageCoin.symbol,
         name: storageCoin.name,
         supply: formatSupply(storageCoin.supply, storageCoin.symbol),
@@ -119,7 +119,7 @@ class CoinCapController {
     const url =
       end !== undefined && start !== undefined
         ? API +
-          `/assets/${id}/history?interval=${interval}&end=${+end}&start=${+start}`
+        `/assets/${id}/history?interval=${interval}&end=${+end}&start=${+start}`
         : API + `/assets/${id}/history?interval=${interval}`;
     const apiUrl = await fetch(url, requestOptions);
     const dataInfo = await apiUrl.json();
@@ -219,7 +219,7 @@ class CoinCapController {
 
     await fetch(
       API +
-        `/candles?exchange=poloniex&interval=${interval}&baseId=ethereum&quoteId=bitcoin\n`,
+      `/candles?exchange=poloniex&interval=${interval}&baseId=ethereum&quoteId=bitcoin\n`,
       requestOptions,
     )
       .then((response) => response.text())

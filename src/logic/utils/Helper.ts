@@ -4,9 +4,38 @@ import { SortOrder } from "models/Interface";
 export function filterCoinList(coinList: Coin[], filter: string) {
   return filter.trim().length > 0 && coinList.length > 0
     ? coinList.filter((coin) =>
-        coin.name.toLowerCase().includes(filter.trim().toLowerCase()),
-      )
+      coin.name.toLowerCase().includes(filter.trim().toLowerCase()),
+    )
     : coinList;
+}
+
+/**
+ * Функция возвращает три самые популярные монеты.
+ * Кажется черезчур затратно по ресурсам сортировать весь массив,
+ * поэтому просто ищем по полю rank.
+ * 
+ * @param list 
+ * @returns Список трёх популярных монет.
+ */
+export function getTopThreeTrendingCoins(list: Coin[]) {
+  const trendingList = [];
+
+  const first = list.find(coin => coin.rank === 1);
+  if (!!first) {
+    trendingList.push(first);
+  }
+
+  const second = list.find(coin => coin.rank === 2);
+  if (!!second) {
+    trendingList.push(second);
+  }
+
+  const third = list.find(coin => coin.rank === 3);
+  if (!!third) {
+    trendingList.push(third);
+  }
+
+  return trendingList;
 }
 
 export enum CoinListSortType {
@@ -36,17 +65,17 @@ export function formatPrice(price: number) {
 
   return nonZeroIndex < 2
     ? new Intl.NumberFormat("en", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(price)
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(price)
     : new Intl.NumberFormat("en", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: nonZeroIndex + 3,
-        maximumFractionDigits: nonZeroIndex + 3,
-      }).format(price);
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: nonZeroIndex + 3,
+      maximumFractionDigits: nonZeroIndex + 3,
+    }).format(price);
 }
 
 export function formatSupply(supply: number, symbol: string) {
@@ -87,15 +116,15 @@ export function formatPercent(persent: number) {
 
   return nonZeroIndex <= 2
     ? new Intl.NumberFormat("en", {
-        style: "percent",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(persent / 100)
+      style: "percent",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(persent / 100)
     : new Intl.NumberFormat("en", {
-        style: "percent",
-        minimumFractionDigits: nonZeroIndex + 3,
-        maximumFractionDigits: nonZeroIndex + 3,
-      }).format(persent / 100);
+      style: "percent",
+      minimumFractionDigits: nonZeroIndex + 3,
+      maximumFractionDigits: nonZeroIndex + 3,
+    }).format(persent / 100);
 }
 
 export function sortCoinList(
@@ -121,7 +150,7 @@ export function sortCoinList(
     case CoinListSortType.changePercent24Hr:
       return coinList.sort((a, b) =>
         percentToNumber(a.changePercent24Hr) >=
-        percentToNumber(b.changePercent24Hr)
+          percentToNumber(b.changePercent24Hr)
           ? placementFlag
           : -placementFlag,
       );

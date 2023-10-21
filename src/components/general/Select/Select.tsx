@@ -19,6 +19,7 @@ export default function Select({
     <div className={styles.wrapper}>
       {label && <p>{label}</p>}
       <select
+        className={styles.select}
         name={name}
         value={selectedOption}
         onChange={(e) => onChange(e.target.value)}

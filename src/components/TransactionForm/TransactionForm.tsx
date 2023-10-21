@@ -97,7 +97,7 @@ export default function TransactionForm({
         />
         <h1>Add transaction</h1>
       </header>
-      <section>
+      <section className={styles.section}>
         <label>Coin</label>
         <Select
           name="coin"
@@ -106,7 +106,7 @@ export default function TransactionForm({
           onChange={setSelectedCoinName}
         />
       </section>
-      <section>
+      <section className={styles.section}>
         <label>Quantity</label>
         <input
           name="quantity"
@@ -122,11 +122,11 @@ export default function TransactionForm({
           onChange={handleQuantityChange}
         />
       </section>
-      <section>
+      <section className={styles.section}>
         <label>Price per coin</label>
-        <span>{selectedCoin?.priceUsd}</span>
+        <span className={styles.price}>{selectedCoin?.priceUsd}</span>
       </section>
-      <section>
+      <section className={styles.section}>
         <label>Total price</label>
         <span>{totalPrice ? formatPrice(totalPrice) : "-"}</span>
       </section>

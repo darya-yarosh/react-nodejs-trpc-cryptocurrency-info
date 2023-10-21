@@ -7,17 +7,17 @@
 
   border: 1px gray solid;
   border-radius: 4px;
+}
 
-  :last-child {
-    margin-left: auto;
-  }
+.wrapper :last-child {
+  margin-left: auto;
+}
 
-  .buyButton {
-    visibility: hidden;
-    width: initial;
-  }
+.buyButton {
+  visibility: hidden;
+  width: initial;
+}
 
-  &:hover .buyButton {
-    visibility: visible;
-  }
+.wrapper:hover .buyButton {
+  visibility: visible;
 }

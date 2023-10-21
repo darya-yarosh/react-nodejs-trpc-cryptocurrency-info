@@ -67,8 +67,8 @@ export default function CoinTable({
 
   return (
     <div className={styles.table__wrapper}>
-      <table>
-        <tbody>
+      <table className={styles.table}>
+        <tbody className={styles.tbody}>
           <tr>
             <th>
               <div className={styles.columnName__withSort}>

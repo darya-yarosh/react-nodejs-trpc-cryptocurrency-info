@@ -6,35 +6,37 @@
   border: 1px gray solid;
   border-radius: 4px;
   padding: 8px;
+}
 
-  div {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.logo,
+.price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-    word-break: break-all;
-  }
+  word-break: break-all;
+}
 
-  .coinName {
-    font-weight: bold;
-  }
+.coinName {
+  font-weight: bold;
+}
 
-  .label {
-    font-size: 0.8rem;
-    color: grey;
-  }
+.label {
+  font-size: 0.8rem;
+  color: grey;
+}
 
-  .buyButton {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 10px;
-    width: 60px;
+.buyButton {
+  display: none;
+  position: absolute;
+  width: 60px;
+  
+  top: 50%;
+  right: 10px;
+  
+  transform: translateY(-50%);
+}
 
-    display: none;
-  }
-
-  &:hover .buyButton {
-    display: block;
-  }
+.wrapper:hover .buyButton {
+  display: block;
 }

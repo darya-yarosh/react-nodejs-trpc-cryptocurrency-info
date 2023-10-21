@@ -14,17 +14,17 @@ export default function TrendingCoins({ coinList }: TrendingCoinsProps) {
         {coinList.map((coin) => {
           return (
             <div key={coin.id} className={styles.coin}>
-              <p>{coin.rank}</p>
-              <p>{coin.symbol}</p>
-              <p>
+              <p className={styles.coin__info}>{coin.rank}</p>
+              <p className={styles.coin__info}>{coin.symbol}</p>
+              <p className={styles.coin__info}>
                 <img
                   src={`${coin.logo}`}
                   alt={`${coin.id} icon`}
                   width={"25px"}
                 ></img>
               </p>
-              <p>{coin.name}</p>
-              <p>{coin.priceUsd}</p>
+              <p className={styles.coin__info}>{coin.name}</p>
+              <p className={styles.coin__info}>{coin.priceUsd}</p>
             </div>
           );
         })}

@@ -1,5 +1,5 @@
 import { useContext, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Diff } from "components/Diff/Diff";
 
@@ -16,6 +16,7 @@ import { Context as PortfolioContext } from "providers/portfolio";
 import styles from "components/PortfolioLiteCard/PortfolioLiteCard.module.scss";
 
 export default function PortfolioLiteCard() {
+  const navigate = useNavigate();
   const portfolio = useContext(PortfolioContext).data;
   const coins = useContext(CoinsContext).data;
 
@@ -32,17 +33,22 @@ export default function PortfolioLiteCard() {
     return coinPrices.reduce((total, coin) => total + coin.price, 0);
   }, [coins, coinsSummary]);
 
+  function handleNavigateToPortfolioClick(event: React.MouseEvent) {
+    if (!event.isDefaultPrevented()) {
+      navigate(`portfolio`);
+    }
+  }
+
   return (
-    <Link to={`portfolio`}>
-      <section className={styles.wrapper}>
-        <label className={styles.label}>My Portfolio</label>
-        <span className={styles.spentAmount}>{formatPrice(spentAmount)}</span>
-        <Diff
-          className={styles.diff}
-          original={spentAmount}
-          actual={actualPrice}
-        />
-      </section>
-    </Link>
+    <section className={styles.wrapper}
+      onClick={handleNavigateToPortfolioClick}>
+      <label className={styles.label}>My Portfolio</label>
+      <span className={styles.spentAmount}>{formatPrice(spentAmount)}</span>
+      <Diff
+        className={styles.diff}
+        original={spentAmount}
+        actual={actualPrice}
+      />
+    </section>
   );
 }

@@ -70,19 +70,19 @@ export default function GraphicCard({ coinId }: GraphicCardProps) {
       graphicPeriod === GraphicPeriod.m1
         ? "d1"
         : graphicPeriod === GraphicPeriod.w1
-        ? "h12"
-        : graphicPeriod === GraphicPeriod.d1
-        ? "m30"
-        : "m30";
+          ? "h12"
+          : graphicPeriod === GraphicPeriod.d1
+            ? "m30"
+            : "m30";
 
     const [startDate, endDate] =
       graphicPeriod === GraphicPeriod.m1
         ? [getDateMonthAgo(new Date()), new Date()]
         : graphicPeriod === GraphicPeriod.w1
-        ? [getDateWeekAgo(new Date()), new Date()]
-        : graphicPeriod === GraphicPeriod.d1
-        ? [getDateDayAgo(new Date()), new Date()]
-        : [getDateDayAgo(new Date()), new Date()];
+          ? [getDateWeekAgo(new Date()), new Date()]
+          : graphicPeriod === GraphicPeriod.d1
+            ? [getDateDayAgo(new Date()), new Date()]
+            : [getDateDayAgo(new Date()), new Date()];
 
     const data = await coinCapController.getCoinHistory(
       coinId,
@@ -130,8 +130,8 @@ export default function GraphicCard({ coinId }: GraphicCardProps) {
   return (
     <section className={styles.wrapper}>
       <header className={styles.header}>
-        <span>Period per </span>
         <Select
+          label="Period per"
           name="period"
           options={graphicPeriodSelect}
           selectedOption={graphicPeriod}

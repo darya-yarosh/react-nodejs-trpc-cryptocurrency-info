@@ -15,7 +15,9 @@ interface FavoriteCoinProps {
   id: Coin["id"];
 }
 
-export default function FavoriteCoin({ id }: FavoriteCoinProps) {
+export default function FavoriteCoin({
+  id
+}: FavoriteCoinProps) {
   const coins = useContext(CoinsContext).data;
 
   const coin = coins.find((c) => c.id === id);
@@ -24,7 +26,10 @@ export default function FavoriteCoin({ id }: FavoriteCoinProps) {
 
   return (
     <div className={styles.wrapper}>
-      <img src={coin.logo} alt={`${coin.id} icon`} width={"25px"} />
+      <img src={coin.logo}
+        alt={`${coin.id} icon`}
+        width={"25px"}
+      />
       <span>{coin.name}</span>
       <span>{coin.symbol}</span>
       <span>{formatPrice(priceToNumber(coin.priceUsd))}</span>

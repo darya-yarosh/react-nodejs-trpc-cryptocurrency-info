@@ -16,6 +16,7 @@ export default function SearchInput({
   return (
     <div className={styles.wrapper}>
       <input
+        className={styles.input}
         type="search"
         placeholder={placeholderValue}
         value={value}

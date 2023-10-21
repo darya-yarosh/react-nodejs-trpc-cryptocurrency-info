@@ -53,8 +53,8 @@ export default function PortfolioCard() {
       </div>
       <div className={styles.content}>
         <section className={styles.priceSummary}>
-          <label>Total price</label>
-          <span>{formatPrice(spentAmount)}</span>
+          <label className={styles.priceSummary__label}>Total price</label>
+          <span className={styles.price}>{formatPrice(spentAmount)}</span>
           <Diff
             className={styles.diff}
             original={spentAmount}
@@ -62,14 +62,14 @@ export default function PortfolioCard() {
           />
         </section>
         <section className={styles.perCoinList}>
-          <label>Details by coin</label>
+          <label className={styles.perCoinList__label}>Details by coin</label>
           {coinsSummary.length === 0 && <span>Empty</span>}
           {coinsSummary.map((coin) => (
             <PortfolioCoin key={coin.id} summary={coin} />
           ))}
         </section>
         <section className={styles.favoritesList}>
-          <label>Favorites</label>
+          <label className={styles.favoritesList__label}>Favorites</label>
           {portfolio.favorites.length === 0 && <span>Empty</span>}
           {portfolio.favorites.map((favorite) => (
             <FavoriteCoin key={favorite} id={favorite} />

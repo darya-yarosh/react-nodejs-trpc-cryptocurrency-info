@@ -11,26 +11,25 @@ $button-border: $color-third;
 
   background: none;
   border: none;
+}
 
-  .icon {
-    display: block;
-    margin: 0;
+.wrapper:hover {
+  color: $button-bg;
+}
 
-    filter: $filter-second;
-    cursor: pointer;
-    transition: all 0.1s;
-  }
+.icon {
+  display: block;
+  margin: 0;
 
-  &:hover {
-    color: $button-bg;
-    .icon {
-      filter: $filter-third;
-    }
-  }
+  filter: $filter-second;
+  cursor: pointer;
+  transition: all 0.1s;
+}
 
-  &:active {
-    .icon {
-      filter: $filter-second;
-    }
-  }
+.wrapper:hover .icon {
+  filter: $filter-third;
+}
+
+.wrapper:active .icon {
+  filter: $filter-second;
 }

@@ -10,21 +10,21 @@
   border-radius: 4px;
   color: $color-second;
   transition: background-color 0.1s;
+}
 
-  &:not(:disabled):hover {
-    color: $color-second;
-    border-color: $color-third;
-    background-color: $color-third;
-  }
+.wrapper:not(:disabled):hover {
+  color: $color-second;
+  border-color: $color-third;
+  background-color: $color-third;
+}
 
-  &:not(:disabled):active {
-    color: $color-second;
-    border-color: $color-second;
-    background-color: $color-third;
-  }
+.wrapper:not(:disabled):active {
+  color: $color-second;
+  border-color: $color-second;
+  background-color: $color-third;
+}
 
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
+.wrapper:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }

@@ -7,7 +7,7 @@
   grid-gap: 8px;
 }
 
-table {
+.table {
   display: block;
   overflow-x: auto;
   white-space: nowrap;
@@ -22,13 +22,13 @@ table {
   transition: all 1s ease-out 0.5s;
 }
 
-tbody {
+.tbody {
   gap: 4px;
   color: $color-font;
   font-weight: 500;
 }
 
-table,
+.table,
 th,
 td {
   text-align: center;
@@ -44,17 +44,13 @@ tr {
 
   border-bottom: 2px solid $color-third;
 }
-tbody {
-  & tr:last-child {
-    border-bottom: none;
-  }
+
+.tbody tr:last-child {
+  border-bottom: none;
 }
 
 th {
   padding: 8px 0px;
-  p {
-    margin: 0;
-  }
 }
 
 th,
@@ -68,64 +64,62 @@ td {
   padding: 12px;
   border: none;
   white-space: nowrap;
+}
 
-  img {
-    align-self: center;
-  }
-  &:last-child {
-    text-wrap: balance;
-    align-self: center;
-    padding: 0;
-  }
+th:last-child,
+td:last-child {
+  text-wrap: balance;
+  align-self: center;
+  padding: 0;
 }
 
 .button__link {
   border: none;
   background: none;
   cursor: pointer;
-  &:hover {
-    color: gray;
-  }
+}
+
+.button__link:hover {
+  color: gray;
 }
 
 .columnName {
   color: $color-font;
   font-weight: 500;
+  margin: 0;
+}
 
-  &__withSort {
-    input {
-      display: none;
-    }
+.columnName__withSort input {
+  display: none;
+}
 
-    label {
-      display: flex;
-      cursor: pointer;
-    }
+.columnName__withSort label {
+  display: flex;
+  cursor: pointer;
+}
 
-    &:hover {
-      span:first-child {
-        text-shadow: 1px 1px 0px $color-third !important;
-      }
-      span:last-child {
-        filter: $filter-third;
-      }
-    }
-  }
+.columnName__withSort:hover span:first-child {
+  text-shadow: 1px 1px 0px $color-third !important;
+}
+
+.columnName__withSort:hover span:last-child {
+  filter: $filter-third;
 }
 
 @media (max-width: 700px) {
-  table {
+  .table {
     max-width: 600px;
     font-size: 12px;
     width: 100%;
   }
+
   th {
     padding: 16px 0px;
   }
 }
 
 @media (max-width: 480px) {
-  table {
+  .table {
     max-width: 400px;
     font-size: 12px;
   }

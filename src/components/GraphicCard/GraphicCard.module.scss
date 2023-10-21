@@ -8,14 +8,14 @@
   padding-top: 8px;
   min-width: 700px;
   min-height: 400px;
-  .header {
-    display: flex;
-    color: $color-font;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: flex-start;
-    gap: 8px;
-  }
+}
+
+.header {
+  display: flex;
+  color: $color-font;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 @media (max-width: 1300px) {

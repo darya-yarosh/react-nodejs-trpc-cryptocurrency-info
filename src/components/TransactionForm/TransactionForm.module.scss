@@ -14,25 +14,25 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
 
-  section {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
-    select {
-      width: 100%;
-      border-radius: 0;
-    }
+.section > label {
+  color: gray;
+  font-size: 0.8rem;
+}
 
-    span {
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
+.section select {
+  width: 100%;
+  border-radius: 0;
+}
 
-    > label {
-      color: gray;
-      font-size: 0.8rem;
-    }
-  }
+.price {
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

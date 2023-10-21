@@ -24,10 +24,6 @@
   font-size: 1.5rem;
 }
 
-.diff {
-  font-size: 1.2rem;
-}
-
 .content {
   display: flex;
   gap: 8px;
@@ -40,15 +36,36 @@
   display: flex;
   flex-direction: column;
   font-size: 2.4rem;
+}
 
-  label {
-    font-size: 1.2rem;
-    color: grey;
-  }
+.priceSummary__label {
+  font-size: 1.2rem;
+  color: grey;
+}
 
-  span {
-    font-weight: bold;
-  }
+.price {
+  font-weight: bold;
+}
+
+.diff {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.perCoinList {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.perCoinList__label {
+  font-size: 0.8rem;
+  color: grey;
+}
+
+.favoritesList__label {
+  font-size: 0.8rem;
+  color: grey;
 }
 
 .perCoinList,
@@ -58,15 +75,4 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-
-  label {
-    font-size: 0.8rem;
-    color: grey;
-  }
-}
-
-.perCoinList {
-  max-height: 400px;
-  overflow-y: auto;
-  padding-right: 4px;
 }

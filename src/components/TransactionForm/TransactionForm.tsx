@@ -31,7 +31,7 @@ export default function TransactionForm({
   const [selectedCoinName, setSelectedCoinName] = useState<Coin["name"]>(
     defaultCoin ? defaultCoin.name : (coins[0] || {}).name,
   );
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(1);
 
   function navigateBack() {
     navigate(-1);
@@ -81,7 +81,7 @@ export default function TransactionForm({
 
   const isValid = useMemo(
     () =>
-      quantity >= 0 &&
+      quantity > 0 &&
       selectedCoin &&
       quantity <= (selectedCoin?.maxSupply ?? Infinity),
     [quantity, selectedCoin],
@@ -118,7 +118,7 @@ export default function TransactionForm({
               ? selectedCoin?.maxSupply
               : undefined
           }
-          min={0}
+          min={1}
           onChange={handleQuantityChange}
         />
       </section>

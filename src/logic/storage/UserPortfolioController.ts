@@ -31,11 +31,11 @@ class UserPortfolioController {
     return portfolio;
   }
 
-  async removeFavorite(id: Coin["id"]) {
+  async removeFavorite(coinId: Coin["id"]) {
     const portfolio = await this.getPortfolio();
 
     const newFavorites = portfolio.favorites.filter(
-      (favCoin) => favCoin !== id,
+      (favCoin) => favCoin !== coinId,
     );
 
     const newPortfolio: Portfolio = {
@@ -64,6 +64,18 @@ class UserPortfolioController {
 
     userPortfolioController.setPortfolio(portfolio);
     return portfolio;
+  }
+
+  async removeCoinTransactions(
+    coinId: Coin["id"]
+  ) {
+    const portfolio = await userPortfolioController.getPortfolio();
+
+    const updatedTransactions = portfolio.transactionList.filter(transaction => transaction.coinId !== coinId);
+    portfolio.transactionList = updatedTransactions
+
+    userPortfolioController.setPortfolio(portfolio);
+    return portfolio
   }
 }
 

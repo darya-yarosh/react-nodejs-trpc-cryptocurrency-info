@@ -1,7 +1,10 @@
 import { useContext, useMemo } from "react";
 
+import Coin from "models/Coin";
+
 import { Diff } from "components/Diff/Diff";
 import BuyCoinButton from "components/BuyCoinButton/BuyCoinButton";
+import RemoveCoinButton from "components/RemoveCoinButton/RemoveCoinButton";
 
 import { CoinSummary } from "logic/utils/PortfolioHelper";
 import { priceToNumber, formatPrice } from "logic/utils/Helper";
@@ -12,9 +15,13 @@ import styles from "components/PortfolioCoin/PortfolioCoin.module.scss";
 
 interface PortfolioCoinProps {
   summary: CoinSummary;
+  removeCoin: (coinId: Coin['id']) => void;
 }
 
-export default function PortfolioCoin({ summary }: PortfolioCoinProps) {
+export default function PortfolioCoin({
+  summary,
+  removeCoin,
+}: PortfolioCoinProps) {
   const coinsContext = useContext(CoinsContext);
 
   const coin = coinsContext.data.find((c) => c.id === summary.id);
@@ -40,7 +47,15 @@ export default function PortfolioCoin({ summary }: PortfolioCoinProps) {
           original={summary.moneySpent}
           actual={summary.amount * priceToNumber(coin.priceUsd)}
         />
-        <BuyCoinButton className={styles.buyButton} coinId={coin.id} />
+        <BuyCoinButton 
+          className={styles.buyButton}
+          coinId={coin.id} />
+        <RemoveCoinButton 
+          className={styles.removeButton}
+          label="Remove"
+          coinId={coin.id}
+          confirmMessage={`You want to remove all transaction of coin ${coin?.id}. Are you sure?`}
+          onClick={removeCoin}        />
       </div>
     </div>
   );

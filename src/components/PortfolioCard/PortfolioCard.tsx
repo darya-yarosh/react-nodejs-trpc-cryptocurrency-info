@@ -23,7 +23,8 @@ export default function PortfolioCard() {
 
   const coins = useContext(CoinsContext).data;
   const portfolio = useContext(PortfolioContext).data;
-
+  const { removeCoinTransactions } = useContext(PortfolioContext);
+  
   function navigateBack() {
     navigate(-1);
   }
@@ -65,7 +66,10 @@ export default function PortfolioCard() {
           <label className={styles.perCoinList__label}>Details by coin</label>
           {coinsSummary.length === 0 && <span>Empty</span>}
           {coinsSummary.map((coin) => (
-            <PortfolioCoin key={coin.id} summary={coin} />
+            <PortfolioCoin
+              key={coin.id}
+              summary={coin}
+              removeCoin={removeCoinTransactions}/>
           ))}
         </section>
         <section className={styles.favoritesList}>

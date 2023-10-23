@@ -12,6 +12,7 @@ export const Context = createContext<PortfolioContext>({
   addFavorite: () => {},
   removeFavorite: () => {},
   addTransaction: () => {},
+  removeCoinTransactions: () => {},
 });
 
 interface PortfolioContext {
@@ -24,6 +25,7 @@ interface PortfolioContext {
     coinPrice: number,
     coinAmount: number,
   ) => void;
+  removeCoinTransactions: (id: Coin["id"]) => void;
 }
 
 export default function PortfolioProvider({
@@ -52,9 +54,26 @@ export default function PortfolioProvider({
     PortfolioController.addTransaction(coinId, coinPrice, coinCount)
       .then((portfolio) => {
         setData(portfolio);
-        alert(
-          "Purchase completed! You can check your balance in your portfolio page",
-        );
+        setTimeout(() => {
+          alert(
+            "Purchase completed! You can check your balance in your portfolio page",
+          );
+        })
+      })
+      .catch((err) => console.error(err));
+  }
+
+  function removeCoinTransactions(
+    coinId: Coin['id']
+  ) {
+    PortfolioController.removeCoinTransactions(coinId)
+      .then((portfolio) => {
+        setData(portfolio);
+        setTimeout(() => {
+          alert(
+            `The removal of the ${coinId} coin has been carried out!`
+          )
+        });
       })
       .catch((err) => console.error(err));
   }
@@ -76,6 +95,7 @@ export default function PortfolioProvider({
         addFavorite,
         removeFavorite,
         addTransaction,
+        removeCoinTransactions,
       }}
     >
       {children}

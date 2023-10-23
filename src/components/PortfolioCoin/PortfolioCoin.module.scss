@@ -32,6 +32,17 @@
   width: 60px;
   
   top: 50%;
+  right: 100px;
+  
+  transform: translateY(-50%);
+}
+
+.removeButton {
+  display: block;
+  position: absolute;
+  width: auto;
+  
+  top: 50%;
   right: 10px;
   
   transform: translateY(-50%);

@@ -9,35 +9,6 @@ export function filterCoinList(coinList: Coin[], filter: string) {
     : coinList;
 }
 
-/**
- * Функция возвращает три самые популярные монеты.
- * Кажется черезчур затратно по ресурсам сортировать весь массив,
- * поэтому просто ищем по полю rank.
- * 
- * @param list 
- * @returns Список трёх популярных монет.
- */
-export function getTopThreeTrendingCoins(list: Coin[]) {
-  const trendingList = [];
-
-  const first = list.find(coin => coin.rank === 1);
-  if (!!first) {
-    trendingList.push(first);
-  }
-
-  const second = list.find(coin => coin.rank === 2);
-  if (!!second) {
-    trendingList.push(second);
-  }
-
-  const third = list.find(coin => coin.rank === 3);
-  if (!!third) {
-    trendingList.push(third);
-  }
-
-  return trendingList;
-}
-
 export enum CoinListSortType {
   rank = "Rank",
   priceUsd = "Price",

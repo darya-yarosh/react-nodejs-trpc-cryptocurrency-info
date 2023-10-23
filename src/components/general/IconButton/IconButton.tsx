@@ -11,10 +11,10 @@ export default function IconButton({
   iconSVG,
   caption,
   onClick,
-  sizePX = 28,
+  sizePX = 25,
 }: IconButtonProps) {
-  const wrapperSize = `${sizePX}px`;
-  const iconSize = `${sizePX - 8}px`;
+  const wrapperSize = `${sizePX+8}px`;
+  const iconSize = `${sizePX}px`;
 
   return (
     <button

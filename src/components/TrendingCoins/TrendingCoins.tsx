@@ -1,5 +1,7 @@
 import Coin from "models/Coin";
 
+import Icon from "components/general/Icon/Icon";
+
 import styles from "components/TrendingCoins/TrendingCoins.module.scss";
 
 interface TrendingCoinsProps {
@@ -17,11 +19,11 @@ export default function TrendingCoins({ coinList }: TrendingCoinsProps) {
               <p className={styles.coin__info}>{coin.rank}</p>
               <p className={styles.coin__info}>{coin.symbol}</p>
               <p className={styles.coin__info}>
-                <img
-                  src={`${coin.logo}`}
+                <Icon
+                  iconSVG={`${coin.logo}`}
                   alt={`${coin.id} icon`}
-                  width={"25px"}
-                ></img>
+                  sizePX={25}
+                />
               </p>
               <p className={styles.coin__info}>{coin.name}</p>
               <p className={styles.coin__info}>{coin.priceUsd}</p>

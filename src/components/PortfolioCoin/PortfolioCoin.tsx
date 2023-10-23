@@ -2,6 +2,7 @@ import { useContext, useMemo } from "react";
 
 import Coin from "models/Coin";
 
+import Icon from "components/general/Icon/Icon";
 import { Diff } from "components/Diff/Diff";
 import BuyCoinButton from "components/BuyCoinButton/BuyCoinButton";
 import RemoveCoinButton from "components/RemoveCoinButton/RemoveCoinButton";
@@ -27,7 +28,7 @@ export default function PortfolioCoin({
   const coin = coinsContext.data.find((c) => c.id === summary.id);
 
   const logoUrl = useMemo(() => {
-    return coin?.logo;
+    return coin?.logo || "";
   }, [coin?.logo]);
 
   if (!coin) return null;
@@ -35,7 +36,7 @@ export default function PortfolioCoin({
   return (
     <div className={styles.wrapper}>
       <div className={styles.logo}>
-        <img src={logoUrl} alt={`${summary.id} icon`} width={"25px"} />
+        <Icon iconSVG={logoUrl} alt={`${summary.id} icon`} sizePX={25}/>
         <span className={styles.coinName}>{coin.name}</span>
         <span className={styles.label}>Amount:</span>
         <span>{summary.amount}</span>

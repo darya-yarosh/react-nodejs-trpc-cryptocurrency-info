@@ -11,7 +11,8 @@
   display: block;
   overflow-x: auto;
   white-space: nowrap;
-
+  width: 100%;
+  
   background-color: $color-second;
   border: 4px solid $color-second;
   border-radius: 8px;
@@ -89,9 +90,16 @@ td:last-child {
 }
 
 .columnName {
-  color: $color-font;
-  font-weight: 500;
+  align-self: center;
   margin: 0;
+  
+  font-weight: 500;
+  color: $color-font;
+}
+
+.columnName__withSort {
+  display: flex;
+  align-items: center;
 }
 
 .columnName__withSort input {
@@ -100,6 +108,7 @@ td:last-child {
 
 .columnName__withSort label {
   display: flex;
+  align-items: center;
   cursor: pointer;
 }
 

@@ -37,6 +37,7 @@ export default function FavoriteButton({ coinId }: FavoriteButtonProps) {
           ? "/images/favorite/favorite-fill.svg"
           : "/images/favorite/favorite-unfill.svg"
       }
+      sizePX={25}
       onClick={handleClick}
     />
   );

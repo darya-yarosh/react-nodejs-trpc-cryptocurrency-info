@@ -1,5 +1,7 @@
 import { SortOrder } from "models/Interface";
 
+import Icon from "components/general/Icon/Icon";
+
 import styles from "components/general/SortIcon/Sorticon.module.scss";
 
 interface SortIconProps {
@@ -16,7 +18,7 @@ export default function SortIcon({
   isSelected,
 }: SortIconProps) {
   const src = `
-        images/sort/sort-${
+        /images/sort/sort-${
           isEnabled && isSelected
             ? sortOrder.toLowerCase()
             : isEnabled
@@ -25,5 +27,5 @@ export default function SortIcon({
         }.svg`;
   const alt = `sort icon for ${sortType}`;
 
-  return <img className={styles.icon} src={`${src}`} alt={alt} />;
+  return <Icon iconSVG={src} alt={alt} />
 }

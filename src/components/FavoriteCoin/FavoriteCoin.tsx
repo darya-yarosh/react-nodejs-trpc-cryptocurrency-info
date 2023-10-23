@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import Coin from "models/Coin";
 
+import Icon from "components/general/Icon/Icon";
 import BuyCoinButton from "components/BuyCoinButton/BuyCoinButton";
 import FavoriteButton from "components/FavoriteButton/FavoriteButton";
 
@@ -26,10 +27,7 @@ export default function FavoriteCoin({
 
   return (
     <div className={styles.wrapper}>
-      <img src={coin.logo}
-        alt={`${coin.id} icon`}
-        width={"25px"}
-      />
+      <Icon iconSVG={coin.logo} alt={`${coin.id} icon`} sizePX={25}/>
       <span>{coin.name}</span>
       <span>{coin.symbol}</span>
       <span>{formatPrice(priceToNumber(coin.priceUsd))}</span>

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import Coin, { CoinLabels } from "models/Coin";
 
+import Icon from "components/general/Icon/Icon";
 import Button from "components/general/Button/Button";
 import IconButton from "components/general/IconButton/IconButton";
 import FavoriteButton from "components/FavoriteButton/FavoriteButton";
@@ -29,11 +30,7 @@ export default function TextCard({ coin, closePage }: TextCardProps) {
             caption={`Button for return to coins table page`}
             onClick={closePage}
           />
-          <img
-            src={`/${coin.logo}`}
-            alt={`${coin.id} icon`}
-            width={"25px"}
-          ></img>
+          <Icon iconSVG={`/${coin.logo}`} alt={`${coin.id} icon`} sizePX={25} />
           <p className={styles.name}>{coin.name}</p>
           <p className={styles.symbol}>{coin.symbol}</p>
         </span>

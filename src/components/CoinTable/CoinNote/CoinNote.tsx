@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import Coin from "models/Coin";
 
+import Icon from "components/general/Icon/Icon";
 import FavoriteButton from "components/FavoriteButton/FavoriteButton";
 
 import { percentToNumber } from "logic/utils/Helper";
@@ -13,6 +14,11 @@ interface CoinNoteProps {
 }
 
 export default function CoinNote({ coin }: CoinNoteProps) {
+  const changePercent24HrClassName =
+    percentToNumber(coin.changePercent24Hr) < 0
+      ? styles.negativeText
+      : styles.positiveText;
+
   const navigate = useNavigate();
 
   function handleNavigateToCoinClick(event: React.MouseEvent) {
@@ -20,11 +26,6 @@ export default function CoinNote({ coin }: CoinNoteProps) {
       navigate(`/cryptocoins/${coin.id}`);
     }
   }
-
-  const changePercent24HrClassName =
-    percentToNumber(coin.changePercent24Hr) < 0
-      ? styles.negativeText
-      : styles.positiveText;
 
   return (
     <tr className={styles.wrapper} onClick={handleNavigateToCoinClick}>
@@ -35,7 +36,7 @@ export default function CoinNote({ coin }: CoinNoteProps) {
         <p>{coin.symbol}</p>
       </td>
       <td>
-        <img src={`${coin.logo}`} alt={`${coin.id} icon`} width={"25px"}></img>
+        <Icon iconSVG={coin.logo} alt={`${coin.id} icon`} sizePX={25}/>
       </td>
       <td>
         <p>{coin.name}</p>

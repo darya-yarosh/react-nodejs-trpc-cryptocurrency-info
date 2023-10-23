@@ -66,6 +66,11 @@ td {
   white-space: nowrap;
 }
 
+td:has(img) {
+  padding: 0px;
+  align-items: center;
+}
+
 th:last-child,
 td:last-child {
   text-wrap: balance;

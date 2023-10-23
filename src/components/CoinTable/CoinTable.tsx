@@ -1,33 +1,26 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import Coin, { CoinLabels } from "models/Coin";
 import { SortOrder } from "models/Interface";
 
 import SortIcon from "components/general/SortIcon/SortIcon";
 import CoinNote from "components/CoinTable/CoinNote/CoinNote";
-import Pagination from "components/general/Pagination/Pagination";
 
 import { CoinListSortType, sortCoinList } from "logic/utils/Helper";
 
 import styles from "components/CoinTable/CoinTable.module.scss";
 
 interface CoinTableProps {
-  coinList: Coin[];
-  coinsPerList?: number;
+  coinList: Coin[]
 }
 
-const COINS_PER_PAGE = 10;
-
 export default function CoinTable({
-  coinList,
-  coinsPerList = COINS_PER_PAGE,
+  coinList
 }: CoinTableProps) {
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.asc);
   const [sortType, setSortType] = useState<CoinListSortType>(
     CoinListSortType.rank,
   );
-
-  const [pageIndex, setPageIndex] = useState<number>(0);
 
   function changeSortType(selectedType: CoinListSortType) {
     setSortType(selectedType);
@@ -42,28 +35,6 @@ export default function CoinTable({
     () => [...sortCoinList(coinList, sortType, sortOrder)],
     [coinList, sortType, sortOrder],
   );
-
-  const currentPageCoins = useMemo(
-    () =>
-      sortedCoins.slice(
-        coinsPerList * pageIndex,
-        coinsPerList * pageIndex + coinsPerList,
-      ),
-    [sortedCoins, coinsPerList, pageIndex],
-  );
-
-  const pageCount = useMemo(
-    () => Math.ceil(sortedCoins.length / coinsPerList),
-    [coinsPerList, sortedCoins.length],
-  );
-  const pages = useMemo(
-    () => new Array(pageCount).fill(0).map((e, i) => Number(i)),
-    [pageCount],
-  );
-
-  useEffect(() => {
-    setPageIndex(0);
-  }, [coinList]);
 
   return (
     <div className={styles.table__wrapper}>
@@ -164,16 +135,11 @@ export default function CoinTable({
             </th>
             <th>{CoinLabels.navigation}</th>
           </tr>
-          {currentPageCoins.map((coinInfo: Coin) => (
+          {sortedCoins.map((coinInfo: Coin) => (
             <CoinNote key={coinInfo.id} coin={coinInfo} />
           ))}
         </tbody>
       </table>
-      <Pagination
-        pages={pages}
-        currentPage={pageIndex}
-        changePage={setPageIndex}
-      />
     </div>
   );
 }

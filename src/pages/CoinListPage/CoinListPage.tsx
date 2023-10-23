@@ -1,31 +1,44 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import Coin from "models/Coin";
 import { APP_NAME, SEARCH_PLACEHOLDER } from "models/Interface";
 
 import CoinTable from "components/CoinTable/CoinTable";
+import Pagination from "components/general/Pagination/Pagination";
 import SearchInput from "components/general/SearchInput/SearchInput";
 import TrendingCoins from "components/TrendingCoins/TrendingCoins";
 import PortfolioLiteCard from "components/PortfolioLiteCard/PortfolioLiteCard";
 
-import { filterCoinList } from "logic/utils/Helper";
 import coinCapController from "logic/storage/CoinCapController";
-
-import { Context as CoinsContext } from "providers/coins";
 
 import styles from "pages/CoinListPage/CoinListPage.module.scss";
 
 export default function CoinListPage() {
-  const coins = useContext(CoinsContext).data;
-
-  const [searchFilter, setSearchFilter] = useState<string>("");
-  const filteredCoinList = useMemo(
-    () => filterCoinList(coins, searchFilter),
-    [searchFilter, coins],
-  );
-
   const [coinsTopThree, setCoinsTopThree] = useState<Coin[]>([]);
+  const [coins, setCoins] = useState<Coin[]>([])
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [searchFilter, setSearchFilter] = useState<string>("");
+
+  const COINS_PER_PAGE = 10;
+  const PAGES_LIMIT = useMemo(() => coins.length / COINS_PER_PAGE, [coins]);
+  const isLastPage = useMemo(() => PAGES_LIMIT < 1, [PAGES_LIMIT]);
+
+  useEffect(() => {
+    setPageIndex(0);
+  }, [searchFilter])
+
+  useEffect(() => {
+    async function loadCoinOfPage(pageInd: number) {
+
+      const filter = searchFilter === "" ? undefined : searchFilter;
+      await coinCapController.getCoinList(filter, pageInd * COINS_PER_PAGE, COINS_PER_PAGE).then((loadedCoins) => {
+        setCoins(loadedCoins);
+      });
+    }
+
+    loadCoinOfPage(pageIndex)
+  }, [pageIndex, searchFilter]);
 
   useEffect(() => {
     /**
@@ -36,7 +49,7 @@ export default function CoinListPage() {
      * @returns A list of three popular coins.
      */
     async function getTopThreeTrendingCoins() {
-      const trendingList = await coinCapController.getCoinList(0, 3);
+      const trendingList = await coinCapController.getCoinList(undefined, 0, 3);
       return trendingList;
     };
 
@@ -62,7 +75,12 @@ export default function CoinListPage() {
         </section>
       </header>
       <section className={styles.body}>
-        <CoinTable coinList={filteredCoinList} />
+        <CoinTable coinList={coins} />
+        <Pagination
+          isLastPage={isLastPage}
+          currentPageInd={pageIndex}
+          changePage={setPageIndex}
+        />
       </section>
       <Outlet />
     </div>

@@ -48,18 +48,23 @@ interface StorageCoin {
 }
 
 class CoinCapController {
-  async getCoinList(offset?: number, limit?: number) {
+  async getCoinList(search?: string, offset?: number, limit?: number) {
     const requestOptions: RequestInit = {
       method: "GET",
       redirect: "follow",
     };
 
-    const url = (offset !== undefined && limit !== undefined)
-      ? API + `/assets?offset=${offset}&limit=${limit}`
-      : API + "/assets";
+    let url = API + "/assets?";
+    if (search !== undefined) {
+      url += `search=${search}&`;
+    }
+    if (offset !== undefined && limit !== undefined) {
+      url += `offset=${offset}&limit=${limit}`
+    };
 
     const apiUrl = await fetch(url, requestOptions);
     const dataInfo = await apiUrl.json();
+
     const coinList: Coin[] = dataInfo.data.map((storageCoin: StorageCoin) => {
       const coin: Coin = {
         id: storageCoin.id,

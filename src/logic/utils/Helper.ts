@@ -1,14 +1,6 @@
 import Coin from "models/Coin";
 import { SortOrder } from "models/Interface";
 
-export function filterCoinList(coinList: Coin[], filter: string) {
-  return filter.trim().length > 0 && coinList.length > 0
-    ? coinList.filter((coin) =>
-      coin.name.toLowerCase().includes(filter.trim().toLowerCase()),
-    )
-    : coinList;
-}
-
 export enum CoinListSortType {
   rank = "Rank",
   priceUsd = "Price",

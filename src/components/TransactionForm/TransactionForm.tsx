@@ -83,7 +83,7 @@ export default function TransactionForm({
     () =>
       quantity > 0 &&
       selectedCoin &&
-      quantity <= (selectedCoin?.maxSupply ?? Infinity),
+      quantity <= (Number(selectedCoin?.maxSupply) ?? Infinity),
     [quantity, selectedCoin],
   );
 

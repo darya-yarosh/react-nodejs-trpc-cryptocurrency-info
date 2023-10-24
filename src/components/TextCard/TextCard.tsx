@@ -14,7 +14,10 @@ interface TextCardProps {
   closePage: () => void;
 }
 
-export default function TextCard({ coin, closePage }: TextCardProps) {
+export default function TextCard({
+  coin,
+  closePage
+}: TextCardProps) {
   const navigate = useNavigate();
 
   function handleBuyClick() {

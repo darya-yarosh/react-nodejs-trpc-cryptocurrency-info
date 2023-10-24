@@ -1,31 +1,31 @@
 import { useState, useEffect } from "react";
 
-import { CoinHistory } from "models/Coin";
+import { CoinHistory, GraphicPeriod } from "models/Coin";
 
 import Graphic from "components/general/Graphic/Graphic";
 import Select from "components/general/Select/Select";
 
 import { priceToNumber } from "logic/utils/Helper";
-import coinCapController from "logic/storage/CoinCapController";
 
 import styles from "components/GraphicCard/GraphicCard.module.scss";
 
-enum GraphicPeriod {
-  d1 = "d1",
-  w1 = "w1",
-  m1 = "m1",
-}
-
 interface GraphicCardProps {
   coinId: string;
+  coinHistory: CoinHistory[];
+  reloadCoinHistory: (
+    coinId: string,
+    graphicPeriod: GraphicPeriod
+  ) => void;
 }
 
-export default function GraphicCard({ coinId }: GraphicCardProps) {
+export default function GraphicCard({
+  coinId,
+  coinHistory,
+  reloadCoinHistory,
+}: GraphicCardProps) {
   const [graphicPeriod, setGraphicPeriod] = useState<GraphicPeriod>(
     GraphicPeriod.d1,
   );
-
-  const [coinHistory, setCoinHistory] = useState<CoinHistory[]>([]);
 
   function updateGraphicPeriod(newPeriod: string) {
     switch (newPeriod) {
@@ -47,64 +47,18 @@ export default function GraphicCard({ coinId }: GraphicCardProps) {
     }
   }
 
-  function getDateDayAgo(startDate: Date) {
-    const endDate = startDate;
-    endDate.setDate(startDate.getDate() - 1);
-    return endDate;
-  }
-
-  function getDateWeekAgo(startDate: Date) {
-    const endDate = startDate;
-    endDate.setDate(startDate.getDay() - 7);
-    return endDate;
-  }
-
-  function getDateMonthAgo(startDate: Date) {
-    const endDate = startDate;
-    endDate.setMonth(startDate.getMonth() - 1);
-    return endDate;
-  }
-
-  async function loadCoinHistory(coinId: string, graphicPeriod: GraphicPeriod) {
-    const graphicInterval =
-      graphicPeriod === GraphicPeriod.m1
-        ? "d1"
-        : graphicPeriod === GraphicPeriod.w1
-          ? "h12"
-          : graphicPeriod === GraphicPeriod.d1
-            ? "m30"
-            : "m30";
-
-    const [startDate, endDate] =
-      graphicPeriod === GraphicPeriod.m1
-        ? [getDateMonthAgo(new Date()), new Date()]
-        : graphicPeriod === GraphicPeriod.w1
-          ? [getDateWeekAgo(new Date()), new Date()]
-          : graphicPeriod === GraphicPeriod.d1
-            ? [getDateDayAgo(new Date()), new Date()]
-            : [getDateDayAgo(new Date()), new Date()];
-
-    const data = await coinCapController.getCoinHistory(
-      coinId,
-      graphicInterval,
-      endDate,
-      startDate,
-    );
-    setCoinHistory(data);
-  }
-
   const graphicPeriodSelect: GraphicPeriod[] = [
     GraphicPeriod.d1,
     GraphicPeriod.w1,
     GraphicPeriod.m1,
   ];
 
-  const c = coinHistory.map((value: CoinHistory) => {
+  const chartData = coinHistory.map((value: CoinHistory) => {
     const unformattedPrice = priceToNumber(value.priceUsd);
     return unformattedPrice;
   });
 
-  const l = coinHistory.map((value: CoinHistory) => {
+  const labels = coinHistory.map((value: CoinHistory) => {
     function formatTimeValue(value: number) {
       return value < 10 ? `0${value}` : `${value}`;
     }
@@ -123,7 +77,7 @@ export default function GraphicCard({ coinId }: GraphicCardProps) {
   });
 
   useEffect(() => {
-    loadCoinHistory(coinId, graphicPeriod);
+    reloadCoinHistory(coinId, graphicPeriod)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graphicPeriod]);
 
@@ -138,7 +92,7 @@ export default function GraphicCard({ coinId }: GraphicCardProps) {
           onChange={updateGraphicPeriod}
         />
       </header>
-      <Graphic chartData={c} labels={l} />
+      <Graphic chartData={chartData} labels={labels} />
     </section>
   );
 }

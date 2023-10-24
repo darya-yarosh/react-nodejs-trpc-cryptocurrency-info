@@ -129,3 +129,21 @@ export function sortCoinList(
       return coinList;
   }
 }
+
+export function getDateDayAgo(startDate: Date) {
+  const endDate = startDate;
+  endDate.setDate(startDate.getDate() - 1);
+  return endDate;
+}
+
+export function getDateWeekAgo(startDate: Date) {
+  const endDate = startDate;
+  endDate.setDate(startDate.getDay() - 7);
+  return endDate;
+}
+
+export function getDateMonthAgo(startDate: Date) {
+  const endDate = startDate;
+  endDate.setMonth(startDate.getMonth() - 1);
+  return endDate;
+}

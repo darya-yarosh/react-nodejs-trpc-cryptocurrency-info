@@ -41,3 +41,9 @@ export interface CoinHistory {
   time: number;
   date: Date;
 }
+
+export enum GraphicPeriod {
+  d1 = "d1",
+  w1 = "w1",
+  m1 = "m1",
+}

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Coin from "models/Coin";
 
@@ -6,9 +6,8 @@ import Icon from "components/general/Icon/Icon";
 import BuyCoinButton from "components/BuyCoinButton/BuyCoinButton";
 import FavoriteButton from "components/FavoriteButton/FavoriteButton";
 
+import coinCapController from 'logic/storage/CoinCapController';
 import { formatPrice, priceToNumber } from "logic/utils/Helper";
-
-import { Context as CoinsContext } from "providers/coins";
 
 import styles from "components/FavoriteCoin/FavoriteCoin.module.scss";
 
@@ -19,9 +18,15 @@ interface FavoriteCoinProps {
 export default function FavoriteCoin({
   id
 }: FavoriteCoinProps) {
-  const coins = useContext(CoinsContext).data;
+  const [coin, setCoin] = useState<Coin>();
 
-  const coin = coins.find((c) => c.id === id);
+  useEffect(()=>{
+    async function loadCoin(coinId: Coin['id']) {
+      await coinCapController.getCoinById(coinId).then(loadedCoin=>setCoin(loadedCoin));
+    }
+
+    loadCoin(id);
+  }, [])
 
   if (!coin) return null;
 

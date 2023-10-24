@@ -20,25 +20,11 @@
   --filter-first: var(--filter-white);
   --filter-second: var(--filter-black);
   --filter-third: var(--filter-yellow);
-}
 
-$color-bg: var(--color-bg);
-$color-first: var(--color-first);
-$color-second: var(--color-second);
-$color-third: var(--color-third);
-$color-font: var(--color-font);
-$shadow-object: var(--shadow-object);
-$shadow-modal: var(--shadow-modal);
-$color-positive: var(--color-positive);
-$color-negative: var(--color-negative);
-
-$filter-first: var(--filter-first);
-$filter-second: var(--filter-second);
-$filter-third: var(--filter-third);
-$box-shadow: 0px 0px 4px 0px black;
-
-$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  --box-shadow: 0px 0px 4px 0px black;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
 
 .app {
   position: absolute;
@@ -47,8 +33,8 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   min-height: 100%;
   width: 100%;
 
-  background-color: $color-bg;
-  color: $color-second;
+  background-color: var(--color-bg);
+  color: var(--color-second);
 }
 
 .app__wrapper {
@@ -60,5 +46,5 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   margin: auto;
   padding: 20px 24px;
 
-  font-family: $font-family;
+  font-family: var(--font-family);
 }

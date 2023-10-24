@@ -1,5 +1,3 @@
-@import "App";
-
 .wrapper {
   display: grid;
   justify-items: center;
@@ -12,20 +10,19 @@
   overflow-x: auto;
   white-space: nowrap;
   width: 100%;
-  //width: min-content;
-  background-color: $color-second;
-  border: 4px solid $color-second;
+  background-color: var(--color-second);
+  border: 4px solid var(--color-second);
   border-radius: 8px;
   padding: 0px 4px;
 
-  box-shadow: $box-shadow;
+  box-shadow: var(--box-shadow);
 
   transition: all 1s ease-out 0.5s;
 }
 
 .tbody {
   gap: 4px;
-  color: $color-font;
+  color: var(--color-font);
   font-weight: 500;
 }
 
@@ -34,7 +31,7 @@ th,
 td {
   text-align: center;
   vertical-align: middle;
-  color: $color-font;
+  color: var(--color-font);
   font-weight: 500;
 }
 
@@ -43,7 +40,7 @@ tr {
   grid-template-columns: 2fr 3fr 2fr 4fr 7fr 8fr 6fr 3fr;
   grid-template-columns: 3fr 3fr 2fr 6fr 9fr 10fr 8fr 4fr;
 
-  border-bottom: 2px solid $color-third;
+  border-bottom: 2px solid var(--color-third);
 }
 
 .tbody tr:last-child {
@@ -94,7 +91,7 @@ td:last-child {
   margin: 0;
   
   font-weight: 500;
-  color: $color-font;
+  color: var(--color-font);
 }
 
 .columnName__withSort {
@@ -113,11 +110,11 @@ td:last-child {
 }
 
 .columnName__withSort:hover span:first-child {
-  text-shadow: 1px 1px 0px $color-third !important;
+  text-shadow: 1px 1px 0px var(--color-third) !important;
 }
 
 .columnName__withSort:hover span:last-child {
-  filter: $filter-third;
+  filter: var(--filter-third);
 }
 
 @media (max-width: 800px) {

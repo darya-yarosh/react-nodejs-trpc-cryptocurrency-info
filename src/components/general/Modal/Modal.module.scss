@@ -1,5 +1,3 @@
-@import "App";
-
 .wrapper {
   position: fixed;
   padding: 16px;
@@ -12,7 +10,7 @@
   position: absolute;
   inset: 0;
 
-  background: $shadow-modal;
+  background: var(--shadow-modal);
   backdrop-filter: blur(2px);
 }
 

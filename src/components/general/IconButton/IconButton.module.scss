@@ -1,8 +1,3 @@
-@import "App";
-
-$button-bg: $color-first;
-$button-border: $color-third;
-
 .wrapper {
   display: flex;
   justify-content: center;
@@ -15,22 +10,22 @@ $button-border: $color-third;
 }
 
 .wrapper:hover {
-  color: $button-bg;
+  color: var(color-first);
 }
 
 .icon {
   display: block;
   margin: 0;
 
-  filter: $filter-second;
+  filter: var(--filter-second);
   cursor: pointer;
   transition: all 0.1s;
 }
 
 .wrapper:hover .icon {
-  filter: $filter-third;
+  filter: var(--filter-third);
 }
 
 .wrapper:active .icon {
-  filter: $filter-second;
+  filter: var(--filter-second);
 }

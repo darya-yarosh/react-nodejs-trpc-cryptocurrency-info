@@ -1,10 +1,8 @@
-@import "App";
-
 .wrapper {
   display: flex;
   justify-content: center;
 
-  background-color: $color-second;
+  background-color: var(--color-second);
 
   position: relative;
   height: 40vh;

@@ -1,34 +1,32 @@
-@import "App";
-
 .wrapper {
   display: flex;
   justify-content: space-around;
   height: 54px;
   height: 36px;
-  background-color: $color-second;
-  border: 2px solid $color-second;
+  background-color: var(--color-second);
+  border: 2px solid var(--color-second);
   border-radius: 8px;
-  box-shadow: $box-shadow;
+  box-shadow: var(--box-shadow);
 }
 
 .input {
   width: 100%;
   padding: 4px;
 
-  font-family: $font-family;
+  font-family: var(--font-family);
   font-size: 1.2rem;
 
-  color: $color-font;
-  background-color: $color-second;
-  border: 4px solid $color-second;
+  color: var(--color-font);
+  background-color: var(--color-second);
+  border: 4px solid var(--color-second);
   border-radius: 4px;
 }
 
 .input::placeholder {
   font-style: italic;
-  color: $color-first;
+  color: var(--color-first);
   opacity: 0.5;
-  border-color: $color-third;
+  border-color: var(--color-third);
 }
 
 .icon {

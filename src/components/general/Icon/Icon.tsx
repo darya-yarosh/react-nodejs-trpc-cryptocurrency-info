@@ -15,20 +15,20 @@ export default function Icon({
 }: IconProps) {
     const [logoSrc, setLogoSrc] = useState<string>(iconSVG);
     
-    const wrapperSize = `${sizePX+8}px`;
+    const wrapperSize = `${sizePX + 8}px`;
     const iconSize = `${sizePX}px`;
 
     function setDefaultLogoSrc() {
-        setLogoSrc('images/imgNotFound.svg')
-      }
+        setLogoSrc('/images/imgNotFound.svg')
+    }
 
-    return <div 
-        className={styles.wrapper} 
+    return <div
+        className={styles.wrapper}
         style={{
             width: wrapperSize,
             height: wrapperSize,
         }}>
-            <img 
+        <img
             className={styles.icon}
             onError={setDefaultLogoSrc}
             src={logoSrc}

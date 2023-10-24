@@ -9,15 +9,22 @@
   border-radius: 4px;
 }
 
-.wrapper :last-child {
-  margin-left: auto;
-}
-
 .buyButton {
+  width: 60px;
+  margin-left: auto;
+
+  font-size: 1rem;
+
   visibility: hidden;
-  width: initial;
 }
 
 .wrapper:hover .buyButton {
   visibility: visible;
+}
+
+@media (max-width: 600px) {
+  .buyButton {
+    font-size: 0.8rem;
+    width: 50px;
+  }
 }

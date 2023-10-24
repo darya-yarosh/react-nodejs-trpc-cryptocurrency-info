@@ -89,13 +89,13 @@ export default function TransactionForm({
 
   return (
     <form className={styles.wrapper}>
-      <header>
+      <header className={styles.header}>
         <IconButton
           iconSVG="/images/buttons/return.svg"
           caption="Go back"
           onClick={navigateBack}
         />
-        <h1>Add transaction</h1>
+        <h1 className={styles.title}>Add transaction</h1>
       </header>
       <section className={styles.section}>
         <label>Coin</label>

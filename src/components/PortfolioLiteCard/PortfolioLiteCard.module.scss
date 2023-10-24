@@ -24,6 +24,17 @@
   color: grey;
 }
 
+.values {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.diff {
+  display: flex;
+  gap: 4px;
+}
+
 .spentAmount,
 .diff {
   font-size: 1rem;
@@ -34,4 +45,27 @@
 .spentAmount,
 .diff {
   cursor: pointer;
+}
+
+
+@media (max-width: 800px) {
+  .diff {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 450px) {
+  .wrapper {
+    flex: auto;
+    max-width: none;
+    width: inherit;
+  }
+  .values {
+    flex-direction: row;
+    gap: 8px;
+  }
+  .diff {
+    flex-direction: row;
+    gap: 8px;
+  }
 }

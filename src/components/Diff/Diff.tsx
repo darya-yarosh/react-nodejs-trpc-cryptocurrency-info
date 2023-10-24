@@ -27,11 +27,15 @@ export function Diff({
   ].join(" ");
 
   return (
-    <span className={classNames}>
-      {positive ? "+" : "-"}
+    <p className={classNames}>
+      <span>
+        {positive ? "+" : "-"}
       {formatPrice(Math.abs(difference))}
-      &nbsp; ({positive ? "+" : ""}
-      {percent})
-    </span>
+      </span>
+      <span>
+        ({positive ? "+" : ""}
+        {percent})
+        </span>
+    </p>
   );
 }

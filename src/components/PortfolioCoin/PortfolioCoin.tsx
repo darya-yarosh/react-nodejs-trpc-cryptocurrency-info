@@ -36,7 +36,7 @@ export default function PortfolioCoin({
   return (
     <div className={styles.wrapper}>
       <div className={styles.logo}>
-        <Icon iconSVG={logoUrl} alt={`${summary.id} icon`} sizePX={25}/>
+        <Icon iconSVG={logoUrl} alt={`${summary.id} icon`} sizePX={25} />
         <span className={styles.coinName}>{coin.name}</span>
         <span className={styles.label}>Amount:</span>
         <span>{summary.amount}</span>
@@ -48,15 +48,17 @@ export default function PortfolioCoin({
           original={summary.moneySpent}
           actual={summary.amount * priceToNumber(coin.priceUsd)}
         />
-        <BuyCoinButton 
+      </div>
+      <div className={styles.navigation}>
+        <BuyCoinButton
           className={styles.buyButton}
           coinId={coin.id} />
-        <RemoveCoinButton 
+        <RemoveCoinButton
           className={styles.removeButton}
           label="Remove"
           coinId={coin.id}
           confirmMessage={`You want to remove all transaction of coin ${coin?.id}. Are you sure?`}
-          onClick={removeCoin}        />
+          onClick={removeCoin} />
       </div>
     </div>
   );

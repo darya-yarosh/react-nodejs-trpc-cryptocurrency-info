@@ -5,7 +5,16 @@
 
   border: 1px gray solid;
   border-radius: 4px;
-  padding: 8px;
+}
+
+.logo {
+  margin: 8px;
+  margin-bottom: 0px;
+}
+
+.price {
+  margin:8px;
+  margin-top: 0px;
 }
 
 .logo,
@@ -26,28 +35,48 @@
   color: grey;
 }
 
+.navigation {
+
+}
+
 .buyButton {
   display: none;
   position: absolute;
-  width: 60px;
+  width: 80px;
   
   top: 50%;
+  top: 28%;
   right: 100px;
+  right: 10px;
   
+  font-size: 1rem;
   transform: translateY(-50%);
 }
 
 .removeButton {
-  display: block;
+  display: none;
   position: absolute;
-  width: auto;
+  width: 80px;
   
   top: 50%;
+  top: 72%;
   right: 10px;
   
+  font-size: 1rem;
   transform: translateY(-50%);
 }
 
 .wrapper:hover .buyButton {
   display: block;
+}
+
+.wrapper:hover .removeButton {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .buyButton, .removeButton {
+    font-size: 0.8rem;
+    width: 60px;
+  }
 }

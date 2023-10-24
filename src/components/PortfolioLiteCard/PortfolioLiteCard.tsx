@@ -43,12 +43,14 @@ export default function PortfolioLiteCard() {
     <section className={styles.wrapper}
       onClick={handleNavigateToPortfolioClick}>
       <label className={styles.label}>My Portfolio</label>
-      <span className={styles.spentAmount}>{formatPrice(spentAmount)}</span>
-      <Diff
-        className={styles.diff}
-        original={spentAmount}
-        actual={actualPrice}
-      />
+      <div className={styles.values}>
+        <span className={styles.spentAmount}>{formatPrice(spentAmount)}</span>
+        <Diff
+          className={styles.diff}
+          original={spentAmount}
+          actual={actualPrice}
+        />
+      </div>
     </section>
   );
 }

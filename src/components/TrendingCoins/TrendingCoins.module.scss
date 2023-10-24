@@ -2,13 +2,13 @@
 
 .wrapper {
   display: flex;
+  flex-direction: column;
   justify-items: center;
   align-items: center;
   gap: 12px;
 }
 
 .title {
-  width: min-content;
   margin: 0;
 }
 
@@ -45,7 +45,12 @@
 @media (max-width: 800px) {
   .wrapper {
     flex-direction: column;
+    width: inherit;
   }
+
+.coinList {
+  width: inherit;
+}
 
   .title {
     width: auto;
@@ -66,6 +71,6 @@
   }
 
   .coin__info {
-    font-size: 12px;
+    font-size: 1rem;
   }
 }

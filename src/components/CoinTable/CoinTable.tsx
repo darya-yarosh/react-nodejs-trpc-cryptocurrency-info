@@ -37,7 +37,7 @@ export default function CoinTable({
   );
 
   return (
-    <div className={styles.table__wrapper}>
+    <div className={styles.wrapper}>
       <table className={styles.table}>
         <tbody className={styles.tbody}>
           <tr>

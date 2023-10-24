@@ -18,13 +18,13 @@ export default function TrendingCoins({ coinList }: TrendingCoinsProps) {
             <div key={coin.id} className={styles.coin}>
               <p className={styles.coin__info}>{coin.rank}</p>
               <p className={styles.coin__info}>{coin.symbol}</p>
-              <p className={styles.coin__info}>
+              <div className={styles.coin__info}>
                 <Icon
                   iconSVG={`${coin.logo}`}
                   alt={`${coin.id} icon`}
                   sizePX={25}
                 />
-              </p>
+              </div>
               <p className={styles.coin__info}>{coin.name}</p>
               <p className={styles.coin__info}>{coin.priceUsd}</p>
             </div>

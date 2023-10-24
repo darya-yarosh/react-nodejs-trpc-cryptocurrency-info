@@ -1,5 +1,6 @@
 import { useContext, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+
+import Coin from "models/Coin";
 
 import { formatPrice } from "logic/utils/Helper";
 import {
@@ -18,16 +19,20 @@ import PortfolioCoin from "components/PortfolioCoin/PortfolioCoin";
 
 import styles from "components/PortfolioCard/PortfolioCard.module.scss";
 
-export default function PortfolioCard() {
-  const navigate = useNavigate();
+interface PortfolioCardProps {
+  isLoading: boolean;
+  favoriteCoins: Coin[];
+  navigateBack: () => void;
+}
 
+export default function PortfolioCard({
+  isLoading,
+  favoriteCoins,
+  navigateBack
+}: PortfolioCardProps) {
   const coins = useContext(CoinsContext).data;
   const portfolio = useContext(PortfolioContext).data;
   const { removeCoinTransactions } = useContext(PortfolioContext);
-  
-  function navigateBack() {
-    navigate(-1);
-  }
 
   const spentAmount = useMemo(() => getSpentAmount(portfolio), [portfolio]);
 
@@ -69,14 +74,14 @@ export default function PortfolioCard() {
             <PortfolioCoin
               key={coin.id}
               summary={coin}
-              removeCoin={removeCoinTransactions}/>
+              removeCoin={removeCoinTransactions} />
           ))}
         </section>
         <section className={styles.favoritesList}>
           <label className={styles.favoritesList__label}>Favorites</label>
-          {portfolio.favorites.length === 0 && <span>Empty</span>}
-          {portfolio.favorites.map((favorite) => (
-            <FavoriteCoin key={favorite} id={favorite} />
+          {favoriteCoins.length === 0 && <span>Empty</span>}
+          {favoriteCoins.map((favorite) => (
+            <FavoriteCoin key={favorite.id} coin={favorite} isDisabledButton={isLoading} />
           ))}
         </section>
       </div>

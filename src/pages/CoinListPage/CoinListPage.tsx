@@ -32,7 +32,7 @@ export default function CoinListPage() {
     async function loadCoinOfPage(pageInd: number) {
 
       const filter = searchFilter === "" ? undefined : searchFilter;
-      await coinCapController.getCoinList(filter, pageInd * COINS_PER_PAGE, COINS_PER_PAGE).then((loadedCoins) => {
+      await coinCapController.getCoinList(filter, undefined, pageInd * COINS_PER_PAGE, COINS_PER_PAGE).then((loadedCoins) => {
         setCoins(loadedCoins);
       });
     }
@@ -49,7 +49,7 @@ export default function CoinListPage() {
      * @returns A list of three popular coins.
      */
     async function getTopThreeTrendingCoins() {
-      const trendingList = await coinCapController.getCoinList(undefined, 0, 3);
+      const trendingList = await coinCapController.getCoinList(undefined, undefined, 0, 3);
       return trendingList;
     };
 

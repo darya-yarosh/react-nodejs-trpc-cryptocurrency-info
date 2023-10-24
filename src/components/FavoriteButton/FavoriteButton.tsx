@@ -8,9 +8,13 @@ import { Context as PortfolioContext } from "providers/portfolio";
 
 interface FavoriteButtonProps {
   coinId: Coin["id"];
+  disabled?: boolean;
 }
 
-export default function FavoriteButton({ coinId }: FavoriteButtonProps) {
+export default function FavoriteButton({
+  coinId,
+  disabled = false,
+}: FavoriteButtonProps) {
   const {
     data: portfolio,
     addFavorite,
@@ -21,11 +25,10 @@ export default function FavoriteButton({ coinId }: FavoriteButtonProps) {
 
   function handleClick(event: React.MouseEvent) {
     event.preventDefault();
-
     if (isFavorite) {
-      removeFavorite(coinId);
+      removeFavorite(coinId)
     } else {
-      addFavorite(coinId);
+      addFavorite(coinId)
     }
   }
 
@@ -39,6 +42,7 @@ export default function FavoriteButton({ coinId }: FavoriteButtonProps) {
       }
       sizePX={25}
       onClick={handleClick}
+      disabled={disabled}
     />
   );
 }

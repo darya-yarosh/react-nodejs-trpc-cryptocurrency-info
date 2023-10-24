@@ -5,6 +5,7 @@ interface IconButtonProps {
   caption: string;
   onClick: (event: React.MouseEvent) => void;
   sizePX?: number;
+  disabled?: boolean;
 }
 
 export default function IconButton({
@@ -12,8 +13,9 @@ export default function IconButton({
   caption,
   onClick,
   sizePX = 25,
+  disabled = false
 }: IconButtonProps) {
-  const wrapperSize = `${sizePX+8}px`;
+  const wrapperSize = `${sizePX + 8}px`;
   const iconSize = `${sizePX}px`;
 
   return (
@@ -22,6 +24,7 @@ export default function IconButton({
       onClick={onClick}
       type="button"
       style={{ width: wrapperSize, height: wrapperSize }}
+      disabled={disabled}
     >
       <img
         className={styles.icon}

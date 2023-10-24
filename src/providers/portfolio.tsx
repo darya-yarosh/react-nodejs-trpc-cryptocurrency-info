@@ -9,23 +9,23 @@ import PortfolioController from "logic/storage/UserPortfolioController";
 export const Context = createContext<PortfolioContext>({
   loading: false,
   data: emptyPortfolio,
-  addFavorite: () => {},
-  removeFavorite: () => {},
-  addTransaction: () => {},
-  removeCoinTransactions: () => {},
+  addFavorite: async () => { },
+  removeFavorite: async () => { },
+  addTransaction: async () => { },
+  removeCoinTransactions: async () => { },
 });
 
 interface PortfolioContext {
   loading: boolean;
   data: Portfolio;
-  addFavorite: (id: Coin["id"]) => void;
-  removeFavorite: (id: Coin["id"]) => void;
+  addFavorite: (id: Coin["id"]) => Promise<void>;
+  removeFavorite: (id: Coin["id"]) => Promise<void>;
   addTransaction: (
     coinId: Coin["id"],
     coinPrice: number,
     coinAmount: number,
-  ) => void;
-  removeCoinTransactions: (id: Coin["id"]) => void;
+  ) => Promise<void>;
+  removeCoinTransactions: (id: Coin["id"]) => Promise<void>;
 }
 
 export default function PortfolioProvider({
@@ -34,24 +34,35 @@ export default function PortfolioProvider({
   const [data, setData] = useState<Portfolio>(emptyPortfolio);
   const [loading, setLoading] = useState<boolean>(true);
 
-  function addFavorite(id: Coin["id"]) {
-    PortfolioController.addFavorite(id)
+  async function addFavorite(id: Coin["id"]) {
+    if (loading) return;
+
+    setLoading(true);
+    setTimeout(() => PortfolioController.addFavorite(id)
       .then((portfolio) => setData(portfolio))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false)));
   }
 
-  function removeFavorite(id: Coin["id"]) {
-    PortfolioController.removeFavorite(id)
+  async function removeFavorite(id: Coin["id"]) {
+    if (loading) return;
+
+    setLoading(true);
+    setTimeout(() => PortfolioController.removeFavorite(id)
       .then((portfolio) => setData(portfolio))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false))
+    );
   }
 
-  function addTransaction(
+  async function addTransaction(
     coinId: Coin["id"],
     coinPrice: number,
     coinCount: number,
   ) {
-    PortfolioController.addTransaction(coinId, coinPrice, coinCount)
+    if (loading) return;
+
+    setTimeout(() => PortfolioController.addTransaction(coinId, coinPrice, coinCount)
       .then((portfolio) => {
         setData(portfolio);
         setTimeout(() => {
@@ -60,13 +71,17 @@ export default function PortfolioProvider({
           );
         })
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false))
+    );
   }
 
-  function removeCoinTransactions(
+  async function removeCoinTransactions(
     coinId: Coin['id']
   ) {
-    PortfolioController.removeCoinTransactions(coinId)
+    if (loading) return;
+
+    setTimeout(() => PortfolioController.removeCoinTransactions(coinId)
       .then((portfolio) => {
         setData(portfolio);
         setTimeout(() => {
@@ -75,7 +90,9 @@ export default function PortfolioProvider({
           )
         });
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false))
+    );
   }
 
   useEffect(() => {

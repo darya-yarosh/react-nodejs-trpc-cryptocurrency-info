@@ -22,6 +22,7 @@ export default function CoinPage() {
     if (params.id !== undefined) {
       loadCoin(params.id);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!coin) return null;

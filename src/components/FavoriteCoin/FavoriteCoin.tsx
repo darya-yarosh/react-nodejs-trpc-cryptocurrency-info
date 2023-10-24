@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Coin from "models/Coin";
 
@@ -26,6 +26,7 @@ export default function FavoriteCoin({
     }
 
     loadCoin(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!coin) return null;

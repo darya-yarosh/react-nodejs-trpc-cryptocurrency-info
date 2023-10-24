@@ -1,12 +1,12 @@
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-import { Context as CoinsContext } from "providers/coins";
 
 import Coin from "models/Coin";
 
 import TextCard from "components/TextCard/TextCard";
 import GraphicCard from "components/GraphicCard/GraphicCard";
+
+import coinCapController from "logic/storage/CoinCapController";
 
 import styles from "pages/CoinPage/CoinPage.module.scss";
 
@@ -14,8 +14,15 @@ export default function CoinPage() {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { data: coins } = useContext(CoinsContext);
-  const coin: Coin | undefined = coins.find((c) => c.id === params.id);
+  const [coin, setCoin] = useState<Coin>();
+  useEffect(() => {
+    async function loadCoin(coinId: Coin['id']) {
+      await coinCapController.getCoinById(coinId).then(loadedCoin => setCoin(loadedCoin));
+    }
+    if (params.id !== undefined) {
+      loadCoin(params.id);
+    }
+  }, [])
 
   if (!coin) return null;
 

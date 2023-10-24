@@ -1,5 +1,4 @@
 import { useContext, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import Coin from "models/Coin";
 
@@ -7,24 +6,29 @@ import Button from "components/general/Button/Button";
 import Select from "components/general/Select/Select";
 import IconButton from "components/general/IconButton/IconButton";
 
-import { formatPrice, priceToNumber } from "logic/utils/Helper";
+import { formatPrice, priceToNumber, supplyToNumber } from "logic/utils/Helper";
 
 import { Context as CoinsContext } from "providers/coins";
-import { Context as PortfolioContext } from "providers/portfolio";
 
 import styles from "components/TransactionForm/TransactionForm.module.scss";
 
 interface TransactionFormProps {
   defaultCoinId?: Coin["id"];
+  navigateBack: ()=>void;
+  submit: (
+    selectedCoinId: Coin['id'],
+    priceUsd: Coin['priceUsd'],
+    quantity: number
+  ) => void;
 }
 
 export default function TransactionForm({
   defaultCoinId,
+  navigateBack,
+  submit,
 }: TransactionFormProps) {
-  const navigate = useNavigate();
 
   const { data: coins } = useContext(CoinsContext);
-  const { addTransaction } = useContext(PortfolioContext);
 
   const defaultCoin = coins.find((c) => c.id === defaultCoinId);
 
@@ -32,10 +36,6 @@ export default function TransactionForm({
     defaultCoin ? defaultCoin.name : (coins[0] || {}).name,
   );
   const [quantity, setQuantity] = useState<number>(1);
-
-  function navigateBack() {
-    navigate(-1);
-  }
 
   function handleQuantityChange(event: React.ChangeEvent<HTMLInputElement>) {
     setQuantity(Number(event.target.value));
@@ -46,12 +46,7 @@ export default function TransactionForm({
 
     if (!selectedCoin) return;
 
-    addTransaction(
-      selectedCoin.id,
-      priceToNumber(selectedCoin.priceUsd),
-      quantity,
-    );
-    navigateBack();
+    submit(selectedCoin.id, selectedCoin.priceUsd, quantity);
   }
 
   useEffect(
@@ -83,7 +78,7 @@ export default function TransactionForm({
     () =>
       quantity > 0 &&
       selectedCoin &&
-      quantity <= (Number(selectedCoin?.maxSupply) ?? Infinity),
+      quantity <= (supplyToNumber(selectedCoin?.maxSupply, selectedCoin?.symbol) ?? Infinity),
     [quantity, selectedCoin],
   );
 

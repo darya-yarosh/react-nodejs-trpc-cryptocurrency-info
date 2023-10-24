@@ -16,6 +16,10 @@ export function percentToNumber(percent: string) {
   return Number(percent.replace("%", ""));
 }
 
+export function supplyToNumber(supply: string, symbol: Coin['symbol']) {
+  return Number(supply.replace(symbol, "").replaceAll(",", ""))
+}
+
 export function formatPrice(price: number) {
   const priceDecimalStr = String(price).split(".");
 

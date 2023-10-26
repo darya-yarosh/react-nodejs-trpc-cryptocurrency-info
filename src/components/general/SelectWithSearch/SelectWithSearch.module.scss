@@ -1,0 +1,45 @@
+.wrapper {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: inherit;
+}
+
+.input {
+  width: 100%;
+}
+
+.optionList__visible {
+  display: block;
+  position: absolute;
+  top: 29.2px;
+
+  width: 100%;
+  max-height: 100px;
+  overflow: auto;
+
+  background-color: lightgray;
+}
+
+.optionList__hidden {
+  display: none;
+}
+
+.option {
+  padding: 0px 4px;
+  display: block;
+  cursor: pointer;
+
+  background: none;
+  border: none;
+  width: inherit;
+  text-align: inherit;
+}
+
+.option:hover {
+  background-color: gray;
+}
+
+.option:active {
+  color: white;
+}

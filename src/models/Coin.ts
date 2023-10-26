@@ -27,7 +27,7 @@ export const CoinLabels = {
   navigation: "Add in Portfolio",
   marketCap: "Market Cap",
   supply: "Supply",
-  maxSupply: "MaxSupply",
+  maxSupply: "Max supply",
 };
 
 export interface StorageCoinHistory {

@@ -1,20 +1,21 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import Coin from "models/Coin";
 
 import Button from "components/general/Button/Button";
-import Select from "components/general/Select/Select";
 import IconButton from "components/general/IconButton/IconButton";
+import SelectWithSearch from "components/general/SelectWithSearch/SelectWithSearch";
 
-import { formatPrice, priceToNumber, supplyToNumber } from "logic/utils/Helper";
-
-import { Context as CoinsContext } from "providers/coins";
+import { formatPrice, formatSupply, priceToNumber, supplyToNumber } from "logic/utils/Helper";
 
 import styles from "components/TransactionForm/TransactionForm.module.scss";
 
 interface TransactionFormProps {
-  defaultCoinId?: Coin["id"];
-  navigateBack: ()=>void;
+  coins: Coin[];
+  searchCoinName: string;
+  selectedCoin?: Coin;
+  onChangeSearchFilter: (newFilter: string) => void;
+  navigateBack: () => void;
   submit: (
     selectedCoinId: Coin['id'],
     priceUsd: Coin['priceUsd'],
@@ -23,19 +24,21 @@ interface TransactionFormProps {
 }
 
 export default function TransactionForm({
-  defaultCoinId,
+  coins,
+  searchCoinName,
+  selectedCoin: defaultCoin,
+  onChangeSearchFilter,
   navigateBack,
   submit,
 }: TransactionFormProps) {
-
-  const { data: coins } = useContext(CoinsContext);
-
-  const defaultCoin = coins.find((c) => c.id === defaultCoinId);
-
   const [selectedCoinName, setSelectedCoinName] = useState<Coin["name"]>(
     defaultCoin ? defaultCoin.name : (coins[0] || {}).name,
   );
   const [quantity, setQuantity] = useState<number>(1);
+
+  function changeSelectedCoin(coinName: string) {
+    setSelectedCoinName(coinName);
+  }
 
   function handleQuantityChange(event: React.ChangeEvent<HTMLInputElement>) {
     setQuantity(Number(event.target.value));
@@ -49,38 +52,33 @@ export default function TransactionForm({
     submit(selectedCoin.id, selectedCoin.priceUsd, quantity);
   }
 
-  useEffect(
-    () => {
-      if (defaultCoin) {
-        const defaultCoin = coins.find((c) => c.id === defaultCoinId);
-        if (defaultCoin) {
-          setSelectedCoinName(defaultCoin.name);
-        }
-      } else {
-        setSelectedCoinName((coins[0] || {}).name);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [coins],
-  );
+  const coinsNameList: string[] = useMemo(() =>
+    coins.map(coin => coin.name)
+    , [coins]);
 
-  const selectedCoin = useMemo(
-    () => coins.find((c) => c.name === selectedCoinName),
-    [coins, selectedCoinName],
-  );
+  const selectedCoin = useMemo(() =>
+    coins.find((c) => c.name === (selectedCoinName))
+    , [coins, selectedCoinName]);
 
-  const totalPrice = useMemo(
-    () => priceToNumber(selectedCoin?.priceUsd || "") * quantity,
+  const totalPrice = useMemo(() =>
+    priceToNumber(selectedCoin?.priceUsd || "") * quantity,
     [quantity, selectedCoin?.priceUsd],
   );
 
-  const isValid = useMemo(
-    () =>
-      quantity > 0 &&
-      selectedCoin &&
-      quantity <= (supplyToNumber(selectedCoin?.maxSupply, selectedCoin?.symbol) ?? Infinity),
+  const supply = selectedCoin ? supplyToNumber(selectedCoin.supply, selectedCoin.symbol) : Infinity;
+
+  const isValid = useMemo(() =>
+    selectedCoin
+    && quantity > 0
+    && quantity <= supply,
     [quantity, selectedCoin],
   );
+
+  const buttonTitle = !(quantity > 0 && quantity <= supply)
+    ? `The quantity must be greater than 0 and less than ${formatSupply(supply, selectedCoin?.symbol || "")} (total quantity of asset issued).`
+    : selectedCoin === undefined
+      ? `Please select a coin from the list.`
+      : `Buy ${selectedCoin.name} in the amount of ${quantity} coins for ${formatPrice(totalPrice)} (worth ${selectedCoin.priceUsd} each).`
 
   return (
     <form className={styles.wrapper}>
@@ -94,11 +92,12 @@ export default function TransactionForm({
       </header>
       <section className={styles.section}>
         <label>Coin</label>
-        <Select
-          name="coin"
-          options={coins.map((c) => c.name)}
-          selectedOption={selectedCoinName}
-          onChange={setSelectedCoinName}
+        <SelectWithSearch
+          value={searchCoinName}
+          placeholderValue={"Search cryptocyrrency..."}
+          list={coinsNameList}
+          onSearchChange={onChangeSearchFilter}
+          onOptionSelect={changeSelectedCoin}
         />
       </section>
       <section className={styles.section}>
@@ -109,8 +108,8 @@ export default function TransactionForm({
           type="number"
           required
           max={
-            selectedCoin?.maxSupply !== null
-              ? selectedCoin?.maxSupply
+            selectedCoin?.supply !== null
+              ? selectedCoin?.supply
               : undefined
           }
           min={1}
@@ -127,6 +126,7 @@ export default function TransactionForm({
       </section>
       <Button
         disabled={!isValid}
+        title={buttonTitle}
         type="submit"
         label="Buy"
         onClick={handleSubmit}

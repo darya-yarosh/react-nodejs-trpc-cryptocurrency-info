@@ -1,32 +1,26 @@
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 
 import Coin from "models/Coin";
+import { CoinWithSummary } from "models/Portfolio";
 
 import Icon from "components/general/Icon/Icon";
-import { Diff } from "components/Diff/Diff";
+import Diff from "components/Diff/Diff";
 import BuyCoinButton from "components/BuyCoinButton/BuyCoinButton";
 import RemoveCoinButton from "components/RemoveCoinButton/RemoveCoinButton";
 
-import { CoinSummary } from "logic/utils/PortfolioHelper";
 import { priceToNumber, formatPrice } from "logic/utils/Helper";
-
-import { Context as CoinsContext } from "providers/coins";
 
 import styles from "components/PortfolioCoin/PortfolioCoin.module.scss";
 
 interface PortfolioCoinProps {
-  summary: CoinSummary;
+  coin: CoinWithSummary;
   removeCoin: (coinId: Coin['id']) => void;
 }
 
 export default function PortfolioCoin({
-  summary,
+  coin,
   removeCoin,
 }: PortfolioCoinProps) {
-  const coinsContext = useContext(CoinsContext);
-
-  const coin = coinsContext.data.find((c) => c.id === summary.id);
-
   const logoUrl = useMemo(() => {
     return coin?.logo || "";
   }, [coin?.logo]);
@@ -36,17 +30,17 @@ export default function PortfolioCoin({
   return (
     <div className={styles.wrapper}>
       <div className={styles.logo}>
-        <Icon iconSVG={logoUrl} alt={`${summary.id} icon`} sizePX={25} />
+        <Icon iconSVG={logoUrl} alt={`${coin.id} icon`} sizePX={25} />
         <span className={styles.coinName}>{coin.name}</span>
         <span className={styles.label}>Amount:</span>
-        <span>{summary.amount}</span>
+        <span>{coin.amount}</span>
       </div>
       <div className={styles.price}>
         <span className={styles.label}>Price:</span>
-        <span>{formatPrice(summary.moneySpent)}</span>
+        <span>{formatPrice(coin.moneySpent)}</span>
         <Diff
-          original={summary.moneySpent}
-          actual={summary.amount * priceToNumber(coin.priceUsd)}
+          original={coin.moneySpent}
+          actual={coin.amount * priceToNumber(coin.priceUsd)}
         />
       </div>
       <div className={styles.navigation}>

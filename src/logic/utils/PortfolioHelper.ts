@@ -1,6 +1,6 @@
 import Coin from "models/Coin";
-import { Portfolio } from "models/Portfolio";
 import { Transaction } from "models/Portfolio";
+import { CoinActualPrice, CoinSummary, Portfolio } from "models/Portfolio";
 
 import { priceToNumber } from "logic/utils/Helper";
 
@@ -68,13 +68,3 @@ export function getCoinsActualPrice(
   });
 }
 
-export type CoinSummary = {
-  id: Coin["id"];
-  amount: number;
-  moneySpent: number;
-};
-
-export type CoinActualPrice = {
-  coinId: Coin["id"];
-  price: number;
-};

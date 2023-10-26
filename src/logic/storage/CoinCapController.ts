@@ -69,13 +69,15 @@ class CoinCapController {
     const dataInfo = await apiUrl.json();
 
     const coinList: Coin[] = dataInfo.data.map((storageCoin: StorageCoin) => {
+      const maxSupply = storageCoin.maxSupply === null ? Infinity : storageCoin.maxSupply;
+
       const coin: Coin = {
         id: storageCoin.id,
         rank: Number(storageCoin.rank),
         symbol: storageCoin.symbol,
         name: storageCoin.name,
         supply: formatSupply(storageCoin.supply, storageCoin.symbol),
-        maxSupply: formatSupply(storageCoin.maxSupply, storageCoin.symbol),
+        maxSupply: formatSupply(maxSupply, storageCoin.symbol),
         marketCapUsd: formatMarketCap(storageCoin.marketCapUsd),
         volumeUsd24Hr: formatVolumeUsd24Hr(storageCoin.volumeUsd24Hr),
         priceUsd: formatPrice(storageCoin.priceUsd),

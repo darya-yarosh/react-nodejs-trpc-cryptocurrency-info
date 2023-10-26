@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import Coin from "models/Coin";
@@ -11,14 +11,25 @@ import TrendingCoins from "components/TrendingCoins/TrendingCoins";
 import PortfolioLiteCard from "components/PortfolioLiteCard/PortfolioLiteCard";
 
 import coinCapController from "logic/storage/CoinCapController";
+import { getCoinsActualPrice, mapTransactionsByCoin } from "logic/utils/PortfolioHelper";
+
+import { Context as PortfolioContext } from "providers/portfolio";
 
 import styles from "pages/CoinListPage/CoinListPage.module.scss";
 
 export default function CoinListPage() {
+  const portfolio = useContext(PortfolioContext).data;
+
   const [coinsTopThree, setCoinsTopThree] = useState<Coin[]>([]);
   const [coins, setCoins] = useState<Coin[]>([])
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [searchFilter, setSearchFilter] = useState<string>("");
+  const [portfolioActualPrice, setPortfolioActualPrice] = useState<number>(0);
+
+  const transactionSummaryList = useMemo(
+    () => mapTransactionsByCoin(portfolio.transactionList),
+    [portfolio.transactionList],
+  );
 
   const COINS_PER_PAGE = 10;
   const PAGES_LIMIT = useMemo(() => coins.length / COINS_PER_PAGE, [coins]);
@@ -30,11 +41,10 @@ export default function CoinListPage() {
 
   useEffect(() => {
     async function loadCoinOfPage(pageInd: number) {
-
       const filter = searchFilter === "" ? undefined : searchFilter;
-      await coinCapController.getCoinList(filter, undefined, pageInd * COINS_PER_PAGE, COINS_PER_PAGE).then((loadedCoins) => {
-        setCoins(loadedCoins);
-      });
+      await coinCapController.getCoinList(filter, undefined, pageInd * COINS_PER_PAGE, COINS_PER_PAGE)
+        .then((loadedCoins) => setCoins(loadedCoins))
+        .catch((error) => console.log("error", error));
     }
 
     loadCoinOfPage(pageIndex)
@@ -56,7 +66,27 @@ export default function CoinListPage() {
     getTopThreeTrendingCoins()
       .then((coins) => setCoinsTopThree(coins))
       .catch((error) => console.log("error", error));
-  }, [])
+
+    async function loadActualPrice() {
+      if (portfolio.transactionList.length === 0) {
+        setPortfolioActualPrice(0)
+        return;
+      };
+
+      const coinIdList: string[] = transactionSummaryList.map(transaction =>
+        transaction.id
+      )
+
+      await coinCapController.getCoinList(undefined, coinIdList)
+        .then((coinList => {
+          const coinPrices = getCoinsActualPrice(coinList, transactionSummaryList);
+          const newActualPrice = coinPrices.reduce((total, coin) => total + coin.price, 0);
+          setPortfolioActualPrice(newActualPrice)
+        }))
+    }
+
+    loadActualPrice();
+  }, [portfolio.transactionList.length, transactionSummaryList])
 
   return (
     <div className={styles.wrapper}>
@@ -71,7 +101,9 @@ export default function CoinListPage() {
         </section>
         <section className={styles.header__sectionSecond}>
           <TrendingCoins coinList={coinsTopThree} />
-          <PortfolioLiteCard />
+          <PortfolioLiteCard
+            coins={coins}
+            actualPrice={portfolioActualPrice} />
         </section>
       </header>
       <section className={styles.body}>

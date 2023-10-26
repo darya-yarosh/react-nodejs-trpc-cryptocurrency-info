@@ -8,7 +8,7 @@ interface DiffProps {
   actual: number;
 }
 
-export function Diff({
+export default function Diff({
   className = "",
   original = 0,
   actual = 0,
@@ -30,12 +30,12 @@ export function Diff({
     <p className={classNames}>
       <span>
         {positive ? "+" : "-"}
-      {formatPrice(Math.abs(difference))}
+        {formatPrice(Math.abs(difference))}
       </span>
       <span>
         ({positive ? "+" : ""}
         {percent})
-        </span>
+      </span>
     </p>
   );
 }

@@ -17,7 +17,11 @@ export function percentToNumber(percent: string) {
 }
 
 export function supplyToNumber(supply: string, symbol: Coin['symbol']) {
-  return Number(supply.replace(symbol, "").replaceAll(",", ""))
+  const value = supply.replace(symbol, "").replaceAll(" ", "");
+  
+  if (value === "∞") return Infinity;
+
+  return Number(value.replaceAll(",", ""))
 }
 
 export function formatPrice(price: number) {
@@ -46,10 +50,12 @@ export function formatPrice(price: number) {
 }
 
 export function formatSupply(supply: number, symbol: string) {
+  const value = supply === null ? Infinity : supply;
+  
   return (
     new Intl.NumberFormat("en", {
       maximumFractionDigits: 0,
-    }).format(supply) +
+    }).format(value) +
     " " +
     symbol
   );

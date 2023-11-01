@@ -53,7 +53,6 @@ export default function TransactionPage() {
   async function loadCoinsByFilter(filter: string) {
     await coinCapController.getCoinList(filter)
       .then((loadedCoins) => {
-        console.log(loadedCoins);
         setCoins(loadedCoins)
       })
       .catch((error) => {

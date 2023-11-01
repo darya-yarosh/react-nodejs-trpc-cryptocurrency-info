@@ -71,7 +71,7 @@ export default function TransactionForm({
     selectedCoin
     && quantity > 0
     && quantity <= supply,
-    [quantity, selectedCoin],
+    [quantity, selectedCoin, supply],
   );
 
   const buttonTitle = !(quantity > 0 && quantity <= supply)

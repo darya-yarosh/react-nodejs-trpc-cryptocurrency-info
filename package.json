@@ -1,11 +1,14 @@
 {
-  "name": "tt-cryptocurrency-info",
+  "name": "react-nodejs-trpc-cryptocurrency-info",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tanstack/react-query": "^4.36.1",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@trpc/client": "^10.43.0",
+    "@trpc/react-query": "^10.43.0",
+    "@trpc/server": "^10.43.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.58",
     "@types/react": "^18.2.25",
@@ -23,12 +26,15 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:storybook/recommended"
     ]
   },
   "browserslist": {
@@ -44,7 +50,24 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.5.2",
+    "@storybook/addon-interactions": "^7.5.2",
+    "@storybook/addon-links": "^7.5.2",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.5.2",
+    "@storybook/preset-create-react-app": "^7.5.2",
+    "@storybook/react": "^7.5.2",
+    "@storybook/react-webpack5": "^7.5.2",
+    "@storybook/testing-library": "^0.2.2",
+    "@testing-library/react": "^14.0.0",
+    "babel-plugin-named-exports-order": "^0.0.2",
+    "cypress": "^13.4.0",
+    "eslint-plugin-storybook": "^0.6.15",
+    "jest": "^27.5.1",
     "prettier": "3.0.3",
-    "sass": "^1.69.0"
+    "prop-types": "^15.8.1",
+    "sass": "^1.69.0",
+    "storybook": "^7.5.2",
+    "webpack": "^5.89.0"
   }
 }

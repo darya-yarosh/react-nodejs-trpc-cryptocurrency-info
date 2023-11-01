@@ -2,8 +2,6 @@ import { SortOrder } from "models/Interface";
 
 import Icon from "components/general/Icon/Icon";
 
-import styles from "components/general/SortIcon/Sorticon.module.scss";
-
 interface SortIconProps {
   sortType: string;
   sortOrder: SortOrder;

@@ -66,7 +66,7 @@ export default function TransactionForm({
   );
 
   const supply = selectedCoin ? supplyToNumber(selectedCoin.supply, selectedCoin.symbol) : Infinity;
-
+  
   const isValid = useMemo(() =>
     selectedCoin
     && quantity > 0

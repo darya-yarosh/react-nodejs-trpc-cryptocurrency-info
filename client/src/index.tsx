@@ -17,6 +17,8 @@ import ErrorPage from "pages/ErrorPage/ErrorPage";
 import PortfolioPage from "pages/PortfolioPage/PortfolioPage";
 import TransactionPage from "pages/TransactionPage/TransactionPage";
 
+import App from "App";
+
 import "App.scss";
 import "reset.scss";
 import "index.scss";
@@ -65,6 +67,7 @@ root.render(
         <PortfolioProvider>
           <CoinsProvider>
             <RouterProvider router={router} />
+            <App />
           </CoinsProvider>
         </PortfolioProvider>
       </div>

@@ -1,22 +1,34 @@
 import express from "express";
 import * as trpcExpress from '@trpc/server/adapters/express';
-import { createHTTPServer } from '@trpc/server/adapters/standalone';
 
 import appRouter from "./appRouter";
 
+/**
+ * @param optionsSuccessStatus Provides a status code for successfully resolving OPTIONS requests (for legacy browser support).
+ * @param credential Permission to provide a response to external JavaScript code by browsers.
+ * @param origin A list of sources for which CORS is enabled.
+ */
+const corsOptions = {
+  optionsSuccessStatus: 200,
+  credentials: true,
+  origin: "*",
+};
+
+const cors = require("cors");
+
 const app = express();
+app.use(cors(corsOptions));
+app.use((request, response, next) => {
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 const createContext = ({
   req: request,
   res: response,
 }: trpcExpress.CreateExpressContextOptions) => ({});
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
 app.use(
   '/trpc',
   trpcExpress.createExpressMiddleware({
@@ -27,11 +39,6 @@ app.use(
 
 const PORT = 4000;
 
-const server = createHTTPServer({
-  router: appRouter,
-  
-});
-
-server.listen(PORT);
+app.listen(PORT)
 
 console.log(`Running on PORT ${PORT}`);

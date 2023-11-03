@@ -43,15 +43,29 @@ var trpc = server_1.initTRPC.create();
 var appRouter = trpc.router({
     getCoinList: trpc.procedure
         .input(function (value) {
-        if (typeof value === 'object'
-            && value !== null
-            && value.hasOwnProperty('search')
-            && value.hasOwnProperty('ids')
-            && value.hasOwnProperty('offset')
-            && value.hasOwnProperty('limit')) {
+        var valueAsType = value;
+        var isValidObject = value !== null
+            && typeof value === 'object';
+        var isValidSearch = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('search'))
+            && (valueAsType.search === null
+                || typeof valueAsType.search === 'string');
+        var isValidIds = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('ids'))
+            && (typeof valueAsType.ids === null
+                || typeof valueAsType.ids === 'object');
+        var isValidOffset = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('offset'))
+            && (valueAsType.offset === null
+                || typeof valueAsType.offset === 'number');
+        var isValidLimit = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('limit'))
+            && (valueAsType.limit === null
+                || typeof valueAsType.limit === 'number');
+        if (isValidObject
+            && isValidSearch
+            && isValidIds
+            && isValidOffset
+            && isValidLimit) {
             return value;
         }
-        throw new Error('Input is not a valid object.');
+        throw new Error('Error[getCoinList]: Input is not a valid object.');
     })
         .query(function (opts) { return __awaiter(void 0, void 0, void 0, function () {
         var input, requestOptions, url, apiUrl, dataInfo, coinList;
@@ -60,18 +74,17 @@ var appRouter = trpc.router({
                 case 0:
                     input = opts.input;
                     requestOptions = {
-                        mode: 'no-cors',
                         method: "GET",
                         redirect: "follow",
                     };
                     url = API + "/assets?";
-                    if (input.search !== undefined) {
+                    if (input.search !== null) {
                         url += "search=".concat(input.search, "&");
                     }
-                    if (input.ids !== undefined) {
+                    if (input.ids !== null) {
                         url += "ids=".concat(input.ids.join(), "&");
                     }
-                    if (input.offset !== undefined && input.limit !== undefined) {
+                    if (input.offset !== null && input.limit !== null) {
                         url += "offset=".concat(input.offset, "&limit=").concat(input.limit, "&");
                     }
                     ;
@@ -102,6 +115,6 @@ var appRouter = trpc.router({
                     return [2 /*return*/, coinList];
             }
         });
-    }); })
+    }); }),
 });
 exports.default = appRouter;

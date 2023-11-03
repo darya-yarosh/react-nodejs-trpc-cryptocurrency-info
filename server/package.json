@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@trpc/server": "^10.43.0",
+    "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.16.4",
     "ts-node": "^10.9.1",

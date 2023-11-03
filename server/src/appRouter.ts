@@ -8,6 +8,13 @@ import {
   formatPercent
 } from './logic/helper';
 
+type getCoinListInput = {
+  search: string | null,
+  ids: string[] | null,
+  offset: number | null,
+  limit: number | null
+}
+
 const API = "https://api.coincap.io/v2";
 
 const trpc = initTRPC.create();
@@ -16,33 +23,61 @@ const appRouter = trpc.router({
   getCoinList: trpc.procedure
     .input(
       (value): getCoinListInput => {
-        if (typeof value === 'object'
-          && value !== null
-          && (value as object).hasOwnProperty('search')
-          && (value as object).hasOwnProperty('ids')
-          && (value as object).hasOwnProperty('offset')
-          && (value as object).hasOwnProperty('limit')) {
-          return value;
+        const valueAsType = value as getCoinListInput;
+
+        const isValidObject = value !== null
+          && typeof value === 'object';
+
+        const isValidSearch = value?.hasOwnProperty('search')
+          && (
+            valueAsType.search === null
+            || typeof valueAsType.search === 'string'
+          );
+
+        const isValidIds = value?.hasOwnProperty('ids')
+          && (
+            typeof valueAsType.ids === null
+            || typeof valueAsType.ids === 'object'
+          );
+
+        const isValidOffset = value?.hasOwnProperty('offset')
+          && (
+            valueAsType.offset === null
+            || typeof valueAsType.offset === 'number'
+          );
+
+        const isValidLimit = value?.hasOwnProperty('limit')
+          && (
+            valueAsType.limit === null
+            || typeof valueAsType.limit === 'number'
+          );
+
+        if (isValidObject
+          && isValidSearch
+          && isValidIds
+          && isValidOffset
+          && isValidLimit) {
+          return value as getCoinListInput;
         }
-        throw new Error('Input is not a valid object.');
+
+        throw new Error('Error[getCoinList]: Input is not a valid object.');
       })
     .query(async (opts) => {
       const { input } = opts;
 
       const requestOptions: RequestInit = {
-        mode: 'no-cors',
         method: "GET",
         redirect: "follow",
       };
 
       let url = API + "/assets?";
-      if (input.search !== undefined) {
+      if (input.search !== null) {
         url += `search=${input.search}&`;
       }
-      if (input.ids !== undefined) {
+      if (input.ids !== null) {
         url += `ids=${input.ids.join()}&`;
       }
-      if (input.offset !== undefined && input.limit !== undefined) {
+      if (input.offset !== null && input.limit !== null) {
         url += `offset=${input.offset}&limit=${input.limit}&`
       };
 
@@ -70,15 +105,8 @@ const appRouter = trpc.router({
         return coin;
       });
       return coinList;
-    })
+    }),
 })
-
-interface getCoinListInput {
-  search?: string,
-  ids?: string[],
-  offset?: number,
-  limit?: number
-}
 
 export type AppRouter = typeof appRouter;
 export default appRouter;

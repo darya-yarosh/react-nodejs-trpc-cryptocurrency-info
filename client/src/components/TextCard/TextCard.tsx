@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Coin, { CoinLabels } from "models/Coin";
@@ -14,7 +15,7 @@ interface TextCardProps {
   closePage: () => void;
 }
 
-export default function TextCard({
+function TextCard({
   coin,
   closePage
 }: TextCardProps) {
@@ -60,3 +61,6 @@ export default function TextCard({
     </section>
   );
 }
+
+const MemoTextCard = memo(TextCard);
+export default MemoTextCard;

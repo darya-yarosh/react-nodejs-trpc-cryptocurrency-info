@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import searchIcon from "components/general/SearchInput/search.svg";
 
 import styles from "components/general/SearchInput/SearchInput.module.scss";
@@ -8,7 +10,7 @@ interface SearchInputProps {
   onChange: (value: string) => void;
 }
 
-export default function SearchInput({
+function SearchInput({
   value,
   placeholderValue,
   onChange,
@@ -26,3 +28,6 @@ export default function SearchInput({
     </div>
   );
 }
+
+const MemoSearchInput = memo(SearchInput);
+export default MemoSearchInput;

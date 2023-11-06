@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { formatPercent, formatPrice } from "logic/utils/Helper";
 
 import styles from "components/Diff/Diff.module.scss";
@@ -8,7 +10,7 @@ interface DiffProps {
   actual: number;
 }
 
-export default function Diff({
+function Diff({
   className = "",
   original = 0,
   actual = 0,
@@ -39,3 +41,6 @@ export default function Diff({
     </p>
   );
 }
+
+const MemoDiff = memo(Diff);
+export default MemoDiff;

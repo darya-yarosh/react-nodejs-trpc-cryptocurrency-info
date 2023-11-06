@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import { useDebounce } from "logic/utils/useDebounce";
 
@@ -8,15 +8,13 @@ interface SelectWithSearchProps {
     value: string;
     placeholderValue: string;
     onSearchChange: (value: string) => void;
-    onOptionSelect: (value: string) => void;
     list: string[];
 }
 
-export default function SelectWithSearch({
+function SelectWithSearch({
     value,
     placeholderValue,
     list,
-    onOptionSelect,
     onSearchChange,
 }: SelectWithSearchProps) {
     const [searchValue, setSearchValue] = useState<string>(value);
@@ -35,7 +33,6 @@ export default function SelectWithSearch({
     }
 
     function setOption(value: string) {
-        onOptionSelect(value);
         setSearchValue(value);
         setIsFocusInput(false);
     }
@@ -80,3 +77,6 @@ export default function SelectWithSearch({
         </div>
     </div>
 }
+
+const MemoSelectWithSearch = memo(SelectWithSearch);
+export default MemoSelectWithSearch;

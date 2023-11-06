@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import styles from "components/general/IconButton/IconButton.module.scss";
 
 interface IconButtonProps {
@@ -8,7 +10,7 @@ interface IconButtonProps {
   disabled?: boolean;
 }
 
-export default function IconButton({
+function IconButton({
   iconSVG,
   caption,
   onClick,
@@ -35,3 +37,6 @@ export default function IconButton({
     </button>
   );
 }
+
+const MemoIconButton = memo(IconButton);
+export default MemoIconButton;

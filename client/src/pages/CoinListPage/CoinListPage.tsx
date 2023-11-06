@@ -2,7 +2,6 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { createTRPCReact } from "@trpc/react-query";
 
-import Coin from "models/Coin";
 import { APP_NAME, SEARCH_PLACEHOLDER } from "models/Interface";
 
 import CoinTable from "components/CoinTable/CoinTable";
@@ -39,7 +38,7 @@ export default function CoinListPage() {
 		ids: null,
 		offset: 0,
 		limit: 3
-	}).data as Coin[];
+	}).data || null;
 
 	const transactionSummaryList = useMemo(
 		() => mapTransactionsByCoin(portfolio.transactionList),
@@ -58,10 +57,6 @@ export default function CoinListPage() {
 	const PAGES_LIMIT = useMemo(() => (coinList?.length || 0) / COINS_PER_PAGE, [coinList]);
 	const isLastPage = useMemo(() => PAGES_LIMIT < 1, [PAGES_LIMIT]);
 
-	useEffect(() => {
-		setPageIndex(0);
-	}, [searchFilter])
-
 	const portfolioCoins = trpc.getCoinList.useQuery({
 		search: null,
 		ids: transactionSummaryList.map(transaction =>
@@ -69,17 +64,19 @@ export default function CoinListPage() {
 		),
 		offset: null,
 		limit: null
-	}).data;
+	}).data || [];
 
 	const portfolioActualPrice = useMemo(() => {
-		if (portfolioCoins === undefined) return 0;
+		if (portfolioCoins.length === 0) return 0;
 
 		const coinPrices = getCoinsActualPrice(portfolioCoins, transactionSummaryList);
 		return coinPrices.reduce((total, coin) => total + coin.price, 0);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [portfolioCoins, portfolio.transactionList.length, transactionSummaryList])
+	}, [portfolioCoins])
 
-	//if (!coinList) return <div>Loading...</div>;
+	useEffect(() => {
+		setPageIndex(0);
+	}, [searchFilter])
 
 	return (
 		<div className={styles.wrapper}>
@@ -100,8 +97,8 @@ export default function CoinListPage() {
 					</section>
 				</header>
 			}
-			{
-				coinList && <section className={styles.body}>
+			{coinList &&
+				<section className={styles.body}>
 					<CoinTable coinList={coinList} />
 					<Pagination
 						isLastPage={isLastPage}

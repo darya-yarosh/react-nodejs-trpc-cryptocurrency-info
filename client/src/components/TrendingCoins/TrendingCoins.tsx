@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import Coin from "models/Coin";
 
 import Icon from "components/general/Icon/Icon";
@@ -8,7 +10,7 @@ interface TrendingCoinsProps {
   coinList: Coin[];
 }
 
-export default function TrendingCoins({ coinList }: TrendingCoinsProps) {
+function TrendingCoins({ coinList }: TrendingCoinsProps) {
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.title}>Trending coins</h1>
@@ -34,3 +36,6 @@ export default function TrendingCoins({ coinList }: TrendingCoinsProps) {
     </div>
   );
 }
+
+const MemoTrendingCoins = memo(TrendingCoins);
+export default MemoTrendingCoins;

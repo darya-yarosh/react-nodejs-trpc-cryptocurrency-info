@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import styles from "components/general/Button/Button.module.scss";
 
 interface ButtonProps {
@@ -9,7 +11,7 @@ interface ButtonProps {
   onClick?: (event: React.MouseEvent) => void;
 }
 
-export default function Button({
+function Button({
   className,
   label,
   title = "",
@@ -29,3 +31,6 @@ export default function Button({
     </button>
   );
 }
+
+const MemoButton = memo(Button);
+export default MemoButton;

@@ -56,12 +56,14 @@ export default function PortfolioPage() {
     return loadedTransactionCoins;
   }, [portfolioCoins, transactionSummaryList]);
 
-  const favoriteCoins = trpc.getCoinList.useQuery({
-    search: null,
-    ids: portfolio.favorites,
-    offset: null,
-    limit: null
-  }).data || [];
+  const favoriteCoins = portfolio.favorites.length > 0
+    ? (trpc.getCoinList.useQuery({
+      search: null,
+      ids: portfolio.favorites,
+      offset: null,
+      limit: null
+    }).data || [])
+    : [];
 
   const portfolioActualPrice = useMemo(() => {
     if (portfolioCoins === undefined) return 0;

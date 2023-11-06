@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 
 import styles from "components/general/Icon/Icon.module.scss";
 
@@ -8,7 +8,7 @@ interface IconProps {
     alt: string;
 }
 
-export default function Icon({
+function Icon({
     iconSVG,
     sizePX = 25,
     alt
@@ -37,3 +37,6 @@ export default function Icon({
         />
     </div>
 }
+
+const MemoIcon = memo(Icon);
+export default MemoIcon;

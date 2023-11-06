@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createTRPCReact } from "@trpc/react-query";
 
@@ -34,17 +34,16 @@ export default function TransactionPage() {
     limit: null
   }).data;
 
-  const coins =
-    trpc.getCoinList.useQuery({
-      search: searchFilter,
-      ids: null,
-      offset: null,
-      limit: null
-    }).data || defaultCoins || [];
+  const coins = trpc.getCoinList.useQuery({
+    search: searchFilter,
+    ids: null,
+    offset: null,
+    limit: null
+  }).data || defaultCoins || [];
 
-  function navigateBack() {
+  const navigateBack = useMemo(() => () => {
     navigate(-1);
-  }
+  }, [navigate]);
 
   function submit(
     selectedCoinId: Coin['id'],
@@ -59,9 +58,9 @@ export default function TransactionPage() {
     navigateBack();
   }
 
-  async function changeSearchFilter(value: string) {
-    setSearchFilter(value);
-  }
+  const changeSearchFilter = useMemo(() => (value: string) => {
+   setSearchFilter(value);
+  }, []);
 
   useEffect(() => {
     if (isFirstLoad) {

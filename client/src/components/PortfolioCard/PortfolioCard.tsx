@@ -58,7 +58,7 @@ export default function PortfolioCard({
         <section className={styles.perCoinList}>
           <label className={styles.perCoinList__label}>Details by coin</label>
           {transactionCoins.length === 0 && <span>Empty</span>}
-          {transactionCoins.map((coin, index) => (
+          {transactionCoins.map((coin) => (
             <PortfolioCoin
               key={coin.id}
               coin={coin}

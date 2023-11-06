@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Coin from "models/Coin";
@@ -13,7 +14,7 @@ interface CoinNoteProps {
   coin: Coin;
 }
 
-export default function CoinNote({ coin }: CoinNoteProps) {
+function CoinNote({ coin }: CoinNoteProps) {
   const changePercent24HrClassName =
     percentToNumber(coin.changePercent24Hr) < 0
       ? styles.negativeText
@@ -51,8 +52,11 @@ export default function CoinNote({ coin }: CoinNoteProps) {
         <p>{coin.changePercent24Hr}</p>
       </td>
       <td>
-        <FavoriteButton coinId={coin.id} />
+        <FavoriteButton key={coin.id} coinId={coin.id} />
       </td>
     </tr>
   );
 }
+
+const MemoCoinNote = memo(CoinNote);
+export default MemoCoinNote;

@@ -18,5 +18,6 @@ export default function BuyCoinButton({
   function navigateToBuy() {
     navigate("/purchase/" + coinId);
   }
-  return <Button className={className} label="Buy" onClick={navigateToBuy} />;
+
+  return <Button key={coinId} className={className} label="Buy" onClick={navigateToBuy} />;
 }

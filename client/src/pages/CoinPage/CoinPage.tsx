@@ -1,5 +1,6 @@
-import { memo, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { createTRPCReact } from "@trpc/react-query";
 
 import { CoinHistory, GraphicPeriod } from "models/Coin";
 
@@ -13,18 +14,17 @@ import {
 } from "logic/utils/Helper";
 
 import styles from "pages/CoinPage/CoinPage.module.scss";
-import { createTRPCReact } from "@trpc/react-query";
 
 import { AppRouter } from "../../../../server/src/appRouter"
 
 const trpc = createTRPCReact<AppRouter>();
 
-function CoinPage() {
+export default function CoinPage() {
   const navigate = useNavigate();
   const params = useParams();
 
   const coinData = trpc.getCoinById.useQuery(params.id || '');
-  const coin = coinData.data;
+  const coin = useMemo(() => coinData.data, [coinData.data]);
 
   const [graphicPeriod, setGraphicPeriod] = useState<GraphicPeriod>(GraphicPeriod.d1);
   const graphicInterval = useMemo(() =>
@@ -58,9 +58,9 @@ function CoinPage() {
     setGraphicPeriod(newValue);
   }
 
-  function navigateBack() {
+  const navigateBack = useMemo(() => () => {
     navigate(-1);
-  }
+  }, [navigate]);
 
   if (!coin) return <div>Loading...</div>;
 
@@ -79,6 +79,3 @@ function CoinPage() {
     </div>
   );
 }
-
-const MemoCoinPage = memo(CoinPage);
-export default MemoCoinPage;

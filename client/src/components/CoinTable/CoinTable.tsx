@@ -55,9 +55,15 @@ export default function CoinTable({
                   <span>
                     <SortIcon
                       sortType={CoinListSortType.rank}
-                      sortOrder={sortOrder}
+                      sortOrder={
+                        sortType === CoinListSortType.rank
+                          ? sortOrder
+                          : SortOrder.none
+                      }
                       isEnabled={true}
-                      isSelected={sortType === CoinListSortType.rank}
+                      isSelected={
+                        sortType === CoinListSortType.rank
+                      }
                     />
                   </span>
                 </label>
@@ -83,9 +89,15 @@ export default function CoinTable({
                   <span>
                     <SortIcon
                       sortType={CoinListSortType.priceUsd}
-                      sortOrder={sortOrder}
+                      sortOrder={
+                        sortType === CoinListSortType.priceUsd
+                          ? sortOrder
+                          : SortOrder.none
+                      }
                       isEnabled={true}
-                      isSelected={sortType === CoinListSortType.priceUsd}
+                      isSelected={
+                        sortType === CoinListSortType.priceUsd
+                      }
                     />
                   </span>
                 </label>
@@ -102,7 +114,11 @@ export default function CoinTable({
                   <span>
                     <SortIcon
                       sortType={CoinListSortType.marketCapUsd}
-                      sortOrder={sortOrder}
+                      sortOrder={
+                        sortType === CoinListSortType.marketCapUsd
+                          ? sortOrder
+                          : SortOrder.none
+                      }
                       isEnabled={true}
                       isSelected={sortType === CoinListSortType.marketCapUsd}
                     />
@@ -123,7 +139,11 @@ export default function CoinTable({
                   <span>
                     <SortIcon
                       sortType={CoinListSortType.changePercent24Hr}
-                      sortOrder={sortOrder}
+                      sortOrder={
+                        sortType === CoinListSortType.changePercent24Hr
+                          ? sortOrder
+                          : SortOrder.none
+                      }
                       isEnabled={true}
                       isSelected={
                         sortType === CoinListSortType.changePercent24Hr

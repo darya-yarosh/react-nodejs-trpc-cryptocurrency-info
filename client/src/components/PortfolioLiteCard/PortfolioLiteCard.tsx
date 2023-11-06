@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react";
+import { memo, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Diff from "components/Diff/Diff";
@@ -14,7 +14,7 @@ interface PortfolioLiteCardProps {
   actualPrice: number;
 }
 
-export default function PortfolioLiteCard({
+function PortfolioLiteCard({
   actualPrice,
 }: PortfolioLiteCardProps) {
   const navigate = useNavigate();
@@ -43,3 +43,6 @@ export default function PortfolioLiteCard({
     </section>
   );
 }
+
+const MemoPortfolioLiteCard = memo(PortfolioLiteCard);
+export default MemoPortfolioLiteCard;

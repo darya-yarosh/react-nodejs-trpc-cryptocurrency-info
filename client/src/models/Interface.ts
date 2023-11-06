@@ -11,4 +11,5 @@ export const SEARCH_PLACEHOLDER = "Search by name...";
 export enum SortOrder {
   asc = "ASC",
   desc = "DESC",
+  none = "None",
 }

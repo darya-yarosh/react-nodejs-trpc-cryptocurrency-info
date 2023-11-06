@@ -33,21 +33,18 @@ export default function TransactionForm({
 }: TransactionFormProps) {
   const [quantity, setQuantity] = useState<number>(1);
 
-  function changeSelectedCoin(coinName: string) {
-    onChangeSearchFilter(coinName);
-  }
-
   function handleQuantityChange(event: React.ChangeEvent<HTMLInputElement>) {
     setQuantity(Number(event.target.value));
   }
 
-  function handleSubmit(event: React.MouseEvent) {
+  const handleSubmit = useMemo(()=>(event: React.MouseEvent)=>{
     event.preventDefault();
 
     if (!selectedCoin) return;
 
     submit(selectedCoin.id, selectedCoin.priceUsd, quantity);
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   const coinsNameList: string[] = useMemo(() =>
     coins.map(coin => coin.name)
@@ -58,8 +55,10 @@ export default function TransactionForm({
     [quantity, selectedCoin?.priceUsd],
   );
 
-  const supply = selectedCoin ? supplyToNumber(selectedCoin.supply, selectedCoin.symbol) : Infinity;
-  
+  const supply = selectedCoin
+    ? supplyToNumber(selectedCoin.supply, selectedCoin.symbol)
+    : Infinity;
+
   const isValid = useMemo(() =>
     selectedCoin
     && quantity > 0
@@ -90,7 +89,6 @@ export default function TransactionForm({
           placeholderValue={"Search cryptocyrrency..."}
           list={coinsNameList}
           onSearchChange={onChangeSearchFilter}
-          onOptionSelect={changeSelectedCoin}
         />
       </section>
       <section className={styles.section}>

@@ -38,31 +38,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var server_1 = require("@trpc/server");
 var helper_1 = require("./logic/helper");
-var API = "https://api.coincap.io/v2";
+var API = 'https://api.coincap.io/v2';
 var trpc = server_1.initTRPC.create();
 var appRouter = trpc.router({
     getCoinList: trpc.procedure
         .input(function (value) {
         var valueAsType = value;
-        var isValidObject = value !== null
-            && typeof value === 'object';
-        var isValidSearch = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('search'))
-            && (valueAsType.search === null
-                || typeof valueAsType.search === 'string');
-        var isValidIds = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('ids'))
-            && (typeof valueAsType.ids === null
-                || typeof valueAsType.ids === 'object');
-        var isValidOffset = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('offset'))
-            && (valueAsType.offset === null
-                || typeof valueAsType.offset === 'number');
-        var isValidLimit = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('limit'))
-            && (valueAsType.limit === null
-                || typeof valueAsType.limit === 'number');
-        if (isValidObject
-            && isValidSearch
-            && isValidIds
-            && isValidOffset
-            && isValidLimit) {
+        var isValidObject = value !== null && typeof value === 'object';
+        var isValidSearch = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('search')) &&
+            (valueAsType.search === null ||
+                typeof valueAsType.search === 'string');
+        var isValidIds = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('ids')) &&
+            (typeof valueAsType.ids === null ||
+                typeof valueAsType.ids === 'object');
+        var isValidOffset = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('offset')) &&
+            (valueAsType.offset === null ||
+                typeof valueAsType.offset === 'number');
+        var isValidLimit = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('limit')) &&
+            (valueAsType.limit === null ||
+                typeof valueAsType.limit === 'number');
+        if (isValidObject &&
+            isValidSearch &&
+            isValidIds &&
+            isValidOffset &&
+            isValidLimit) {
             return value;
         }
         throw new Error('Error[getCoinList]: Input is not a valid object.');
@@ -75,10 +74,10 @@ var appRouter = trpc.router({
                     input = opts.input;
                     search = input.search, ids = input.ids, offset = input.offset, limit = input.limit;
                     requestOptions = {
-                        method: "GET",
-                        redirect: "follow",
+                        method: 'GET',
+                        redirect: 'follow',
                     };
-                    url = API + "/assets?";
+                    url = API + '/assets?';
                     if (search !== null) {
                         url += "search=".concat(search, "&");
                     }
@@ -88,7 +87,6 @@ var appRouter = trpc.router({
                     if (offset !== null && limit !== null) {
                         url += "offset=".concat(offset, "&limit=").concat(limit, "&");
                     }
-                    ;
                     return [4 /*yield*/, fetch(url, requestOptions)];
                 case 1:
                     apiUrl = _a.sent();
@@ -96,7 +94,9 @@ var appRouter = trpc.router({
                 case 2:
                     dataInfo = _a.sent();
                     coinList = dataInfo.data.map(function (storageCoin) {
-                        var maxSupply = storageCoin.maxSupply === null ? Infinity : storageCoin.maxSupply;
+                        var maxSupply = storageCoin.maxSupply === null
+                            ? Infinity
+                            : storageCoin.maxSupply;
                         var coin = {
                             id: storageCoin.id,
                             rank: Number(storageCoin.rank),
@@ -131,8 +131,8 @@ var appRouter = trpc.router({
                 case 0:
                     id = opts.input;
                     requestOptions = {
-                        method: "GET",
-                        redirect: "follow",
+                        method: 'GET',
+                        redirect: 'follow',
                     };
                     return [4 /*yield*/, fetch(API + "/assets/".concat(id), requestOptions)];
                 case 1:
@@ -162,29 +162,29 @@ var appRouter = trpc.router({
     getCoinHistory: trpc.procedure
         .input(function (value) {
         var valueAsType = value;
-        var isValidObject = value !== null
-            && typeof value === 'object';
-        var isValidId = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('id'))
-            && typeof valueAsType.id === 'string';
-        var isValidInterval = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('interval'))
-            && typeof valueAsType.interval === 'string'
-            && valueAsType.interval === valueAsType.interval;
-        var isValidEnd = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('end'))
-            && (valueAsType.end === null
-                || (typeof valueAsType.end === 'string'
-                    && new Date(valueAsType.end).toString() !== 'Invalid Date'));
-        var isValidStart = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('start'))
-            && (valueAsType.start === null
-                || (typeof valueAsType.start === 'string'
-                    && new Date(valueAsType.start).toString() !== 'Invalid Date'));
-        if (isValidObject
-            && isValidId
-            && isValidInterval
-            && isValidEnd
-            && isValidStart) {
-            var endDate = valueAsType.end === null
-                ? null
-                : new Date(valueAsType.end);
+        var isValidObject = value !== null && typeof value === 'object';
+        var isValidId = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('id')) &&
+            typeof valueAsType.id === 'string';
+        var isValidInterval = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('interval')) &&
+            typeof valueAsType.interval === 'string' &&
+            valueAsType.interval ===
+                valueAsType.interval;
+        var isValidEnd = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('end')) &&
+            (valueAsType.end === null ||
+                (typeof valueAsType.end === 'string' &&
+                    new Date(valueAsType.end).toString() !==
+                        'Invalid Date'));
+        var isValidStart = (value === null || value === void 0 ? void 0 : value.hasOwnProperty('start')) &&
+            (valueAsType.start === null ||
+                (typeof valueAsType.start === 'string' &&
+                    new Date(valueAsType.start).toString() !==
+                        'Invalid Date'));
+        if (isValidObject &&
+            isValidId &&
+            isValidInterval &&
+            isValidEnd &&
+            isValidStart) {
+            var endDate = valueAsType.end === null ? null : new Date(valueAsType.end);
             var startDate = valueAsType.start === null
                 ? null
                 : new Date(valueAsType.start);
@@ -206,11 +206,12 @@ var appRouter = trpc.router({
                     input = opts.input;
                     id = input.id, interval = input.interval, end = input.end, start = input.start;
                     requestOptions = {
-                        method: "GET",
-                        redirect: "follow",
+                        method: 'GET',
+                        redirect: 'follow',
                     };
-                    url = (end !== null && start !== null)
-                        ? API + "/assets/".concat(id, "/history?interval=").concat(interval, "&end=").concat(+end, "&start=").concat(+start)
+                    url = end !== null && start !== null
+                        ? API +
+                            "/assets/".concat(id, "/history?interval=").concat(interval, "&end=").concat(+end, "&start=").concat(+start)
                         : API + "/assets/".concat(id, "/history?interval=").concat(interval);
                     return [4 /*yield*/, fetch(url, requestOptions)];
                 case 1:
@@ -229,6 +230,6 @@ var appRouter = trpc.router({
                     return [2 /*return*/, coinHistory];
             }
         });
-    }); })
+    }); }),
 });
 exports.default = appRouter;

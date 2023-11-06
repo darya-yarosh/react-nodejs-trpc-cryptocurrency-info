@@ -1,39 +1,39 @@
 .wrapper {
-  display: flex;
-  justify-content: space-around;
-  height: 54px;
-  height: 36px;
-  background-color: var(--color-second);
-  border: 2px solid var(--color-second);
-  border-radius: 8px;
-  box-shadow: var(--box-shadow);
+	display: flex;
+	justify-content: space-around;
+	height: 54px;
+	height: 36px;
+	background-color: var(--color-second);
+	border: 2px solid var(--color-second);
+	border-radius: 8px;
+	box-shadow: var(--box-shadow);
 }
 
 .input {
-  width: 100%;
-  padding: 4px;
+	width: 100%;
+	padding: 4px;
 
-  font-family: var(--font-family);
-  font-size: 1.2rem;
+	font-family: var(--font-family);
+	font-size: 1.2rem;
 
-  color: var(--color-font);
-  background-color: var(--color-second);
-  border: 4px solid var(--color-second);
-  border-radius: 4px;
+	color: var(--color-font);
+	background-color: var(--color-second);
+	border: 4px solid var(--color-second);
+	border-radius: 4px;
 }
 
 .input::placeholder {
-  font-style: italic;
-  color: var(--color-first);
-  opacity: 0.5;
-  border-color: var(--color-third);
+	font-style: italic;
+	color: var(--color-first);
+	opacity: 0.5;
+	border-color: var(--color-third);
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
-  margin: auto 8px;
+	width: 20px;
+	height: 20px;
+	margin: auto 8px;
 
-  filter: brightness(0) saturate(100%) invert(19%) sepia(3%) saturate(15%)
-    hue-rotate(352deg) brightness(89%) contrast(83%);
+	filter: brightness(0) saturate(100%) invert(19%) sepia(3%) saturate(15%)
+		hue-rotate(352deg) brightness(89%) contrast(83%);
 }

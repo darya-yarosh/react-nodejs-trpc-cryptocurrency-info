@@ -1,32 +1,32 @@
 .pagination {
-  display: flex;
-  justify-content: center;
-  gap: 4px;
+	display: flex;
+	justify-content: center;
+	gap: 4px;
 }
 
 .pageNum {
-  font-family: var(--font-family);
-  font-size: 1rem;
+	font-family: var(--font-family);
+	font-size: 1rem;
 
-  border: none;
-  background: none;
-  color: var(--color-second);
+	border: none;
+	background: none;
+	color: var(--color-second);
 }
 
 .pageNum:not(:disabled):hover {
-  cursor: pointer;
-  text-shadow: 1px 1px 0px var(--color-third) !important;
+	cursor: pointer;
+	text-shadow: 1px 1px 0px var(--color-third) !important;
 }
 
 .pageNum__current {
-  justify-self: center;
-  font-family: var(--font-family);
-  font-size: 1rem;
-  font-weight: bold;
+	justify-self: center;
+	font-family: var(--font-family);
+	font-size: 1rem;
+	font-weight: bold;
 
-  border: none;
-  background: none;
+	border: none;
+	background: none;
 
-  color: var(--color-third);
-  cursor: default;
+	color: var(--color-third);
+	cursor: default;
 }

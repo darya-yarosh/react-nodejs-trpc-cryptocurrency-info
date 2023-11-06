@@ -1,20 +1,20 @@
 .wrapper {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 
-  background-color: var(--color-second);
+	background-color: var(--color-second);
 
-  position: relative;
-  height: 40vh;
-  width: 100%;
+	position: relative;
+	height: 40vh;
+	width: 100%;
 }
 
 @media (max-width: 1300px) {
-  .wrapper {
-    height: 90%;
-  }
+	.wrapper {
+		height: 90%;
+	}
 
-  .graphic {
-    height: auto;
-  }
+	.graphic {
+		height: auto;
+	}
 }

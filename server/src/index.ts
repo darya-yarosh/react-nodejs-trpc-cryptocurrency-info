@@ -39,6 +39,6 @@ app.use(
 
 const PORT = 4000;
 
-app.listen(PORT)
-
-console.log(`Running on PORT ${PORT}`);
+app.listen(PORT, ()=>{
+  console.log(`Running on PORT ${PORT}`);
+})

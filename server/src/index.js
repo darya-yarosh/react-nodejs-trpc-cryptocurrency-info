@@ -57,5 +57,6 @@ app.use('/trpc', trpcExpress.createExpressMiddleware({
     createContext: createContext,
 }));
 var PORT = 4000;
-app.listen(PORT);
-console.log("Running on PORT ".concat(PORT));
+app.listen(PORT, function () {
+    console.log("Running on PORT ".concat(PORT));
+});

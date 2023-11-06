@@ -143,7 +143,7 @@ var appRouter = trpc.router({
                     storageCoin = dataInfo.data;
                     coin = {
                         id: storageCoin.id,
-                        rank: storageCoin.rank,
+                        rank: Number(storageCoin.rank),
                         symbol: storageCoin.symbol,
                         name: storageCoin.name,
                         supply: (0, helper_1.formatSupply)(storageCoin.supply, storageCoin.symbol),

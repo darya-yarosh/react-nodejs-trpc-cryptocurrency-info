@@ -12,7 +12,6 @@ import CoinListPage from "pages/CoinListPage/CoinListPage";
 import PortfolioPage from "pages/PortfolioPage/PortfolioPage";
 import TransactionPage from "pages/TransactionPage/TransactionPage";
 
-import CoinsProvider from "providers/coins";
 import PortfolioProvider from "providers/portfolio";
 
 import "App.scss";
@@ -72,11 +71,9 @@ export default function App() {
                     <QueryClientProvider client={queryClient}>
 
                         <PortfolioProvider>
-                            <CoinsProvider>
 
-                                <RouterProvider router={router} />
+                            <RouterProvider router={router} />
 
-                            </CoinsProvider>
                         </PortfolioProvider>
 
                     </QueryClientProvider>

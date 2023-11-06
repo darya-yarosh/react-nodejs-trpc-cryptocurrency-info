@@ -1,20 +1,21 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Coin from "models/Coin";
 import { CoinWithSummary } from "models/Portfolio";
 
 import Modal from "components/general/Modal/Modal";
 import PortfolioCard from "components/PortfolioCard/PortfolioCard";
 
-import coinCapController from "logic/storage/CoinCapController";
 import { getCoinsActualPrice, mapTransactionsByCoin } from "logic/utils/PortfolioHelper";
 
 import { Context as PortfolioContext } from "providers/portfolio";
+import { createTRPCReact } from "@trpc/react-query";
+
+import { AppRouter } from "../../../../server/src/appRouter"
+
+const trpc = createTRPCReact<AppRouter>();
 
 export default function PortfolioPage() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const navigate = useNavigate();
 
   const portfolio = useContext(PortfolioContext).data;
@@ -23,83 +24,61 @@ export default function PortfolioPage() {
     () => mapTransactionsByCoin(portfolio.transactionList),
     [portfolio.transactionList],
   );
-  const [transactionCoins, setTransactionCoins] = useState<CoinWithSummary[]>([]);
-  const [favoriteCoins, setFavoriteCoins] = useState<Coin[]>([]);
-  const [actualPrice, setActualPrice] = useState<number>(0);
+
+  const portfolioCoins = trpc.getCoinList.useQuery({
+    search: null,
+    ids: transactionSummaryList.map(transaction =>
+      transaction.id
+    ),
+    offset: null,
+    limit: null
+  }).data;
+
+  const transactionCoins = useMemo(() => {
+    if (portfolioCoins === undefined) return [];
+
+    const loadedTransactionCoins: CoinWithSummary[] = [];
+
+    transactionSummaryList.forEach(transactionSummary => {
+      const coin = portfolioCoins.find(coin => coin.id === transactionSummary.id);
+      if (coin) {
+        const transactionCoin: CoinWithSummary = {
+          id: transactionSummary.id,
+          amount: transactionSummary.amount,
+          moneySpent: transactionSummary.moneySpent,
+          name: coin.name,
+          logo: coin.logo,
+          priceUsd: coin.priceUsd,
+        }
+        loadedTransactionCoins.push(transactionCoin);
+      }
+    })
+    return loadedTransactionCoins;
+  }, [portfolioCoins, transactionSummaryList]);
+
+  const favoriteCoins = trpc.getCoinList.useQuery({
+    search: null,
+    ids: portfolio.favorites,
+    offset: null,
+    limit: null
+  }).data || [];
+
+  const portfolioActualPrice = useMemo(() => {
+    if (portfolioCoins === undefined) return 0;
+
+    const coinPrices = getCoinsActualPrice(portfolioCoins, transactionSummaryList);
+    return coinPrices.reduce((total, coin) => total + coin.price, 0);
+  }, [portfolioCoins, transactionSummaryList])
 
   function navigateBack() {
-    if (!isLoading) navigate(-1);
+    navigate(-1);
   }
-
-  async function loadTransactionCoins() {
-    if (portfolio.transactionList.length === 0) {
-      setTransactionCoins([])
-      setIsLoading(false);
-      return;
-    };
-
-    const coinIdList: string[] = transactionSummaryList.map(transaction =>
-      transaction.id
-    )
-
-    await coinCapController.getCoinList(undefined, coinIdList)
-      .then((coinList => {
-        const loadedTransactionCoins: CoinWithSummary[] = [];
-
-        transactionSummaryList.forEach(transactionSummary => {
-          const coin = coinList.find(coin => coin.id === transactionSummary.id);
-          if (coin) {
-            const transactionCoin: CoinWithSummary = {
-              id: transactionSummary.id,
-              amount: transactionSummary.amount,
-              moneySpent: transactionSummary.moneySpent,
-              name: coin.name,
-              logo: coin.logo,
-              priceUsd: coin.priceUsd,
-            }
-            loadedTransactionCoins.push(transactionCoin);
-          }
-        })
-        setTransactionCoins(loadedTransactionCoins);
-
-        const coinPrices = getCoinsActualPrice(coinList, transactionSummaryList);
-        const newActualPrice = coinPrices.reduce((total, coin) => total + coin.price, 0);
-        setActualPrice(newActualPrice)
-      }))
-      .finally(() => setIsLoading(false));
-  }
-
-  async function loadFavoriteCoins() {
-    if (portfolio.favorites.length === 0) {
-      setFavoriteCoins([])
-      setIsLoading(false);
-      return;
-    };
-
-    await coinCapController.getCoinList(undefined, portfolio.favorites)
-      .then((coinList => {
-        setFavoriteCoins(coinList)
-      }))
-      .finally(() => setIsLoading(false));
-  }
-
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(loadFavoriteCoins)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [portfolio.favorites])
-
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(loadTransactionCoins);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [portfolio.transactionList])
 
   return (
     <Modal handleDismiss={navigateBack}>
       <PortfolioCard
-        isLoading={isLoading}
-        actualPrice={actualPrice}
+        isLoading={false}
+        actualPrice={portfolioActualPrice}
         transactionCoins={transactionCoins}
         favoriteCoins={favoriteCoins}
         navigateBack={navigateBack} />

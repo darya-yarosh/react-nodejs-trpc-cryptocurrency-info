@@ -1,8 +1,6 @@
 import { useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Coin from "models/Coin";
-
 import Diff from "components/Diff/Diff";
 
 import { getSpentAmount } from "logic/utils/PortfolioHelper";
@@ -13,12 +11,10 @@ import { Context as PortfolioContext } from "providers/portfolio";
 import styles from "components/PortfolioLiteCard/PortfolioLiteCard.module.scss";
 
 interface PortfolioLiteCardProps {
-  coins: Coin[];
   actualPrice: number;
 }
 
 export default function PortfolioLiteCard({
-  coins,
   actualPrice,
 }: PortfolioLiteCardProps) {
   const navigate = useNavigate();

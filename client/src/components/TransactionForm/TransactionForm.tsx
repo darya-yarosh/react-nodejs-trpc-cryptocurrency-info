@@ -26,18 +26,15 @@ interface TransactionFormProps {
 export default function TransactionForm({
   coins,
   searchCoinName,
-  selectedCoin: defaultCoin,
+  selectedCoin,
   onChangeSearchFilter,
   navigateBack,
   submit,
 }: TransactionFormProps) {
-  const [selectedCoinName, setSelectedCoinName] = useState<Coin["name"]>(
-    defaultCoin ? defaultCoin.name : (coins[0] || {}).name,
-  );
   const [quantity, setQuantity] = useState<number>(1);
 
   function changeSelectedCoin(coinName: string) {
-    setSelectedCoinName(coinName);
+    onChangeSearchFilter(coinName);
   }
 
   function handleQuantityChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -55,10 +52,6 @@ export default function TransactionForm({
   const coinsNameList: string[] = useMemo(() =>
     coins.map(coin => coin.name)
     , [coins]);
-
-  const selectedCoin = useMemo(() =>
-    coins.find((c) => c.name === (selectedCoinName))
-    , [coins, selectedCoinName]);
 
   const totalPrice = useMemo(() =>
     priceToNumber(selectedCoin?.priceUsd || "") * quantity,

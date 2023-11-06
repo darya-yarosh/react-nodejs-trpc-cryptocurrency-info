@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet } from "react-router-dom";
+import { createTRPCReact } from "@trpc/react-query";
 
 import Coin from "models/Coin";
 import { APP_NAME, SEARCH_PLACEHOLDER } from "models/Interface";
@@ -10,111 +11,106 @@ import SearchInput from "components/general/SearchInput/SearchInput";
 import TrendingCoins from "components/TrendingCoins/TrendingCoins";
 import PortfolioLiteCard from "components/PortfolioLiteCard/PortfolioLiteCard";
 
-import coinCapController from "logic/storage/CoinCapController";
 import { getCoinsActualPrice, mapTransactionsByCoin } from "logic/utils/PortfolioHelper";
 
 import { Context as PortfolioContext } from "providers/portfolio";
 
 import styles from "pages/CoinListPage/CoinListPage.module.scss";
 
+import { AppRouter } from "../../../../server/src/appRouter"
+
+const trpc = createTRPCReact<AppRouter>();
+
 export default function CoinListPage() {
-  const portfolio = useContext(PortfolioContext).data;
+	const portfolio = useContext(PortfolioContext).data;
 
-  const [coinsTopThree, setCoinsTopThree] = useState<Coin[]>([]);
-  const [coins, setCoins] = useState<Coin[]>([])
-  const [pageIndex, setPageIndex] = useState<number>(0);
-  const [searchFilter, setSearchFilter] = useState<string>("");
-  const [portfolioActualPrice, setPortfolioActualPrice] = useState<number>(0);
+	const [pageIndex, setPageIndex] = useState<number>(0);
+	const [searchFilter, setSearchFilter] = useState<string>("");
 
-  const transactionSummaryList = useMemo(
-    () => mapTransactionsByCoin(portfolio.transactionList),
-    [portfolio.transactionList],
-  );
+	/**
+	 * The function returns the three most popular coins.
+	 * Since all coins in the database are sorted by rank,
+	 * the first three elements are taken.
+	 * 
+	 * @returns A list of three popular coins.
+	 */
+	const coinsTopThree = trpc.getCoinList.useQuery({
+		search: null,
+		ids: null,
+		offset: 0,
+		limit: 3
+	}).data as Coin[];
 
-  const COINS_PER_PAGE = 10;
-  const PAGES_LIMIT = useMemo(() => coins.length / COINS_PER_PAGE, [coins]);
-  const isLastPage = useMemo(() => PAGES_LIMIT < 1, [PAGES_LIMIT]);
+	const transactionSummaryList = useMemo(
+		() => mapTransactionsByCoin(portfolio.transactionList),
+		[portfolio.transactionList],
+	);
 
-  useEffect(() => {
-    setPageIndex(0);
-  }, [searchFilter])
+	const COINS_PER_PAGE = 10;
 
-  useEffect(() => {
-    async function loadCoinOfPage(pageInd: number) {
-      const filter = searchFilter === "" ? undefined : searchFilter;
-      await coinCapController.getCoinList(filter, undefined, pageInd * COINS_PER_PAGE, COINS_PER_PAGE)
-        .then((loadedCoins) => setCoins(loadedCoins))
-        .catch((error) => console.log("error", error));
-    }
+	const coinList = trpc.getCoinList.useQuery({
+		search: searchFilter === "" ? null : searchFilter,
+		ids: null,
+		offset: pageIndex * COINS_PER_PAGE,
+		limit: COINS_PER_PAGE,
+	}).data;
 
-    loadCoinOfPage(pageIndex)
-  }, [pageIndex, searchFilter]);
+	const PAGES_LIMIT = useMemo(() => (coinList?.length || 0) / COINS_PER_PAGE, [coinList]);
+	const isLastPage = useMemo(() => PAGES_LIMIT < 1, [PAGES_LIMIT]);
 
-  useEffect(() => {
-    /**
-     * The function returns the three most popular coins.
-     * Since all coins in the database are sorted by rank,
-     * the first three elements are taken.
-     * 
-     * @returns A list of three popular coins.
-     */
-    async function getTopThreeTrendingCoins() {
-      const trendingList = await coinCapController.getCoinList(undefined, undefined, 0, 3);
-      return trendingList;
-    };
+	useEffect(() => {
+		setPageIndex(0);
+	}, [searchFilter])
 
-    getTopThreeTrendingCoins()
-      .then((coins) => setCoinsTopThree(coins))
-      .catch((error) => console.log("error", error));
+	const portfolioCoins = trpc.getCoinList.useQuery({
+		search: null,
+		ids: transactionSummaryList.map(transaction =>
+			transaction.id
+		),
+		offset: null,
+		limit: null
+	}).data;
 
-    async function loadActualPrice() {
-      if (portfolio.transactionList.length === 0) {
-        setPortfolioActualPrice(0)
-        return;
-      };
+	const portfolioActualPrice = useMemo(() => {
+		if (portfolioCoins === undefined) return 0;
 
-      const coinIdList: string[] = transactionSummaryList.map(transaction =>
-        transaction.id
-      )
+		const coinPrices = getCoinsActualPrice(portfolioCoins, transactionSummaryList);
+		return coinPrices.reduce((total, coin) => total + coin.price, 0);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [portfolioCoins, portfolio.transactionList.length, transactionSummaryList])
 
-      await coinCapController.getCoinList(undefined, coinIdList)
-        .then((coinList => {
-          const coinPrices = getCoinsActualPrice(coinList, transactionSummaryList);
-          const newActualPrice = coinPrices.reduce((total, coin) => total + coin.price, 0);
-          setPortfolioActualPrice(newActualPrice)
-        }))
-    }
+	//if (!coinList) return <div>Loading...</div>;
 
-    loadActualPrice();
-  }, [portfolio.transactionList.length, transactionSummaryList])
-
-  return (
-    <div className={styles.wrapper}>
-      <header className={styles.header}>
-        <section className={styles.header__sectionFirst}>
-          <h1 className={styles.appName}>{APP_NAME}</h1>
-          <SearchInput
-            value={searchFilter}
-            placeholderValue={SEARCH_PLACEHOLDER}
-            onChange={setSearchFilter}
-          />
-        </section>
-        <section className={styles.header__sectionSecond}>
-          <TrendingCoins coinList={coinsTopThree} />
-          <PortfolioLiteCard
-            coins={coins}
-            actualPrice={portfolioActualPrice} />
-        </section>
-      </header>
-      <section className={styles.body}>
-        <CoinTable coinList={coins} />
-        <Pagination
-          isLastPage={isLastPage}
-          currentPageInd={pageIndex}
-          changePage={setPageIndex}
-        />
-      </section>
-      <Outlet />
-    </div>
-  );
+	return (
+		<div className={styles.wrapper}>
+			{coinsTopThree &&
+				<header className={styles.header}>
+					<section className={styles.header__sectionFirst}>
+						<h1 className={styles.appName}>{APP_NAME}</h1>
+						<SearchInput
+							value={searchFilter}
+							placeholderValue={SEARCH_PLACEHOLDER}
+							onChange={setSearchFilter}
+						/>
+					</section>
+					<section className={styles.header__sectionSecond}>
+						<TrendingCoins coinList={coinsTopThree} />
+						<PortfolioLiteCard
+							actualPrice={portfolioActualPrice} />
+					</section>
+				</header>
+			}
+			{
+				coinList && <section className={styles.body}>
+					<CoinTable coinList={coinList} />
+					<Pagination
+						isLastPage={isLastPage}
+						currentPageInd={pageIndex}
+						changePage={setPageIndex}
+					/>
+				</section>
+			}
+			<Outlet />
+		</div>
+	);
 }

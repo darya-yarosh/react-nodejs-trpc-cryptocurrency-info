@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { createTRPCReact } from "@trpc/react-query";
 
 import Coin from "models/Coin";
 
@@ -7,21 +8,39 @@ import Modal from "components/general/Modal/Modal";
 import TransactionForm from "components/TransactionForm/TransactionForm";
 
 import { priceToNumber } from "logic/utils/Helper";
-import coinCapController from "logic/storage/CoinCapController";
 
-import { Context as CoinsContext } from "providers/coins";
 import { Context as PortfolioContext } from "providers/portfolio";
 
+import { AppRouter } from "../../../../server/src/appRouter"
+
+const trpc = createTRPCReact<AppRouter>();
+
 export default function TransactionPage() {
+  const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
   const navigate = useNavigate();
   const params = useParams();
 
-  const { data: contextCoins } = useContext(CoinsContext);
   const { addTransaction } = useContext(PortfolioContext);
 
-  const [selectedCoin, setSelectedCoin] = useState<Coin>();
+  const [selectedCoinId, setSelectedCoinId] = useState<Coin['id']>(params.id || "");
+  const selectedCoin = trpc.getCoinById.useQuery(selectedCoinId).data;
+
   const [searchFilter, setSearchFilter] = useState<string>("");
-  const [coins, setCoins] = useState<Coin[]>([])
+
+  const defaultCoins = trpc.getCoinList.useQuery({
+    search: null,
+    ids: null,
+    offset: null,
+    limit: null
+  }).data;
+
+  const coins =
+    trpc.getCoinList.useQuery({
+      search: searchFilter,
+      ids: null,
+      offset: null,
+      limit: null
+    }).data || defaultCoins || [];
 
   function navigateBack() {
     navigate(-1);
@@ -41,48 +60,48 @@ export default function TransactionPage() {
   }
 
   async function changeSearchFilter(value: string) {
-    if (value === "") {
-      setCoins(contextCoins);
-      return;
-    }
-
     setSearchFilter(value);
-    loadCoinsByFilter(value);
-  }
-
-  async function loadCoinsByFilter(filter: string) {
-    await coinCapController.getCoinList(filter)
-      .then((loadedCoins) => {
-        setCoins(loadedCoins)
-      })
-      .catch((error) => {
-        console.log("error", error)
-      });
   }
 
   useEffect(() => {
-    if (params.id !== undefined) {
-      coinCapController.getCoinById(params.id)
-        .then(coin => {
-          setSearchFilter(coin.name);
-          setSelectedCoin(coin);
-        })
-        .catch((error) => console.log("error", error));
+    if (isFirstLoad) {
+      return;
     }
+
+    function updateCoinId() {
+      const id = (
+        coins !== undefined
+        && coins.length > 0
+        && coins !== defaultCoins
+      ) ? coins[0].id
+        : "";
+
+      setSelectedCoinId(id)
+    };
+
+    updateCoinId()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [coins]);
+
+  useEffect(() => {
+    if (isFirstLoad) {
+      if (selectedCoin !== undefined && selectedCoin.id === params.id) {
+        setIsFirstLoad(false);
+        setSearchFilter(selectedCoin.name);
+      }
+    }
+  }, [isFirstLoad, params.id, selectedCoin])
 
   return (
     <Modal handleDismiss={navigateBack}>
-      {selectedCoin !== undefined &&
-        <TransactionForm
-          coins={coins}
-          selectedCoin={selectedCoin}
-          searchCoinName={searchFilter}
-          onChangeSearchFilter={changeSearchFilter}
-          navigateBack={navigateBack}
-          submit={submit}
-        />}
+      <TransactionForm
+        coins={coins || []}
+        selectedCoin={selectedCoin}
+        searchCoinName={searchFilter}
+        onChangeSearchFilter={changeSearchFilter}
+        navigateBack={navigateBack}
+        submit={submit}
+      />
     </Modal>
   );
 }

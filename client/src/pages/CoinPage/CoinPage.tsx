@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import Coin, { CoinHistory, GraphicPeriod } from "models/Coin";
+import { CoinHistory, GraphicPeriod } from "models/Coin";
 
 import TextCard from "components/TextCard/TextCard";
 import GraphicCard from "components/GraphicCard/GraphicCard";
@@ -11,63 +11,58 @@ import {
   getDateMonthAgo,
   getDateWeekAgo
 } from "logic/utils/Helper";
-import coinCapController from "logic/storage/CoinCapController";
 
 import styles from "pages/CoinPage/CoinPage.module.scss";
+import { createTRPCReact } from "@trpc/react-query";
 
-export default function CoinPage() {
+import { AppRouter } from "../../../../server/src/appRouter"
+
+const trpc = createTRPCReact<AppRouter>();
+
+function CoinPage() {
   const navigate = useNavigate();
   const params = useParams();
 
-  const [coin, setCoin] = useState<Coin>();
-  const [coinHistory, setCoinHistory] = useState<CoinHistory[]>([]);
+  const coinData = trpc.getCoinById.useQuery(params.id || '');
+  const coin = coinData.data;
+
+  const [graphicPeriod, setGraphicPeriod] = useState<GraphicPeriod>(GraphicPeriod.d1);
+  const graphicInterval = useMemo(() =>
+    graphicPeriod === GraphicPeriod.m1
+      ? "d1"
+      : graphicPeriod === GraphicPeriod.w1
+        ? "h12"
+        : graphicPeriod === GraphicPeriod.d1
+          ? "m30"
+          : "m30"
+    , [graphicPeriod]);
+  const [startDate, endDate] = useMemo(() =>
+    graphicPeriod === GraphicPeriod.m1
+      ? [getDateMonthAgo(new Date()), new Date()]
+      : graphicPeriod === GraphicPeriod.w1
+        ? [getDateWeekAgo(new Date()), new Date()]
+        : graphicPeriod === GraphicPeriod.d1
+          ? [getDateDayAgo(new Date()), new Date()]
+          : [getDateDayAgo(new Date()), new Date()]
+    , [graphicPeriod]);
+
+  const coinHistoryData = trpc.getCoinHistory.useQuery({
+    id: params.id || coin?.id || '',
+    interval: graphicInterval,
+    end: endDate,
+    start: startDate
+  });
+  const coinHistory = coinHistoryData.data as unknown as CoinHistory[];
+
+  function updateGraphicPeriod(newValue: GraphicPeriod) {
+    setGraphicPeriod(newValue);
+  }
 
   function navigateBack() {
     navigate(-1);
   }
 
-  async function loadCoinHistory(
-    coinId: string,
-    graphicPeriod: GraphicPeriod
-  ) {
-    const graphicInterval =
-      graphicPeriod === GraphicPeriod.m1
-        ? "d1"
-        : graphicPeriod === GraphicPeriod.w1
-          ? "h12"
-          : graphicPeriod === GraphicPeriod.d1
-            ? "m30"
-            : "m30";
-
-    const [startDate, endDate] =
-      graphicPeriod === GraphicPeriod.m1
-        ? [getDateMonthAgo(new Date()), new Date()]
-        : graphicPeriod === GraphicPeriod.w1
-          ? [getDateWeekAgo(new Date()), new Date()]
-          : graphicPeriod === GraphicPeriod.d1
-            ? [getDateDayAgo(new Date()), new Date()]
-            : [getDateDayAgo(new Date()), new Date()];
-
-    const data = await coinCapController.getCoinHistory(
-      coinId,
-      graphicInterval,
-      endDate,
-      startDate,
-    );
-    setCoinHistory(data);
-  }
-
-  useEffect(() => {
-    async function loadCoin(coinId: Coin['id']) {
-      await coinCapController.getCoinById(coinId).then(loadedCoin => setCoin(loadedCoin));
-    }
-    if (params.id !== undefined) {
-      loadCoin(params.id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  if (!coin) return null;
+  if (!coin) return <div>Loading...</div>;
 
   return (
     <div className={styles.wrapper}>
@@ -75,12 +70,15 @@ export default function CoinPage() {
         coin={coin}
         closePage={navigateBack}
       />
-      <GraphicCard
-        coinId={coin.id}
+      {!coinHistory && <div>Loading...</div>}
+      {coinHistory && <GraphicCard
         coinHistory={coinHistory}
-        reloadCoinHistory={loadCoinHistory}
-      />
+        graphicPeriod={graphicPeriod}
+        updateGraphicPeriod={updateGraphicPeriod}
+      />}
     </div>
   );
 }
 
+const MemoCoinPage = memo(CoinPage);
+export default MemoCoinPage;

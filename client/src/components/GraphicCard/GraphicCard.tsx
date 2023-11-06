@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { memo } from "react";
 
 import { CoinHistory, GraphicPeriod } from "models/Coin";
 
@@ -10,39 +10,33 @@ import { priceToNumber } from "logic/utils/Helper";
 import styles from "components/GraphicCard/GraphicCard.module.scss";
 
 interface GraphicCardProps {
-  coinId: string;
   coinHistory: CoinHistory[];
-  reloadCoinHistory: (
-    coinId: string,
-    graphicPeriod: GraphicPeriod
-  ) => void;
+  graphicPeriod: GraphicPeriod,
+  updateGraphicPeriod: (newValue: GraphicPeriod) => void,
 }
 
-export default function GraphicCard({
-  coinId,
+function GraphicCard({
   coinHistory,
-  reloadCoinHistory,
+  graphicPeriod,
+  updateGraphicPeriod,
 }: GraphicCardProps) {
-  const [graphicPeriod, setGraphicPeriod] = useState<GraphicPeriod>(
-    GraphicPeriod.d1,
-  );
 
-  function updateGraphicPeriod(newPeriod: string) {
+  function handlerUpdateGraphicPeriod(newPeriod: string) {
     switch (newPeriod) {
       case GraphicPeriod.m1: {
-        setGraphicPeriod(GraphicPeriod.m1);
+        updateGraphicPeriod(GraphicPeriod.m1);
         break;
       }
       case GraphicPeriod.w1: {
-        setGraphicPeriod(GraphicPeriod.w1);
+        updateGraphicPeriod(GraphicPeriod.w1);
         break;
       }
       case GraphicPeriod.d1: {
-        setGraphicPeriod(GraphicPeriod.d1);
+        updateGraphicPeriod(GraphicPeriod.d1);
         break;
       }
       default: {
-        setGraphicPeriod((currentValue) => currentValue);
+        updateGraphicPeriod(graphicPeriod);
       }
     }
   }
@@ -76,11 +70,6 @@ export default function GraphicCard({
     return `${formattedDate}, ${formattedTime}`;
   });
 
-  useEffect(() => {
-    reloadCoinHistory(coinId, graphicPeriod)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graphicPeriod]);
-
   return (
     <section className={styles.wrapper}>
       <header className={styles.header}>
@@ -89,10 +78,13 @@ export default function GraphicCard({
           name="period"
           options={graphicPeriodSelect}
           selectedOption={graphicPeriod}
-          onChange={updateGraphicPeriod}
+          onChange={handlerUpdateGraphicPeriod}
         />
       </header>
       <Graphic chartData={chartData} labels={labels} />
     </section>
   );
 }
+
+const MemoGraphicCard = memo(GraphicCard);
+export default MemoGraphicCard;

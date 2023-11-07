@@ -58,7 +58,7 @@ function GraphicCard({
 
 		const date = new Date(value.time);
 
-		const formattedDay = formatTimeValue(date.getDay());
+		const formattedDay = formatTimeValue(date.getDate());
 		const formattedMonth = formatTimeValue(date.getMonth() + 1);
 		const formattedDate = `${formattedDay}.${formattedMonth}`;
 

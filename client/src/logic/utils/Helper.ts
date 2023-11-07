@@ -139,19 +139,19 @@ export function sortCoinList(
 }
 
 export function getDateDayAgo(startDate: Date) {
-	const endDate = startDate;
-	endDate.setDate(startDate.getDate() - 1);
+	const oneDayInMS = 86400000;
+	const endDate = new Date(startDate.getTime() - 1*oneDayInMS);;
 	return endDate;
 }
 
 export function getDateWeekAgo(startDate: Date) {
-	const endDate = startDate;
-	endDate.setDate(startDate.getDay() - 7);
+	const oneDayInMS = 86400000;
+	const endDate = new Date(startDate.getTime() - 7*oneDayInMS);
 	return endDate;
 }
 
 export function getDateMonthAgo(startDate: Date) {
-	const endDate = startDate;
+	const endDate = new Date(startDate)
 	endDate.setMonth(startDate.getMonth() - 1);
 	return endDate;
 }

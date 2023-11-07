@@ -20,7 +20,7 @@ function SelectWithSearch({
 	const [searchValue, setSearchValue] = useState<string>(value);
 	const [isFocusInput, setIsFocusInput] = useState<boolean>(false);
 
-	const reloadList = useDebounce(() => onSearchChange(searchValue), 300);
+	const reloadList = useDebounce((value) => onSearchChange(value), 300);
 
 	const SEARCH_ID = 'searchId';
 
@@ -30,11 +30,15 @@ function SelectWithSearch({
 
 	function changeSearchValue(value: string) {
 		setSearchValue(value);
+		
+		reloadList(value);
 	}
 
 	function setOption(value: string) {
 		setSearchValue(value);
 		setIsFocusInput(false);
+		
+		reloadList(value);
 	}
 
 	function handleInputFocus(
@@ -44,11 +48,6 @@ function SelectWithSearch({
 			setIsFocusInput(true);
 		}
 	}
-
-	useEffect(() => {
-		reloadList();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [searchValue]);
 
 	useEffect(() => {
 		setSearchValue(value);

@@ -38,22 +38,6 @@ export default function TransactionForm({
 }: TransactionFormProps) {
 	const [quantity, setQuantity] = useState<number>(1);
 
-	function handleQuantityChange(event: React.ChangeEvent<HTMLInputElement>) {
-		setQuantity(Number(event.target.value));
-	}
-
-	const handleSubmit = useMemo(
-		() => (event: React.MouseEvent) => {
-			event.preventDefault();
-
-			if (!selectedCoin) return;
-
-			submit(selectedCoin.id, selectedCoin.priceUsd, quantity);
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[]
-	);
-
 	const coinsNameList: string[] = useMemo(
 		() => coins.map((coin) => coin.name),
 		[coins]
@@ -75,16 +59,31 @@ export default function TransactionForm({
 
 	const buttonTitle = !(quantity > 0 && quantity <= supply)
 		? `The quantity must be greater than 0 and less than ${formatSupply(
-				supply,
-				selectedCoin?.symbol || ''
-		  )} (total quantity of asset issued).`
+			supply,
+			selectedCoin?.symbol || ''
+		)} (total quantity of asset issued).`
 		: selectedCoin === undefined
-		? `Please select a coin from the list.`
-		: `Buy ${
-				selectedCoin.name
-		  } in the amount of ${quantity} coins for ${formatPrice(
+			? `Please select a coin from the list.`
+			: `Buy ${selectedCoin.name
+			} in the amount of ${quantity} coins for ${formatPrice(
 				totalPrice
-		  )} (worth ${selectedCoin.priceUsd} each).`;
+			)} (worth ${selectedCoin.priceUsd} each).`;
+
+	const handleSubmit = useMemo(
+		() => (event: React.MouseEvent) => {
+			event.preventDefault();
+
+			if (!selectedCoin) return;
+
+			submit(selectedCoin.id, selectedCoin.priceUsd, quantity);
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[isValid]
+	);
+
+	function handleQuantityChange(event: React.ChangeEvent<HTMLInputElement>) {
+		setQuantity(Number(event.target.value));
+	}
 
 	return (
 		<form className={styles.wrapper}>

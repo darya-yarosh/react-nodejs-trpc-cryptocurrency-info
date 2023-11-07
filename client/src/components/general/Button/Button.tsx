@@ -8,7 +8,7 @@ interface ButtonProps {
 	title?: string;
 	type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
 	disabled?: React.ButtonHTMLAttributes<HTMLButtonElement>['disabled'];
-	onClick?: (event: React.MouseEvent) => void;
+	onClick: (event: React.MouseEvent) => void;
 }
 
 function Button({

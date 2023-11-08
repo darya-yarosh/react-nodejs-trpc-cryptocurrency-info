@@ -16,7 +16,10 @@
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
-		"baseUrl": "src"
+		"baseUrl": "src",
+		"paths": {
+			"test-utils": ["./logic/utils/test-utils"]
+		  }
 	},
-	"include": ["src"]
+	"include": ["src", "jest.config.ts"]
 }

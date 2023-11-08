@@ -69,17 +69,13 @@ export default function TransactionForm({
 				totalPrice
 			)} (worth ${selectedCoin.priceUsd} each).`;
 
-	const handleSubmit = useMemo(
-		() => (event: React.MouseEvent) => {
-			event.preventDefault();
+	function handleSubmit(event: React.MouseEvent) {
+		event.preventDefault();
 
-			if (!selectedCoin) return;
+		if (!selectedCoin) return;
 
-			submit(selectedCoin.id, selectedCoin.priceUsd, quantity);
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[isValid]
-	);
+		submit(selectedCoin.id, selectedCoin.priceUsd, quantity);
+	}
 
 	function handleQuantityChange(event: React.ChangeEvent<HTMLInputElement>) {
 		setQuantity(Number(event.target.value));

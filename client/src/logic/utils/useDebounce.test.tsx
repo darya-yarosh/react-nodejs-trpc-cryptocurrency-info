@@ -2,7 +2,7 @@ import { screen, render } from "@testing-library/react";
 import { act } from '@testing-library/react-hooks';
 import userEvent from "@testing-library/user-event";
 
-import TestComponent from 'logic/tests/TestComponent';
+import TestComponent from 'logic/utils/UseDebounceTestComponent';
 
 describe('useDebounce hook module', function () {
     afterEach(() => {

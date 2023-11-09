@@ -13,6 +13,12 @@ const config: Config = {
   moduleFileExtensions: [...defaults.moduleFileExtensions, 'mts'],
   collectCoverage: true,
   coverageReporters: ['json', 'html', 'text'],
+  reporters: [
+    "default",
+    ["./node_modules/jest-html-reporter", {
+      "pageTitle": "Test Report"
+    }]
+  ]
 };
 
 export default config;

@@ -44,10 +44,6 @@ export default function CoinListPage() {
 			limit: 3,
 		}).data || null;
 
-	const transactionSummaryList = useMemo(
-		() => mapTransactionsByCoin(portfolio.transactionList),
-		[portfolio.transactionList]
-	);
 
 	const COINS_PER_PAGE = 10;
 
@@ -63,6 +59,11 @@ export default function CoinListPage() {
 		[coinList]
 	);
 	const isLastPage = useMemo(() => PAGES_LIMIT < 1, [PAGES_LIMIT]);
+
+	const transactionSummaryList = useMemo(
+		() => mapTransactionsByCoin(portfolio.transactionList),
+		[portfolio.transactionList]
+	);
 
 	const portfolioCoins =
 		trpc.getCoinList.useQuery({

@@ -106,22 +106,21 @@ const appRouter = trpc.router({
 						symbol: storageCoin.symbol,
 						name: storageCoin.name,
 						supply: formatSupply(
-							storageCoin.supply,
+							Number(storageCoin.supply),
 							storageCoin.symbol
 						),
-						maxSupply: formatSupply(maxSupply, storageCoin.symbol),
-						marketCapUsd: formatMarketCap(storageCoin.marketCapUsd),
+						maxSupply: formatSupply(Number(maxSupply), storageCoin.symbol),
+						marketCapUsd: formatMarketCap(Number(storageCoin.marketCapUsd)),
 						volumeUsd24Hr: formatVolumeUsd24Hr(
-							storageCoin.volumeUsd24Hr
+							Number(storageCoin.volumeUsd24Hr)
 						),
 						priceUsd: formatPrice(storageCoin.priceUsd),
 						changePercent24Hr: formatPercent(
 							storageCoin.changePercent24Hr
 						),
-						vwap24Hr: storageCoin.vwap24Hr,
+						vwap24Hr: Number(storageCoin.vwap24Hr),
 						logo: `images/coins/${storageCoin.symbol.toLowerCase()}.svg`,
 					};
-
 					return coin;
 				}
 			);
@@ -151,17 +150,17 @@ const appRouter = trpc.router({
 				rank: Number(storageCoin.rank),
 				symbol: storageCoin.symbol,
 				name: storageCoin.name,
-				supply: formatSupply(storageCoin.supply, storageCoin.symbol),
+				supply: formatSupply(Number(storageCoin.supply), storageCoin.symbol),
 				maxSupply: formatSupply(
-					storageCoin.maxSupply,
+					Number(storageCoin.maxSupply),
 					storageCoin.symbol
 				),
-				marketCapUsd: formatMarketCap(storageCoin.marketCapUsd),
-				volumeUsd24Hr: formatVolumeUsd24Hr(storageCoin.volumeUsd24Hr),
+				marketCapUsd: formatMarketCap(Number(storageCoin.marketCapUsd)),
+				volumeUsd24Hr: formatVolumeUsd24Hr(Number(storageCoin.volumeUsd24Hr)),
 				priceUsd: formatPrice(storageCoin.priceUsd),
 				changePercent24Hr: formatPercent(storageCoin.changePercent24Hr),
-				vwap24Hr: storageCoin.vwap24Hr,
-				logo: `images/coins/${storageCoin.symbol.toLowerCase()}.svg`,
+				vwap24Hr: Number(storageCoin.vwap24Hr),
+				logo: `images/coins/${(storageCoin.symbol || '').toLowerCase()}.svg`,
 			};
 
 			return coin;
@@ -180,21 +179,21 @@ const appRouter = trpc.router({
 				value?.hasOwnProperty('interval') &&
 				typeof valueAsType.interval === 'string' &&
 				valueAsType.interval ===
-					(valueAsType.interval as CoinHistoryIntervalList);
+				(valueAsType.interval as CoinHistoryIntervalList);
 
 			const isValidEnd =
 				value?.hasOwnProperty('end') &&
 				(valueAsType.end === null ||
 					(typeof valueAsType.end === 'string' &&
 						new Date(valueAsType.end).toString() !==
-							'Invalid Date'));
+						'Invalid Date'));
 
 			const isValidStart =
 				value?.hasOwnProperty('start') &&
 				(valueAsType.start === null ||
 					(typeof valueAsType.start === 'string' &&
 						new Date(valueAsType.start).toString() !==
-							'Invalid Date'));
+						'Invalid Date'));
 
 			if (
 				isValidObject &&
@@ -235,7 +234,7 @@ const appRouter = trpc.router({
 			const url =
 				end !== null && start !== null
 					? API +
-					  `/assets/${id}/history?interval=${interval}&end=${+end}&start=${+start}`
+					`/assets/${id}/history?interval=${interval}&end=${+end}&start=${+start}`
 					: API + `/assets/${id}/history?interval=${interval}`;
 			const apiUrl = await fetch(url, requestOptions);
 			const dataInfo = await apiUrl.json();

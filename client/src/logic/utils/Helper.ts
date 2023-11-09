@@ -24,32 +24,54 @@ export function supplyToNumber(supply: string, symbol: Coin['symbol']) {
 	return Number(value.replaceAll(',', ''));
 }
 
-export function formatPrice(price: number) {
-	const priceDecimalStr = String(price).split('.');
+export function formatPrice(price: string) {
+	const priceDecimalStr = price !== undefined
+		? price.split('.')
+		: '0'.split('.');
+
+	if (priceDecimalStr[1] === undefined) {
+		priceDecimalStr.push('00');
+	}
 
 	let nonZeroIndex = 0;
 	let currentNum = '0';
-	while (currentNum === '0') {
+	while (currentNum === '0'
+		&& nonZeroIndex < priceDecimalStr[1].length
+	) {
 		currentNum = String(priceDecimalStr[1])[nonZeroIndex];
-		nonZeroIndex++;
+		nonZeroIndex += 1;
 	}
 
-	return nonZeroIndex < 2
+	const priceDecimalStrTail =
+		'0'.repeat(nonZeroIndex - 1)
+		+ priceDecimalStr[1][nonZeroIndex - 1]
+		+ (priceDecimalStr[1][nonZeroIndex] !== undefined
+			? priceDecimalStr[1][nonZeroIndex]
+			: '0')
+		+ (priceDecimalStr[1][nonZeroIndex + 1] !== undefined
+			? priceDecimalStr[1][nonZeroIndex + 1]
+			: '0')
+		+ (priceDecimalStr[1][nonZeroIndex + 2] !== undefined
+			? priceDecimalStr[1][nonZeroIndex + 2]
+			: '0');
+
+	return nonZeroIndex <= 2
 		? new Intl.NumberFormat('en', {
-				style: 'currency',
-				currency: 'USD',
-				minimumFractionDigits: 2,
-				maximumFractionDigits: 2,
-		  }).format(price)
+			style: 'currency',
+			currency: 'USD',
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		}).format(Number(price))
 		: new Intl.NumberFormat('en', {
-				style: 'currency',
-				currency: 'USD',
-				minimumFractionDigits: nonZeroIndex + 3,
-				maximumFractionDigits: nonZeroIndex + 3,
-		  }).format(price);
+			style: 'currency',
+			currency: 'USD',
+			minimumFractionDigits: 0,
+			maximumFractionDigits: 0,
+		}).format(Number(priceDecimalStr[0]))
+		+ '.' + priceDecimalStrTail.toString();
 }
 
-export function formatSupply(supply: number, symbol: string) {
+export function formatSupply(supply: number | null, symbol: string) {
 	const value = supply === null ? Infinity : supply;
 
 	return (
@@ -77,27 +99,35 @@ export function formatVolumeUsd24Hr(volumeUsd24Hr: number) {
 	}).format(volumeUsd24Hr);
 }
 
-export function formatPercent(persent: number) {
-	const percentDecimalStr = String(persent).split('.');
+export function formatPercent(percent: string) {
+	const percentDecimalStr = percent !== undefined
+		? percent.split('.')
+		: '0'.split('.');
+
+	if (percentDecimalStr[1] === undefined) {
+		percentDecimalStr.push('00');
+	}
 
 	let nonZeroIndex = 0;
 	let currentNum = '0';
-	while (currentNum === '0') {
+	while (currentNum === '0'
+		&& nonZeroIndex < percentDecimalStr[1].length
+	) {
 		currentNum = String(percentDecimalStr[1])[nonZeroIndex];
 		nonZeroIndex++;
 	}
 
 	return nonZeroIndex <= 2
 		? new Intl.NumberFormat('en', {
-				style: 'percent',
-				minimumFractionDigits: 2,
-				maximumFractionDigits: 2,
-		  }).format(persent / 100)
+			style: 'percent',
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		}).format(Number(percentDecimalStr.join('.')) / 100)
 		: new Intl.NumberFormat('en', {
-				style: 'percent',
-				minimumFractionDigits: nonZeroIndex + 3,
-				maximumFractionDigits: nonZeroIndex + 3,
-		  }).format(persent / 100);
+			style: 'percent',
+			minimumFractionDigits: nonZeroIndex + 3,
+			maximumFractionDigits: nonZeroIndex + 3,
+		}).format(Number(percentDecimalStr.join('.')) / 100);
 }
 
 export function sortCoinList(
@@ -123,7 +153,7 @@ export function sortCoinList(
 		case CoinListSortType.changePercent24Hr:
 			return coinList.sort((a, b) =>
 				percentToNumber(a.changePercent24Hr) >=
-				percentToNumber(b.changePercent24Hr)
+					percentToNumber(b.changePercent24Hr)
 					? placementFlag
 					: -placementFlag
 			);
@@ -140,13 +170,13 @@ export function sortCoinList(
 
 export function getDateDayAgo(startDate: Date) {
 	const oneDayInMS = 86400000;
-	const endDate = new Date(startDate.getTime() - 1*oneDayInMS);;
+	const endDate = new Date(startDate.getTime() - 1 * oneDayInMS);;
 	return endDate;
 }
 
 export function getDateWeekAgo(startDate: Date) {
 	const oneDayInMS = 86400000;
-	const endDate = new Date(startDate.getTime() - 7*oneDayInMS);
+	const endDate = new Date(startDate.getTime() - 7 * oneDayInMS);
 	return endDate;
 }
 

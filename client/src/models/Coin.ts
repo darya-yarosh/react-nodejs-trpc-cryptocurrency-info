@@ -30,12 +30,6 @@ export const CoinLabels = {
 	maxSupply: 'Max supply',
 };
 
-export interface StorageCoinHistory {
-	priceUsd: number;
-	time: number;
-	date: Date;
-}
-
 export interface CoinHistory {
 	priceUsd: string;
 	time: number;

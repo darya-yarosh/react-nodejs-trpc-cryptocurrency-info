@@ -34,7 +34,7 @@ function PortfolioLiteCard({ actualPrice }: PortfolioLiteCardProps) {
 			<label className={styles.label}>My Portfolio</label>
 			<div className={styles.values}>
 				<span className={styles.spentAmount}>
-					{formatPrice(spentAmount)}
+					{formatPrice(spentAmount.toString())}
 				</span>
 				<Diff
 					className={styles.diff}

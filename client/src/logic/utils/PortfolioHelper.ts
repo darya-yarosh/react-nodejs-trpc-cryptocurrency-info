@@ -8,29 +8,12 @@ export function getSpentAmount(portfolio: Portfolio) {
 	return getTransactionsSum(portfolio.transactionList);
 }
 
-export function getCoinSpentAmount(portfolio: Portfolio, coinId: Coin['id']) {
-	const coinTransactions = portfolio.transactionList.filter(
-		(transaction) => transaction.coinId === coinId
-	);
-	return getTransactionsSum(coinTransactions);
-}
-
 function getTransactionsSum(list: Transaction[]): number {
 	return list.reduce(
 		(price, transaction) =>
 			(price += transaction.coinPrice * transaction.coinCount),
 		0
 	);
-}
-
-export function getTransactionsCoinList(list: Transaction[]): Coin['id'][] {
-	return list.reduce<Coin['id'][]>((coins, transaction) => {
-		if (!coins.includes(transaction.coinId)) {
-			coins.push(transaction.coinId);
-		}
-
-		return coins;
-	}, []);
 }
 
 export function mapTransactionsByCoin(list: Transaction[]): CoinSummary[] {
@@ -59,7 +42,7 @@ export function getCoinsActualPrice(
 ): CoinActualPrice[] {
 	return coinList.map((coin) => {
 		const actualPrice = priceToNumber(
-			actualCoinList.find((c) => c.id === coin.id)?.priceUsd || ''
+			actualCoinList.find((c) => c.id === coin.id)?.priceUsd || '0'
 		);
 		return {
 			coinId: coin.id,

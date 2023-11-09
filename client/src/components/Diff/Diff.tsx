@@ -21,7 +21,7 @@ function Diff({
 	const percent =
 		actual === 0 && original === 0
 			? '0.00%'
-			: formatPercent((actual * 100) / original - 100);
+			: formatPercent(((actual * 100) / original - 100).toString());
 
 	const classNames = [
 		positive ? styles.diffPositive : styles.diffNegative,
@@ -32,7 +32,7 @@ function Diff({
 		<p className={classNames}>
 			<span>
 				{positive ? '+' : '-'}
-				{formatPrice(Math.abs(difference))}
+				{formatPrice(Math.abs(difference).toString())}
 			</span>
 			<span>
 				({positive ? '+' : ''}

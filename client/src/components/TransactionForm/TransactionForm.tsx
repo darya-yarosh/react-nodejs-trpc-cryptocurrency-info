@@ -66,7 +66,7 @@ export default function TransactionForm({
 			? `Please select a coin from the list.`
 			: `Buy ${selectedCoin.name
 			} in the amount of ${quantity} coins for ${formatPrice(
-				totalPrice
+				totalPrice.toString()
 			)} (worth ${selectedCoin.priceUsd} each).`;
 
 	function handleSubmit(event: React.MouseEvent) {
@@ -122,7 +122,7 @@ export default function TransactionForm({
 			</section>
 			<section className={styles.section}>
 				<label>Total price</label>
-				<span>{totalPrice ? formatPrice(totalPrice) : '-'}</span>
+				<span>{totalPrice ? formatPrice(totalPrice.toString()) : '-'}</span>
 			</section>
 			<Button
 				disabled={!isValid}

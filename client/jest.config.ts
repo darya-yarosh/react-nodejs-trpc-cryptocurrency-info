@@ -4,7 +4,7 @@ import {defaults} from 'jest-config';
 const config: Config = {
   preset: 'ts-jest',
   verbose: true,
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
@@ -13,6 +13,7 @@ const config: Config = {
   moduleFileExtensions: [...defaults.moduleFileExtensions, 'mts'],
   collectCoverage: true,
   coverageReporters: ['json', 'html', 'text'],
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts']
 };
 
 export default config;

@@ -37,7 +37,7 @@ export default function PortfolioCoin({
 			</div>
 			<div className={styles.price}>
 				<span className={styles.label}>Price:</span>
-				<span>{formatPrice(coin.moneySpent)}</span>
+				<span>{formatPrice(coin.moneySpent.toString())}</span>
 				<Diff
 					original={coin.moneySpent}
 					actual={coin.amount * priceToNumber(coin.priceUsd)}

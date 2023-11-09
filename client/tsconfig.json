@@ -19,7 +19,9 @@
 		"baseUrl": "src",
 		"paths": {
 			"test-utils": ["./logic/utils/test-utils"]
-		  }
+		  },
+		"types": [ "node" ],
+		"typeRoots": [ "node_modules/@types" ]
 	},
 	"include": ["src", "jest.config.ts"]
 }

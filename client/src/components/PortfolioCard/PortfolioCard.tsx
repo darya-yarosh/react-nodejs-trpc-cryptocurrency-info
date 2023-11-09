@@ -51,7 +51,7 @@ export default function PortfolioCard({
 						Total price
 					</label>
 					<span className={styles.price}>
-						{formatPrice(spentAmount)}
+						{formatPrice(spentAmount.toString())}
 					</span>
 					<Diff
 						className={styles.diff}

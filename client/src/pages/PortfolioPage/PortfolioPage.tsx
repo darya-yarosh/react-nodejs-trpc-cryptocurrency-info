@@ -59,15 +59,19 @@ export default function PortfolioPage() {
 		return loadedTransactionCoins;
 	}, [portfolioCoins, transactionSummaryList]);
 
-	const favoriteCoins =
-		portfolio.favorites.length > 0
+	const favoriteCoins = (
+		portfolio !== undefined
+		&& portfolio.favorites !== undefined
+	)
+		? (portfolio.favorites.length > 0
 			? trpc.getCoinList.useQuery({
-					search: null,
-					ids: portfolio.favorites,
-					offset: null,
-					limit: null,
-			  }).data || []
-			: [];
+				search: null,
+				ids: portfolio.favorites,
+				offset: null,
+				limit: null,
+			}).data || []
+			: [])
+		: [];
 
 	const portfolioActualPrice = useMemo(() => {
 		if (portfolioCoins === undefined) return 0;

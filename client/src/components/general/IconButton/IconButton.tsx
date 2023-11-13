@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
 import styles from 'components/general/IconButton/IconButton.module.scss';
 
@@ -17,11 +17,18 @@ function IconButton({
 	sizePX = 25,
 	disabled = false,
 }: IconButtonProps) {
+	const [logoSrc, setLogoSrc] = useState<string>(iconSVG);
+
 	const wrapperSize = `${sizePX + 8}px`;
 	const iconSize = `${sizePX}px`;
 
+	function setDefaultLogoSrc() {
+		setLogoSrc('/images/imgNotFound.svg');
+	}
+
 	return (
 		<button
+			data-testid={'iconButton-button'}
 			className={styles.wrapper}
 			onClick={onClick}
 			type="button"
@@ -29,8 +36,10 @@ function IconButton({
 			disabled={disabled}
 		>
 			<img
+				data-testid={'iconButton-icon'}
 				className={styles.icon}
-				src={iconSVG}
+				src={logoSrc}
+				onError={setDefaultLogoSrc}
 				alt={caption}
 				style={{ width: iconSize, height: iconSize }}
 			/>

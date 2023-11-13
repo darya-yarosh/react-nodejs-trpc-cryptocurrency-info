@@ -12,7 +12,7 @@ interface TrendingCoinsProps {
 
 function TrendingCoins({ coinList }: TrendingCoinsProps) {
 	return (
-		<div className={styles.wrapper}>
+		<div className={styles.wrapper} data-testid={'trendingCoins'}>
 			<h1 className={styles.title}>Trending coins</h1>
 			<section className={styles.coinList}>
 				{coinList.map((coin) => {

@@ -49,6 +49,7 @@ function Graphic({ chartData, labels }: GraphicProps) {
 	return (
 		<div className={styles.wrapper}>
 			<canvas
+				data-testid={'graphic'}
 				ref={canvasCallback}
 				id={'graphicChart'}
 				className={styles.graphic}

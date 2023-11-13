@@ -17,11 +17,9 @@ function SortIcon({
 	isEnabled,
 	isSelected,
 }: SortIconProps) {
-	const src = `
-        /images/sort/sort-${
-			isEnabled && isSelected
-				? sortOrder.toLowerCase()
-				: isEnabled
+	const src = `/images/sort/sort-${isEnabled && isSelected
+			? sortOrder.toLowerCase()
+			: isEnabled
 				? 'enabled'
 				: 'disabled'
 		}.svg`;

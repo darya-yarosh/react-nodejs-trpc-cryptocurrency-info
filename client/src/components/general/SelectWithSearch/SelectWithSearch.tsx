@@ -30,14 +30,14 @@ function SelectWithSearch({
 
 	function changeSearchValue(value: string) {
 		setSearchValue(value);
-		
+
 		reloadList(value);
 	}
 
 	function setOption(value: string) {
 		setSearchValue(value);
 		setIsFocusInput(false);
-		
+
 		reloadList(value);
 	}
 
@@ -54,7 +54,7 @@ function SelectWithSearch({
 	}, [value]);
 
 	return (
-		<div className={styles.wrapper}>
+		<div className={styles.wrapper} data-testid={'selectWithSearch'}>
 			<input
 				className={styles.input}
 				id={SEARCH_ID}

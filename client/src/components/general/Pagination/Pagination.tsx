@@ -22,8 +22,9 @@ export default function Pagination({
 	const currentPageNum = currentPageInd + 1;
 
 	return (
-		<nav className={styles.pagination}>
+		<nav className={styles.pagination} data-testid={'pagination'}>
 			<button
+				data-testid={'pagination-prevButton'}
 				className={styles.pageNum}
 				onClick={prevPage}
 				disabled={currentPageInd <= 0}
@@ -31,13 +32,15 @@ export default function Pagination({
 				{`<`}
 			</button>
 			<button
+				data-testid={'pagination-pageCountText'}
 				className={styles.pageNum__current}
-				onClick={() => {}}
+				onClick={() => { }}
 				disabled
 			>
 				{currentPageNum}
 			</button>
 			<button
+				data-testid={'pagination-nextButton'}
 				className={styles.pageNum}
 				onClick={nextPage}
 				disabled={isLastPage}

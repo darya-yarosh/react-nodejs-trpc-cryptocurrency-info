@@ -16,9 +16,10 @@ export default function Select({
 	onChange,
 }: SelectProps) {
 	return (
-		<div className={styles.wrapper}>
-			{label && <p>{label}</p>}
+		<div className={styles.wrapper} data-testid="select">
+			{label && <label>{label}</label>}
 			<select
+				data-testid="select-list"
 				className={styles.select}
 				name={name}
 				value={selectedOption}

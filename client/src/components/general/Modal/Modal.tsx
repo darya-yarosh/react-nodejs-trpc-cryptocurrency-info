@@ -7,9 +7,9 @@ interface ModalProps {
 
 export default function Module({ handleDismiss, children }: ModalProps) {
 	return (
-		<div className={styles.wrapper}>
-			<div className={styles.backdrop} onClick={handleDismiss} />
-			<div className={styles.drawer}>{children}</div>
+		<div className={styles.wrapper} data-testid={'modal'}>
+			<div className={styles.backdrop} onClick={handleDismiss} data-testid={'modal-backdrop'} />
+			<div className={styles.drawer} data-testid={'modal-drawer'}>{children}</div>
 		</div>
 	);
 }

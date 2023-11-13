@@ -31,6 +31,7 @@ function Icon({ iconSVG, sizePX = 25, alt }: IconProps) {
 				onError={setDefaultLogoSrc}
 				src={logoSrc}
 				alt={alt}
+				data-testid="icon"
 				style={{ width: iconSize, height: iconSize }}
 			/>
 		</div>

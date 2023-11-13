@@ -15,12 +15,13 @@ function Button({
 	className,
 	label,
 	title = '',
-	type,
-	disabled,
+	type = 'button',
+	disabled = false,
 	onClick,
 }: ButtonProps) {
 	return (
 		<button
+			data-testid="button"
 			disabled={disabled}
 			type={type}
 			title={title}

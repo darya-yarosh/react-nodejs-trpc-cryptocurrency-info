@@ -29,7 +29,7 @@ function Diff({
 	].join(' ');
 
 	return (
-		<p className={classNames}>
+		<p className={classNames} data-testid="diff">
 			<span>
 				{positive ? '+' : '-'}
 				{formatPrice(Math.abs(difference).toString())}

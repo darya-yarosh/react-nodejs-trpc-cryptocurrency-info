@@ -12,7 +12,7 @@ interface SearchInputProps {
 
 function SearchInput({ value, placeholderValue, onChange }: SearchInputProps) {
 	return (
-		<div className={styles.wrapper}>
+		<div className={styles.wrapper} data-testid="search">
 			<input
 				className={styles.input}
 				type="search"

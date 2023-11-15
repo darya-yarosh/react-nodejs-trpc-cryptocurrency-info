@@ -9,7 +9,7 @@ export enum CoinListSortType {
 }
 
 export function priceToNumber(price: string) {
-	return Number(price.replace('$', '').replaceAll(',', ''));
+	return Number(price.replace('$', '').replace(/,/g, ''));
 }
 
 export function percentToNumber(percent: string) {
@@ -17,11 +17,11 @@ export function percentToNumber(percent: string) {
 }
 
 export function supplyToNumber(supply: string, symbol: Coin['symbol']) {
-	const value = supply.replace(symbol, '').replaceAll(' ', '');
+	const value = supply.replace(symbol, '').replace(/ /g, '');
 
 	if (value === '∞') return Infinity;
 
-	return Number(value.replaceAll(',', ''));
+	return Number(value.replace(/,/g, ''));
 }
 
 export function formatPrice(price: string) {
@@ -76,6 +76,7 @@ export function formatSupply(supply: number | null, symbol: string) {
 
 	return (
 		new Intl.NumberFormat('en', {
+			minimumFractionDigits: 0,
 			maximumFractionDigits: 0,
 		}).format(value) +
 		' ' +
@@ -87,6 +88,7 @@ export function formatMarketCap(marketCap: number) {
 	return new Intl.NumberFormat('en', {
 		style: 'currency',
 		currency: 'USD',
+		minimumFractionDigits: 0,
 		maximumFractionDigits: 0,
 	}).format(marketCap);
 }
@@ -95,6 +97,7 @@ export function formatVolumeUsd24Hr(volumeUsd24Hr: number) {
 	return new Intl.NumberFormat('en', {
 		style: 'currency',
 		currency: 'USD',
+		minimumFractionDigits: 0,
 		maximumFractionDigits: 0,
 	}).format(volumeUsd24Hr);
 }

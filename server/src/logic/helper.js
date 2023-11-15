@@ -5,6 +5,7 @@ function formatVolumeUsd24Hr(volumeUsd24Hr) {
     return new Intl.NumberFormat('en', {
         style: 'currency',
         currency: 'USD',
+        minimumFractionDigits: 0,
         maximumFractionDigits: 0,
     }).format(volumeUsd24Hr);
 }
@@ -40,6 +41,7 @@ function formatMarketCap(marketCap) {
     return new Intl.NumberFormat('en', {
         style: 'currency',
         currency: 'USD',
+        minimumFractionDigits: 0,
         maximumFractionDigits: 0,
     }).format(marketCap);
 }
@@ -88,6 +90,7 @@ exports.formatPrice = formatPrice;
 function formatSupply(supply, symbol) {
     var value = supply === null ? Infinity : supply;
     return (new Intl.NumberFormat('en', {
+        minimumFractionDigits: 0,
         maximumFractionDigits: 0,
     }).format(value) +
         ' ' +

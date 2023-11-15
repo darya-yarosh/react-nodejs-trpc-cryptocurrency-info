@@ -2,6 +2,7 @@ export function formatVolumeUsd24Hr(volumeUsd24Hr: number) {
 	return new Intl.NumberFormat('en', {
 		style: 'currency',
 		currency: 'USD',
+		minimumFractionDigits: 0,
 		maximumFractionDigits: 0,
 	}).format(volumeUsd24Hr);
 }
@@ -41,6 +42,7 @@ export function formatMarketCap(marketCap: number) {
 	return new Intl.NumberFormat('en', {
 		style: 'currency',
 		currency: 'USD',
+		minimumFractionDigits: 0,
 		maximumFractionDigits: 0,
 	}).format(marketCap);
 }
@@ -97,6 +99,7 @@ export function formatSupply(supply: number | null, symbol: string) {
 
 	return (
 		new Intl.NumberFormat('en', {
+			minimumFractionDigits: 0,
 			maximumFractionDigits: 0,
 		}).format(value) +
 		' ' +

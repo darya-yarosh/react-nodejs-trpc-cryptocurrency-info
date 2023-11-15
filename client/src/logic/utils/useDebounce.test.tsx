@@ -1,3 +1,4 @@
+import { jest } from "@jest/globals";
 import { screen, render } from "@testing-library/react";
 import { act } from '@testing-library/react-hooks';
 import userEvent from "@testing-library/user-event";

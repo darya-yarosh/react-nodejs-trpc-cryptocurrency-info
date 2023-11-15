@@ -59,19 +59,12 @@ export default function PortfolioPage() {
 		return loadedTransactionCoins;
 	}, [portfolioCoins, transactionSummaryList]);
 
-	const favoriteCoins = (
-		portfolio !== undefined
-		&& portfolio.favorites !== undefined
-	)
-		? (portfolio.favorites.length > 0
-			? trpc.getCoinList.useQuery({
-				search: null,
-				ids: portfolio.favorites,
-				offset: null,
-				limit: null,
-			}).data || []
-			: [])
-		: [];
+	const favoriteCoins = trpc.getCoinList.useQuery({
+		search: null,
+		ids: portfolio.favorites.length > 0 ? portfolio.favorites : ['app-cryptocyrrency-test'],
+		offset: null,
+		limit: null,
+	}).data || [];
 
 	const portfolioActualPrice = useMemo(() => {
 		if (portfolioCoins === undefined) return 0;
@@ -84,8 +77,10 @@ export default function PortfolioPage() {
 	}, [portfolioCoins, transactionSummaryList]);
 
 	function navigateBack() {
-		navigate(-1);
+		navigate('/');
 	}
+
+	if (!portfolio) return <div>Loading...</div>;
 
 	return (
 		<Modal handleDismiss={navigateBack}>

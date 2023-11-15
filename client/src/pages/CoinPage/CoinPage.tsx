@@ -34,10 +34,10 @@ export default function CoinPage() {
 			graphicPeriod === GraphicPeriod.m1
 				? 'd1'
 				: graphicPeriod === GraphicPeriod.w1
-				? 'h12'
-				: graphicPeriod === GraphicPeriod.d1
-				? 'm30'
-				: 'm30',
+					? 'h12'
+					: graphicPeriod === GraphicPeriod.d1
+						? 'm30'
+						: 'm30',
 		[graphicPeriod]
 	);
 	const [startDate, endDate] = useMemo(
@@ -45,10 +45,10 @@ export default function CoinPage() {
 			graphicPeriod === GraphicPeriod.m1
 				? [getDateMonthAgo(new Date()), new Date()]
 				: graphicPeriod === GraphicPeriod.w1
-				? [getDateWeekAgo(new Date()), new Date()]
-				: graphicPeriod === GraphicPeriod.d1
-				? [getDateDayAgo(new Date()), new Date()]
-				: [getDateDayAgo(new Date()), new Date()],
+					? [getDateWeekAgo(new Date()), new Date()]
+					: graphicPeriod === GraphicPeriod.d1
+						? [getDateDayAgo(new Date()), new Date()]
+						: [getDateDayAgo(new Date()), new Date()],
 		[graphicPeriod]
 	);
 
@@ -66,10 +66,14 @@ export default function CoinPage() {
 
 	const navigateBack = useMemo(
 		() => () => {
-			navigate(-1);
+			navigate('/');
 		},
 		[navigate]
 	);
+
+	if (coinData.status === 'error') {
+		throw new Error("Invalid code id")
+	}
 
 	if (!coin) return <div>Loading...</div>;
 

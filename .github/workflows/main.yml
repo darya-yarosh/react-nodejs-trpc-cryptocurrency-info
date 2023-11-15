@@ -28,7 +28,7 @@ jobs:
         node-version: '16'
     - name: Run tests on client
       run : |
-        npm ci
+        sudo rm -rf node_modules package-lock.json && npm ci
         npm run test
   server_tests: 
     runs-on: ubuntu-latest

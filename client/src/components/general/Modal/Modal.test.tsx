@@ -1,4 +1,4 @@
-import { screen, render, act } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 
 import Modal from './Modal';
 import userEvent from "@testing-library/user-event";
@@ -18,7 +18,8 @@ describe('Modal component module', () => {
         expect(modalComponent.childNodes[1]).toContainHTML('p');
         expect(modalComponent.childNodes[1].childNodes[0]).toHaveTextContent('Test element')
     })
-    test('Closing when clicking on the backdrop', () => {
+
+    test('Closing when clicking on the backdrop', async () => {
         let isClosed = false;
         function handleDismiss() {
             isClosed = true;
@@ -30,18 +31,16 @@ describe('Modal component module', () => {
         )
 
         const backdropComponent = screen.getByTestId('modal-backdrop');
-        const closeModal = () => {
-            // eslint-disable-next-line testing-library/no-unnecessary-act
-            act(() => {
-                userEvent.click(backdropComponent);
-            });
+        const closeModal = async () => {
+            await userEvent.click(backdropComponent);
         }
 
         expect(isClosed).toBeFalsy();
-        closeModal();
+        await closeModal();
         expect(isClosed).toBeTruthy();
     })
-    test('Not closing when clicking on the drawer', () => {
+
+    test('Not closing when clicking on the drawer', async () => {
         let isClosed = false;
         function handleDismiss() {
             isClosed = true;
@@ -53,18 +52,16 @@ describe('Modal component module', () => {
         )
 
         const drawerComponent = screen.getByTestId('modal-drawer');
-        const clickToDrawer = () => {
-            // eslint-disable-next-line testing-library/no-unnecessary-act
-            act(() => {
-                userEvent.click(drawerComponent);
-            });
+        const clickToDrawer = async () => {
+            await userEvent.click(drawerComponent);
         }
 
         expect(isClosed).toBeFalsy();
-        clickToDrawer();
+        await clickToDrawer();
         expect(isClosed).toBeFalsy();
     })
-    test('Not closing when clicking on the modal', () => {
+
+    test('Not closing when clicking on the modal', async () => {
         let isClosed = false;
         function handleDismiss() {
             isClosed = true;
@@ -76,15 +73,12 @@ describe('Modal component module', () => {
         )
 
         const modalComponent = screen.getByTestId('modal');
-        const clickToModal = () => {
-            // eslint-disable-next-line testing-library/no-unnecessary-act
-            act(() => {
-                userEvent.click(modalComponent);
-            });
+        const clickToModal = async () => {
+            await userEvent.click(modalComponent);
         }
 
         expect(isClosed).toBeFalsy();
-        clickToModal();
+        await clickToModal();
         expect(isClosed).toBeFalsy();
     })
 });

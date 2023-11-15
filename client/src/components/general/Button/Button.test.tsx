@@ -1,11 +1,11 @@
-import { screen, render, act } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 
 import userEvent from "@testing-library/user-event";
 
 import Button from "./Button";
 
 describe('Button component module', () => {
-    test('Working onClick', () => {
+    test('Working onClick', async () => {
         let counter = 0;
         render(<Button
             data-testid="button"
@@ -13,17 +13,12 @@ describe('Button component module', () => {
             onClick={() => { counter++ }} />)
 
         const buttonElement = screen.getByTestId('button');
-        const upCounter = () => {
-            // eslint-disable-next-line testing-library/no-unnecessary-act
-            act(() => {
-                userEvent.click(buttonElement);
-            });
-        }
 
         expect(counter).toBe(0);
-        upCounter()
+        await userEvent.click(buttonElement);
         expect(counter).toBe(1);
     })
+
     test('Disabled status', () => {
         const isDisabled = true;
         render(
@@ -37,6 +32,7 @@ describe('Button component module', () => {
         const buttonElement = screen.getByTestId('button');
         expect(buttonElement).toBeDisabled();
     })
+
     test('Enabled status', () => {
         const isDisabled = false;
         render(

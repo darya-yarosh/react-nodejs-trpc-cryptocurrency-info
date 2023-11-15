@@ -1,4 +1,4 @@
-import { screen, render, act } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 
 import Pagination from './Pagination';
 import userEvent from "@testing-library/user-event";
@@ -21,8 +21,8 @@ describe('Pagination component module', () => {
         expect(paginationComponent.childNodes[0]).toHaveTextContent('<');
         expect(paginationComponent.childNodes[1]).toHaveTextContent('1');
         expect(paginationComponent.childNodes[2]).toHaveTextContent('>');
-
     })
+
     test('Setting a specific page', () => {
         const pageInd = 5;
         render(
@@ -35,7 +35,8 @@ describe('Pagination component module', () => {
         const paginationComponent = screen.getByTestId('pagination');
         expect(paginationComponent.childNodes[1]).toHaveTextContent(`${pageInd + 1}`);
     });
-    test('Navigating through pages and replacing the current page', () => {
+
+    test('Navigating through pages and replacing the current page', async () => {
         render(
             <TestComponent />
         )
@@ -44,34 +45,28 @@ describe('Pagination component module', () => {
         const pageCountText = screen.getByTestId('pagination-pageCountText');
         const nextButton = screen.getByTestId('pagination-nextButton');
 
-        const onClickPrev = () => {
-            // eslint-disable-next-line testing-library/no-unnecessary-act
-            act(() => {
-                userEvent.click(prevButton);
-            });
+        const onClickPrev = async () => {
+            await userEvent.click(prevButton);
         }
-        const onClickNext = () => {
-            // eslint-disable-next-line testing-library/no-unnecessary-act
-            act(() => {
-                userEvent.click(nextButton);
-            });
+        const onClickNext = async () => {
+            await userEvent.click(nextButton);
         }
 
         expect(pageCountText).toHaveTextContent('1');
-        onClickPrev();
+        await onClickPrev();
         expect(pageCountText).toHaveTextContent('1');
 
-        onClickNext();
+        await onClickNext();
         expect(pageCountText).toHaveTextContent('2');
 
-        onClickNext();
+        await onClickNext();
         expect(pageCountText).toHaveTextContent('3');
 
-        onClickPrev();
-        onClickNext();
+        await onClickPrev();
+        await onClickNext();
         expect(pageCountText).toHaveTextContent('3');
 
-        onClickPrev();
+        await onClickPrev();
         expect(pageCountText).toHaveTextContent('2');
     });
 });

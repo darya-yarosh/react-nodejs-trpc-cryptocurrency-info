@@ -43,6 +43,7 @@ jobs:
         node-version: '14'
     - name: Run tests on server
       run : |
+        sudo rm -rf node_modules package-lock.json && npm install
         npm run test
     - name: Remove jest-config.js in server
       run : rm jest.config.js 
@@ -58,5 +59,7 @@ jobs:
       with:
         node-version: '14'
     - name: Run Cypress tests
-      run : ./node_modules/.bin/cypress open
+      run : |
+        sudo rm -rf node_modules package-lock.json && npm install
+        ./node_modules/.bin/cypress open
     

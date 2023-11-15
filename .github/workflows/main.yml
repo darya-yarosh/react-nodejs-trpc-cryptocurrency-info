@@ -1,0 +1,58 @@
+#------------------------
+# GitHub Actions
+#------------------------
+
+name: GitHub-Actions-Tests
+env:
+  APP_NAME: "Cryptocurrency Info"
+  DEPLOY_PACKAGE_NAME: "deploy-ver-${{ github.sha }}"
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  client_tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+    - name: Run tests on client
+      run : |
+        sudo rm -rf node_modules package-lock.json && npm install
+        npm run test
+  server_tests: 
+    runs-on: ubuntu-latest
+    needs: [client_tests]
+    defaults:
+      run:
+        working-directory: ./server
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+    - name: Run tests on server
+      run : |
+        npm run test
+    - name: Remove jest-config.js in server
+      run : rm jest.config.js 
+  cypress_tests:
+    runs-on: ubuntu-latest
+    needs: [server_tests]
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+    - name: Run Cypress tests
+      run : ./node_modules/.bin/cypress open
+    

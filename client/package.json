@@ -55,6 +55,7 @@
 		]
 	},
 	"devDependencies": {
+		"@babel/compat-data": "^7.8.0",
 		"@jest/globals": "^29.7.0",
 		"@storybook/addon-essentials": "^7.5.2",
 		"@storybook/addon-interactions": "^7.5.2",

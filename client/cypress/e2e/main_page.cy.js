@@ -2,14 +2,13 @@
 
 import "cypress-real-events/support";
 
-import { API } from "./api";
-
 const sortLabel = {
     rank: 'Rank',
     price: 'Price',
     marketCap: 'MarketCap',
     change24hPercent: '24h %'
 }
+
 const sortIconAlt = {
     rank: 'Rank',
     price: 'Price',
@@ -37,7 +36,7 @@ function clickLabel(label) {
 
 describe('Main page', () => {
     beforeEach(() => {
-        cy.visit(API)
+        cy.visit('/')
     })
 
     it('Coins searching', () => {
@@ -96,7 +95,7 @@ describe('Main page', () => {
             .parent()
             .trigger("click")
 
-        cy.visit(API)
+        cy.visit('/')
         cy.get('*[class^="CoinNote_wrapper"] *[class^="IconButton_wrapper"]')
             .find(`[alt="Button to adding ${testCoinId} in portfolio"]`)
             .should('have.attr', 'alt', 'Button to adding bitcoin in portfolio')
@@ -105,7 +104,7 @@ describe('Main page', () => {
             .parent()
             .trigger("click");
 
-        cy.visit(API)
+        cy.visit('/')
         cy.get('*[class^="CoinNote_wrapper"] *[class^="IconButton_wrapper"]')
             .find(`[alt="Button to adding ${testCoinId} in portfolio"]`)
             .should('have.attr', 'alt', 'Button to adding bitcoin in portfolio')

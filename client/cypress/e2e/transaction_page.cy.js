@@ -1,11 +1,10 @@
 /// <reference types="cypress" />
 
-import { API } from "./api";
 import { formatPrice, priceToNumber } from '../../src/logic/utils/Helper';
 
 describe('Transaction page', () => {
     beforeEach(() => {
-        cy.visit(`${API}/purchase/bitcoin`)
+        cy.visit(`/purchase/bitcoin`)
     })
 
     it('Price update when transaction parameters change', () => {

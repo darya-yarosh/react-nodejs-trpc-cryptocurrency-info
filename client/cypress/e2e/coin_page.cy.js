@@ -2,11 +2,9 @@
 
 import "cypress-real-events/support";
 
-import { API } from "./api";
-
 describe('Coin page', () => {
     beforeEach(() => {
-        cy.visit(`${API}/cryptocoins/bitcoin`)
+        cy.visit(`/cryptocoins/bitcoin`)
     })
 
     it('Adding coin in portfolio favorites and then removing', () => {
@@ -18,7 +16,7 @@ describe('Coin page', () => {
             .parent()
             .trigger("click")
 
-        cy.visit(`${API}/cryptocoins/bitcoin`)
+        cy.visit(`/cryptocoins/bitcoin`)
         cy.get(`[alt="Button to adding ${testCoinId} in portfolio"]`)
             .should('have.attr', 'alt', 'Button to adding bitcoin in portfolio')
             .should('have.attr', 'src', '/images/favorite/favorite-fill.svg')
@@ -26,7 +24,7 @@ describe('Coin page', () => {
             .parent()
             .trigger("click");
 
-        cy.visit(`${API}/cryptocoins/bitcoin`)
+        cy.visit(`/cryptocoins/bitcoin`)
         cy.get(`[alt="Button to adding ${testCoinId} in portfolio"]`)
             .should('have.attr', 'alt', 'Button to adding bitcoin in portfolio')
             .should('have.attr', 'src', '/images/favorite/favorite-unfill.svg')
@@ -61,7 +59,7 @@ describe('Coin page', () => {
         .parent()
         .trigger("click")
         cy.url().then(($url) => {
-            if (!$url.includes(`${API}/purchase/bitcoin`)) {
+            if (!$url.includes(`/purchase/bitcoin`)) {
                 throw new Error("Not a valid url")
             }
         })
@@ -69,7 +67,7 @@ describe('Coin page', () => {
         cy.wait(500);
         cy.get('[src^="/images/buttons/return.svg"]').click();
         cy.url().then(($url) => {
-            if (!$url.includes(`${API}/cryptocoins/bitcoin`)) {
+            if (!$url.includes(`/cryptocoins/bitcoin`)) {
                 throw new Error("Not a valid url")
             }
         })

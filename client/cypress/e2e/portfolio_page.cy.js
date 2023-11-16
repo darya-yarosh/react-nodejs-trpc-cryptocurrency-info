@@ -2,16 +2,14 @@
 
 import "cypress-real-events/support";
 
-import { API } from "./api";
-
 describe('Portfolio page', () => {
     beforeEach(() => {
-        cy.visit(`${API}/portfolio`)
+        cy.visit(`/portfolio`)
     })
 
     it('Buying coins and removing them from the portfolio', () => {
         // Opening a profile and going to the transaction page
-        cy.visit(`${API}/purchase/bitcoin`)
+        cy.visit(`/purchase/bitcoin`)
         cy.wait(2000);
 
         cy.get('*[class^="SelectWithSearch_input"]').should('value', 'Bitcoin');
@@ -24,7 +22,7 @@ describe('Portfolio page', () => {
         // Send form
         cy.wait(2000);
         cy.url().then(($url) => {
-            if (!$url.includes(`${API}/portfolio`)) {
+            if (!$url.includes(`/portfolio`)) {
                 throw new Error("Not a valid url")
             }
         })
@@ -42,7 +40,7 @@ describe('Portfolio page', () => {
     })
 
     it('Adding coin in portfolio favorites and then removing', () => {
-        cy.visit(`${API}`)
+        cy.visit(`/`)
         const testCoinId = 'bitcoin';
         cy.get('*[class^="CoinNote_wrapper"] *[class^="IconButton_wrapper"]')
             .find(`[alt="Button to adding ${testCoinId} in portfolio"]`)
@@ -51,9 +49,9 @@ describe('Portfolio page', () => {
             .realHover('mouse')
             .parent()
             .trigger("click")
-        cy.visit(`${API}`)
+        cy.visit(`/`)
         cy.wait(500);
-        cy.visit(`${API}/portfolio`)
+        cy.visit(`/portfolio`)
 
         cy.wait(500);
         cy.get('*[class^="FavoriteCoin_wrapper"] *[class^="IconButton_wrapper"]')
@@ -69,7 +67,7 @@ describe('Portfolio page', () => {
 
     it('Opening a transaction form and closing it', () => {
         // Adding coin to Profile Favorites
-        cy.visit(`${API}`)
+        cy.visit(`/`)
         const testCoinId = 'bitcoin';
         cy.get('*[class^="CoinNote_wrapper"] *[class^="IconButton_wrapper"]')
             .find(`[alt="Button to adding ${testCoinId} in portfolio"]`)
@@ -79,7 +77,7 @@ describe('Portfolio page', () => {
             .parent()
             .trigger("click")
         // Opening a profile and going to the transaction page
-        cy.visit(`${API}/portfolio`)
+        cy.visit(`/portfolio`)
         cy.wait(500);
         cy.get('*[class^="FavoriteCoin_wrapper"]')
             .realHover('mouse')
@@ -88,7 +86,7 @@ describe('Portfolio page', () => {
             .contains('Buy', { force: true })
             .click({ force: true })
         cy.url().then(($url) => {
-            if (!$url.includes(`${API}/purchase/bitcoin`)) {
+            if (!$url.includes(`/purchase/bitcoin`)) {
                 throw new Error("Not a valid url")
             }
         })
@@ -96,7 +94,7 @@ describe('Portfolio page', () => {
         cy.wait(500);
         cy.get('[src^="/images/buttons/return.svg"]').click();
         cy.url().then(($url) => {
-            if (!$url.includes(`${API}/portfolio`)) {
+            if (!$url.includes(`/portfolio`)) {
                 throw new Error("Not a valid url")
             }
         })

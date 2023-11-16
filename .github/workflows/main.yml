@@ -70,8 +70,8 @@ jobs:
       uses: cypress-io/github-action@v6
       with: 
         working-directory: ./client
+        build: npm run build
         start: |
-          sudo rm -rf node_modules package-lock.json && npm install
           npm start &
           sleep 10 &&
           curl http://localhost:3000

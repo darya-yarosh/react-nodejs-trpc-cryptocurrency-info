@@ -54,12 +54,25 @@ jobs:
     needs: [server_tests]
     defaults:
       run:
-        working-directory: ./client
+        working-directory: ./server
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+    - name: Run server
+      run : |
+        sudo rm -rf node_modules package-lock.json && npm install
+        npm start
+    - name: Return to client
+      run : |
+        cd ..
+        cd client
+    - name: Run client
+      run : |
+        sudo rm -rf node_modules package-lock.json && npm install
+        npm start
     - name: Cypress run
       uses: cypress-io/github-action@v6
-      with:
-        build: npm run build
-        start: npm start

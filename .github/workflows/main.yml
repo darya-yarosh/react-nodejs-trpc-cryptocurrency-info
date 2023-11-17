@@ -78,3 +78,7 @@ jobs:
       with:
         browser: edge
         working-directory: ./client
+        build: |
+          ls -la
+          npm run build
+          ls -la

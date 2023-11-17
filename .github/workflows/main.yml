@@ -74,11 +74,6 @@ jobs:
         sleep 10 &&
         curl http://localhost:3000
     - name: Run Cypress
-      uses: cypress-io/github-action@v6
-      with:
-        browser: edge
-        working-directory: ./client
-        build: |
-          ls -la
-          npm run build
-          ls -la
+      run: |
+        cd client
+        npx cypress run

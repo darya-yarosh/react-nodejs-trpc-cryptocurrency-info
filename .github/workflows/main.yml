@@ -69,11 +69,11 @@ jobs:
     - name: Run client
       run : |
         cd client
-        sudo rm -rf node_modules package-lock.json && npm install
         npm start &
         sleep 10 &&
         curl http://localhost:3000
     - name: Run Cypress
-      run: |
-        cd client
-        npx cypress run
+      uses: cypress-io/github-action@v6
+      with:
+        working-directory: ./client
+        browser: edge

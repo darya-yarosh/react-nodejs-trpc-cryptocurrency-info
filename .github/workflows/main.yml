@@ -69,7 +69,9 @@ jobs:
     - name: Run client
       run : |
         cd client
+        ls
         sudo rm -rf node_modules && rm package-lock.json && npm install
+        ls
         npm start &
         sleep 10 &&
         curl http://localhost:3000
@@ -78,3 +80,4 @@ jobs:
       with:
         working-directory: ./client
         browser: edge
+        start: ls

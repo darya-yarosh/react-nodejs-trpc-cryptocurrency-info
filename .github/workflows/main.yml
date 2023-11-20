@@ -78,7 +78,7 @@ jobs:
       with:
         working-directory: ./client
         browser: edge
-    - uses: actions/upload-artifact@3
+    - uses: actions/upload-artifact@v3
       if: failure()
       with: 
         name: cypress-snapshots

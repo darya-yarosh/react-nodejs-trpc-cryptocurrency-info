@@ -29,7 +29,7 @@ describe('Coin page', () => {
             .should('have.attr', 'alt', 'Button to adding bitcoin in portfolio')
             .should('have.attr', 'src', '/images/favorite/favorite-unfill.svg')
     })
-    
+
     it('Choosing a schedule of price changes for a day/week/month', () => {
         cy.get(`*[class^="Select_wrapper"]`)
             .contains('Period per')
@@ -38,26 +38,33 @@ describe('Coin page', () => {
             .select('m1')
             .wait(3000)
         cy.get(`*[class^="Select_wrapper"]`)
+            .matchImageSnapshot('coin_selector_period-month')
+        cy.get(`*[class^="Select_wrapper"]`)
             .contains('Period per')
             .parent()
             .find('select')
             .select('w1')
             .wait(3000)
         cy.get(`*[class^="Select_wrapper"]`)
+            .matchImageSnapshot('coin_selector_period-weak')
+
+        cy.get(`*[class^="Select_wrapper"]`)
             .contains('Period per')
             .parent()
             .find('select')
             .select('d1')
             .wait(3000)
+        cy.get(`*[class^="Select_wrapper"]`)
+            .matchImageSnapshot('coin_selector_period-day')
     })
 
-    it('Opening a transaction form and closing it', ()=>{
+    it('Opening a transaction form and closing it', () => {
         // Going to the transaction page
         cy.get(`*[class^="Button_wrapper"]`)
-        .contains('Buy')
-        .realHover('mouse')
-        .parent()
-        .trigger("click")
+            .contains('Buy')
+            .realHover('mouse')
+            .parent()
+            .trigger("click")
         cy.url().then(($url) => {
             if (!$url.includes(`/purchase/bitcoin`)) {
                 throw new Error("Not a valid url")

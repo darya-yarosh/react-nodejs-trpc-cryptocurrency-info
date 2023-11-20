@@ -137,6 +137,9 @@ var appRouter = trpc.router({
                     return [4 /*yield*/, fetch(API + "/assets/".concat(id), requestOptions)];
                 case 1:
                     apiUrl = _a.sent();
+                    if (apiUrl.status === 404 && apiUrl.statusText === 'Not Found') {
+                        return [2 /*return*/, null];
+                    }
                     return [4 /*yield*/, apiUrl.json()];
                 case 2:
                     dataInfo = _a.sent();

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createTRPCReact } from '@trpc/react-query';
+import { TRPCClientError, createTRPCReact } from '@trpc/react-query';
 
 import { CoinHistory, GraphicPeriod } from 'models/Coin';
 
@@ -24,6 +24,11 @@ export default function CoinPage() {
 	const params = useParams();
 
 	const coinData = trpc.getCoinById.useQuery(params.id || '');
+	if (coinData.data === null) {
+		throw new TRPCClientError(
+			'Error loading the specified coin from the database: invalid coin id.'
+		)
+	}
 	const coin = useMemo(() => coinData.data, [coinData.data]);
 
 	const [graphicPeriod, setGraphicPeriod] = useState<GraphicPeriod>(
@@ -70,10 +75,6 @@ export default function CoinPage() {
 		},
 		[navigate]
 	);
-
-	if (coinData.status === 'error') {
-		throw new Error("Invalid code id")
-	}
 
 	if (!coin) return <div>Loading...</div>;
 

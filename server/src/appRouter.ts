@@ -1,10 +1,12 @@
 import { initTRPC } from '@trpc/server';
+
 import Coin, {
 	CoinHistory,
 	CoinHistoryIntervalList,
 	StorageCoin,
 	StorageCoinHistory,
 } from './models/Coin';
+
 import {
 	formatSupply,
 	formatMarketCap,
@@ -126,6 +128,7 @@ const appRouter = trpc.router({
 			);
 			return coinList;
 		}),
+
 	getCoinById: trpc.procedure
 		.input((id): string => {
 			if (typeof id === 'string') {
@@ -143,6 +146,10 @@ const appRouter = trpc.router({
 			};
 
 			const apiUrl = await fetch(API + `/assets/${id}`, requestOptions);
+			if (apiUrl.status === 404 && apiUrl.statusText === 'Not Found') {
+				return null;
+			}
+
 			const dataInfo = await apiUrl.json();
 			const storageCoin: StorageCoin = dataInfo.data;
 			const coin: Coin = {
@@ -165,6 +172,7 @@ const appRouter = trpc.router({
 
 			return coin;
 		}),
+
 	getCoinHistory: trpc.procedure
 		.input((value): getCoinHistoryInput => {
 			const valueAsType = value as getCoinHistoryInput;

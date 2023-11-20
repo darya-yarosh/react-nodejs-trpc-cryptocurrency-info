@@ -25,7 +25,7 @@ export default function TransactionPage() {
 	const [selectedCoinId, setSelectedCoinId] = useState<Coin['id']>(
 		params.id || ''
 	);
-	const selectedCoin = trpc.getCoinById.useQuery(selectedCoinId).data;
+	const selectedCoin = trpc.getCoinById.useQuery(selectedCoinId).data || null;
 
 	const [searchFilter, setSearchFilter] = useState<string>('');
 
@@ -77,10 +77,10 @@ export default function TransactionPage() {
 		function updateCoinId() {
 			const id =
 				coins !== undefined &&
-				coins.length > 0 &&
-				coins !== defaultCoins
+					coins.length > 0 &&
+					coins !== defaultCoins
 					? coins[0].id
-					: '';
+					: searchFilter;
 
 			setSelectedCoinId(id);
 		}
@@ -91,7 +91,7 @@ export default function TransactionPage() {
 
 	useEffect(() => {
 		if (isFirstLoad) {
-			if (selectedCoin !== undefined && selectedCoin.id === params.id) {
+			if (selectedCoin !== null && selectedCoin.id === params.id) {
 				setIsFirstLoad(false);
 				setSearchFilter(selectedCoin.name);
 			}
@@ -102,7 +102,11 @@ export default function TransactionPage() {
 		<Modal handleDismiss={navigateBack}>
 			<TransactionForm
 				coins={coins || []}
-				selectedCoin={selectedCoin}
+				selectedCoin={
+					selectedCoin !== null
+						? selectedCoin
+						: undefined
+				}
 				searchCoinName={searchFilter}
 				onChangeSearchFilter={changeSearchFilter}
 				navigateBack={navigateBack}

@@ -144,9 +144,9 @@ const appRouter = trpc.router({
 				method: 'GET',
 				redirect: 'follow',
 			};
-
 			const apiUrl = await fetch(API + `/assets/${id}`, requestOptions);
-			if (apiUrl.status === 404 && apiUrl.statusText === 'Not Found') {
+
+			if (apiUrl.status === 404 || apiUrl.statusText === 'Not Found') {
 				return null;
 			}
 

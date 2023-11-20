@@ -1,4 +1,9 @@
-import { useMemo, useState } from 'react';
+import {
+	useMemo,
+	useState,
+	MouseEvent as rMouseEvent,
+	ChangeEvent as rChangeEvent
+} from 'react';
 
 import Coin from 'models/Coin';
 
@@ -69,7 +74,7 @@ export default function TransactionForm({
 				totalPrice.toString()
 			)} (worth ${selectedCoin.priceUsd} each).`;
 
-	function handleSubmit(event: React.MouseEvent) {
+	function handleSubmit(event: rMouseEvent) {
 		event.preventDefault();
 
 		if (!selectedCoin) return;
@@ -77,7 +82,7 @@ export default function TransactionForm({
 		submit(selectedCoin.id, selectedCoin.priceUsd, quantity);
 	}
 
-	function handleQuantityChange(event: React.ChangeEvent<HTMLInputElement>) {
+	function handleQuantityChange(event: rChangeEvent<HTMLInputElement>) {
 		setQuantity(Number(event.target.value));
 	}
 
@@ -118,11 +123,15 @@ export default function TransactionForm({
 			</section>
 			<section className={styles.section}>
 				<label>Price per coin</label>
-				<span className={styles.price}>{selectedCoin?.priceUsd}</span>
+				<span className={styles.price}>
+					{selectedCoin?.priceUsd || '$0'}
+				</span>
 			</section>
 			<section className={styles.section}>
 				<label>Total price</label>
-				<span>{totalPrice ? formatPrice(totalPrice.toString()) : '-'}</span>
+				<span>
+					{totalPrice ? formatPrice(totalPrice.toString()) : '-'}
+				</span>
 			</section>
 			<Button
 				disabled={!isValid}

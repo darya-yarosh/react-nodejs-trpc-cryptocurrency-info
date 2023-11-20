@@ -8,7 +8,7 @@ describe('Portfolio page', () => {
     })
 
     it('Buying coins and removing them from the portfolio', () => {
-        // Opening a profile and going to the transaction page
+        // Opening a portfolio and going to the transaction page
         cy.visit(`/purchase/bitcoin`)
         cy.wait(2000);
 
@@ -40,7 +40,8 @@ describe('Portfolio page', () => {
     })
 
     it('Adding coin in portfolio favorites and then removing', () => {
-        cy.visit(`/`)
+        // Adding coin to Portfolio Favorites
+        cy.visit(`/`).wait(500)
         const testCoinId = 'bitcoin';
         cy.get('*[class^="CoinNote_wrapper"] *[class^="IconButton_wrapper"]')
             .find(`[alt="Button to adding ${testCoinId} in portfolio"]`)
@@ -49,11 +50,9 @@ describe('Portfolio page', () => {
             .realHover('mouse')
             .parent()
             .trigger("click")
-        cy.visit(`/`)
-        cy.wait(500);
-        cy.visit(`/portfolio`)
-
-        cy.wait(500);
+        cy.visit(`/`).wait(500);
+        // Removing coin from Portfolio Favorites
+        cy.visit(`/portfolio`).wait(500);
         cy.get('*[class^="FavoriteCoin_wrapper"] *[class^="IconButton_wrapper"]')
             .find(`[alt="Button to adding ${testCoinId} in portfolio"]`)
             .should('have.attr', 'alt', 'Button to adding bitcoin in portfolio')
@@ -61,12 +60,13 @@ describe('Portfolio page', () => {
             .realHover('mouse')
             .parent()
             .trigger("click")
-
-        cy.wait(500);
+            .wait(500);
+        // Checking for the absence of an element.
+        cy.get('*[class^="FavoriteCoin_wrapper"] *[class^="IconButton_wrapper"]').should('not.exist')
     })
 
     it('Opening a transaction form and closing it', () => {
-        // Adding coin to Profile Favorites
+        // Adding coin to Portfolio Favorites
         cy.visit(`/`)
         const testCoinId = 'bitcoin';
         cy.get('*[class^="CoinNote_wrapper"] *[class^="IconButton_wrapper"]')
@@ -76,7 +76,7 @@ describe('Portfolio page', () => {
             .realHover('mouse')
             .parent()
             .trigger("click")
-        // Opening a profile and going to the transaction page
+        // Opening a portfolio and going to the transaction page
         cy.visit(`/portfolio`)
         cy.wait(500);
         cy.get('*[class^="FavoriteCoin_wrapper"]')

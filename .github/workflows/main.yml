@@ -27,7 +27,7 @@ jobs:
     - name: Setup node
       uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '14'
     - name: Run tests on client
       run : |
         sudo rm -rf node_modules package-lock.json && npm install
@@ -44,7 +44,7 @@ jobs:
     - name: Setup node
       uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '14'
     - name: Run tests on server
       run : |
         sudo rm -rf node_modules package-lock.json && npm install
@@ -58,7 +58,7 @@ jobs:
     - name: Setup node
       uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '14'
     - name: Run server
       run : |
         cd server

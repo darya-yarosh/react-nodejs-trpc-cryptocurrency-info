@@ -70,7 +70,7 @@ export default function App() {
 	);
 
 	return (
-		<div className="app">
+		<div className="app" id="app">
 			<div className="app__wrapper">
 				<trpc.Provider client={trpcClient} queryClient={queryClient}>
 					<QueryClientProvider client={queryClient}>

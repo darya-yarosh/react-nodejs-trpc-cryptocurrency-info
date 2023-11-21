@@ -4,7 +4,12 @@ import "cypress-real-events/support";
 
 describe('Coin page', () => {
     beforeEach(() => {
+        cy.intercept("**")
+            .as('requests')
         cy.visit(`/cryptocoins/bitcoin`)
+        cy.wait('@requests')
+            .its('response.statusCode')
+            .should('be.oneOf', [200, 304])
     })
 
     it('Adding coin in portfolio favorites and then removing', () => {
@@ -36,7 +41,6 @@ describe('Coin page', () => {
             .parent()
             .find('select')
             .select('m1')
-            .wait(3000)
         cy.get(`*[class^="Select_wrapper"]`)
             .matchImageSnapshot('coin_selector_period-month')
         cy.get(`*[class^="Select_wrapper"]`)
@@ -44,7 +48,6 @@ describe('Coin page', () => {
             .parent()
             .find('select')
             .select('w1')
-            .wait(3000)
         cy.get(`*[class^="Select_wrapper"]`)
             .matchImageSnapshot('coin_selector_period-weak')
 
@@ -53,7 +56,6 @@ describe('Coin page', () => {
             .parent()
             .find('select')
             .select('d1')
-            .wait(3000)
         cy.get(`*[class^="Select_wrapper"]`)
             .matchImageSnapshot('coin_selector_period-day')
     })
@@ -65,18 +67,19 @@ describe('Coin page', () => {
             .realHover('mouse')
             .parent()
             .trigger("click")
-        cy.url().then(($url) => {
-            if (!$url.includes(`/purchase/bitcoin`)) {
-                throw new Error("Not a valid url")
-            }
-        })
+        cy.url()
+            .then(($url) => {
+                if (!$url.includes(`/purchase/bitcoin`)) {
+                    throw new Error("Not a valid url")
+                }
+            })
         // Closing the transaction page
-        cy.wait(500);
         cy.get('[src^="/images/buttons/return.svg"]').click();
-        cy.url().then(($url) => {
-            if (!$url.includes(`/cryptocoins/bitcoin`)) {
-                throw new Error("Not a valid url")
-            }
-        })
+        cy.url()
+            .then(($url) => {
+                if (!$url.includes(`/cryptocoins/bitcoin`)) {
+                    throw new Error("Not a valid url")
+                }
+            })
     })
 })

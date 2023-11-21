@@ -24,14 +24,15 @@ const sortIconSrc = {
 }
 
 function checkIconSrc(alt, src) {
-    cy.wait(200).get(`[alt="sort icon for ${alt}"]`)
+    cy.get(`[alt="sort icon for ${alt}"]`)
         .should('have.attr', 'src', src);
 }
 
 function clickLabel(label) {
     cy.get('*[class^="CoinTable_columnName"] label')
         .contains(label)
-        .click().wait(200);
+        .click()
+        .wait(500)
 }
 
 function checkSorting(sortType) {
@@ -42,8 +43,8 @@ function checkSorting(sortType) {
     const label = sortType === '24h' ? sortLabel.changePerDay : sortLabel[rankIconName]
 
     if (label.toString() !== sortLabel.rank.toString()) {
-        cy.wait(200)
-            .get(rankClass)
+        cy.get(rankClass)
+            .should('be.visible')
             .contains(rankLabel)
             .matchImageSnapshot(`main-coins_sorting_${rankIconName}-enabled`)
         clickLabel(label)
@@ -71,7 +72,8 @@ function checkSorting(sortType) {
 
 describe('Main page', () => {
     beforeEach(() => {
-        cy.intercept("**").as('requests')
+        cy.intercept("**")
+            .as('requests')
         cy.visit('/')
         cy.wait('@requests')
             .its('response.statusCode')
@@ -81,19 +83,22 @@ describe('Main page', () => {
     it('Coins searching', () => {
         cy.get('*[class^="SearchInput_wrapper"]')
             .should('be.visible')
+        cy.get('*[class^="SearchInput_wrapper"]')
             .matchImageSnapshot('main-coins_search-filter-empty')
 
         cy.get('*[class^="SearchInput_wrapper"] input')
-            .as('inputSearch')
-            .focus()
+            .as('searchInput')
             .type('aave')
+        cy.get('@searchInput')
+            .blur()
 
-        cy.get('@inputSearch').trigger('blur')
-
+        cy.get('@searchInput')
+            .should('value', 'aave')
         cy.get('*[class^="SearchInput_wrapper"]')
+            .should('be.visible')
             .matchImageSnapshot('main-coins_search-filter-full')
 
-        cy.wait(500).get('*[class^="CoinNote_wrapper"] p')
+        cy.get('*[class^="CoinNote_wrapper"] p')
             .contains('AAVE');
     })
 
@@ -119,6 +124,7 @@ describe('Main page', () => {
         const coinAlt = `[alt="Button to adding ${testCoinId} in portfolio"]`;
 
         cy.get(coinClass)
+            .should('be.visible')
             .find(coinAlt)
             .matchImageSnapshot('main_coin-unfavorited')
         cy.get(coinClass)
@@ -150,24 +156,25 @@ describe('Main page', () => {
         const paginationWrapperClass = '*[class^="Pagination_pagination"]'
 
         cy.get(paginationButtonClass)
+            .should('be.visible')
             .contains('1');
         cy.get(paginationWrapperClass)
             .matchImageSnapshot('main-coins_pagination_page-first')
 
         cy.get(paginationButtonClass)
             .contains('>')
-            .trigger("click");
-        cy.wait(200)
-            .get(paginationButtonClass)
+            .trigger("click")
+        cy.get(paginationButtonClass)
+            .should('be.visible')
             .contains('2');
         cy.get(paginationWrapperClass)
             .matchImageSnapshot('main-coins_pagination_page-first-to-second')
 
         cy.get(paginationButtonClass)
             .contains('<')
-            .trigger("click");
-        cy.wait(200)
-            .get(paginationButtonClass)
+            .trigger("click")
+        cy.get(paginationButtonClass)
+            .should('be.visible')
             .contains('1');
         cy.get(paginationWrapperClass)
             .matchImageSnapshot('main-coins_pagination_page-second-to-first')

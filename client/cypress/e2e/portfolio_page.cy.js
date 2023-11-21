@@ -5,17 +5,24 @@ import "cypress-real-events/support";
 describe('Portfolio page', () => {
     beforeEach(() => {
         cy.visit(`/portfolio`)
+        cy.intercept("**")
+            .as('requests')
+        cy.wait('@requests')
+            .its('response.statusCode')
+            .should('be.oneOf', [200, 304])
     })
 
     it('Buying coins and removing them from the portfolio', () => {
         // Opening a portfolio and going to the transaction page
         cy.visit(`/purchase/bitcoin`)
-            .wait(2000);
 
         cy.get('*[class^="SelectWithSearch_input"]')
             .should('value', 'Bitcoin');
         cy.get('[name="quantity"]')
             .should('value', 1)
+        cy.get('*[class^="TransactionForm_price"]')
+            .contains('$0')
+            .should('not.exist');
         cy.get('*[class^="TransactionForm_price"]')
             .contains('$')
             .then(($span) => {
@@ -27,25 +34,23 @@ describe('Portfolio page', () => {
             })
         cy.get('button')
             .contains('Buy')
-            .click();
+            .click()
         // Send form
-        cy.wait(2000)
-            .url()
+        cy.url()
             .then(($url) => {
                 if (!$url.includes(`/portfolio`)) {
                     throw new Error("Not a valid url")
                 }
             })
         // Checking whether the coin transactions have been deleted.
-        cy.wait(2000)
-            .get('*[class^="PortfolioCoin_wrapper"]')
+        cy.get('*[class^="PortfolioCoin_wrapper"]')
+            .should('be.visible')
             .contains('Bitcoin')
             .parent()
             .parent()
             .find('button')
             .contains('Remove', { force: true })
             .click({ force: true })
-            .wait(2000);
         cy.get('*[class^="PortfolioCoin_wrapper"]')
             .should('not.exist')
     })
@@ -53,7 +58,6 @@ describe('Portfolio page', () => {
     it('Adding coin in portfolio favorites and then removing', () => {
         // Adding coin to Portfolio Favorites
         cy.visit(`/`)
-            .wait(500)
         const testCoinId = 'bitcoin';
         cy.get('*[class^="CoinNote_wrapper"] *[class^="IconButton_wrapper"]')
             .find(`[alt="Button to adding ${testCoinId} in portfolio"]`)
@@ -63,10 +67,8 @@ describe('Portfolio page', () => {
             .parent()
             .trigger("click")
         cy.visit(`/`)
-            .wait(500);
         // Removing coin from Portfolio Favorites
         cy.visit(`/portfolio`)
-            .wait(500);
         cy.get('*[class^="FavoriteCoin_wrapper"] *[class^="IconButton_wrapper"]')
             .find(`[alt="Button to adding ${testCoinId} in portfolio"]`)
             .should('have.attr', 'alt', 'Button to adding bitcoin in portfolio')
@@ -74,7 +76,6 @@ describe('Portfolio page', () => {
             .realHover('mouse')
             .parent()
             .trigger("click")
-            .wait(500);
         // Checking for the absence of an element.
         cy.get('*[class^="FavoriteCoin_wrapper"] *[class^="IconButton_wrapper"]')
             .should('not.exist')
@@ -93,7 +94,6 @@ describe('Portfolio page', () => {
             .trigger("click")
         // Opening a portfolio and going to the transaction page
         cy.visit(`/portfolio`)
-            .wait(500);
         cy.get('*[class^="FavoriteCoin_wrapper"]')
             .realHover('mouse')
         cy.get('*[class^="FavoriteCoin_wrapper"]')
@@ -107,8 +107,8 @@ describe('Portfolio page', () => {
                 }
             })
         // Closing the transaction page
-        cy.wait(500);
         cy.get('[src^="/images/buttons/return.svg"]')
+            .should('be.visible')
             .click();
         cy.url()
             .then(($url) => {

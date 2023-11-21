@@ -3,6 +3,11 @@
 describe('App navigation', () => {
     beforeEach(() => {
         cy.visit('/')
+        cy.intercept("**")
+            .as('requests')
+        cy.wait('@requests')
+            .its('response.statusCode')
+            .should('be.oneOf', [200, 304])
     })
 
     it('Go to the page with the invalid address and see the error page', () => {
@@ -73,7 +78,6 @@ describe('App navigation', () => {
             return true
         })
         cy.visit(`/cryptocoins/bitcoinc`)
-            .wait(5000)
         cy.url()
             .then(($url) => {
                 if (!$url.includes(`/cryptocoins/bitcoinc`)) {
@@ -84,7 +88,7 @@ describe('App navigation', () => {
     })
 
     it('Go to the previous page (main page)', () => {
-        cy.visit(`/cryptocoins/bitcoin`).wait(500)
+        cy.visit(`/cryptocoins/bitcoin`)
         cy.get('*[class^="TextCard_header"] button:first')
             .click();
         cy.url()

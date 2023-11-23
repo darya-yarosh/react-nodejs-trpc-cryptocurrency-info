@@ -77,8 +77,10 @@ jobs:
       run : |
         cd client
         npx cypress run
-    - uses: actions/upload-artifact@v3
+    - name: Uploads artifacts
+      uses: actions/upload-artifact@v3
       if: failure()
-      with: 
+      with:
+        working-directory: ./client
         name: cypress-snapshots
         path: cypress/snapshots

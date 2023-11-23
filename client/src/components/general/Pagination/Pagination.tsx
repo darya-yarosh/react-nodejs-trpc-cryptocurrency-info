@@ -1,6 +1,6 @@
 import styles from 'components/general/Pagination/Pagination.module.scss';
 
-interface PaginationProps {
+export interface PaginationProps {
 	isLastPage: boolean;
 	currentPageInd: number;
 	changePage: (pageIndex: number) => void;
@@ -19,10 +19,14 @@ export default function Pagination({
 		changePage(currentPageInd + 1);
 	}
 
-	const currentPageNum = currentPageInd + 1;
+	const currentPageNum =
+		currentPageInd >= 0
+			? currentPageInd + 1
+			: 1;
 
 	return (
-		<nav className={styles.pagination} data-testid={'pagination'}>
+		<nav className={styles.pagination}
+			data-testid={'pagination'}>
 			<button
 				data-testid={'pagination-prevButton'}
 				className={styles.pageNum}

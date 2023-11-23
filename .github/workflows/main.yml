@@ -29,7 +29,9 @@ jobs:
       with:
         node-version: '20'
     - name: Run tests on client
-      run : npm run test
+      run : |
+        npm install
+        npm run test
   server_tests: 
     runs-on: ubuntu-latest
     needs: [client_tests]
@@ -44,7 +46,9 @@ jobs:
       with:
         node-version: '20'
     - name: Run tests on server
-      run : npm run test
+      run : |
+        npm install
+        npm run test
   cypress_tests:
     runs-on: ubuntu-22.04
     needs: [server_tests]

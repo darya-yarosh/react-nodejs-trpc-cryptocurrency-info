@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Select from './Select';
-
-import 'components/general/Select/Select.module.scss';
-import 'App.scss'
+import Select from 'components/general/Select/Select';
 
 const options = ['Bitcoin', 'USDC', 'XRP', 'Cardano']
 let selectedOption = options[0]

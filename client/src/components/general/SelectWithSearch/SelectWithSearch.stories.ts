@@ -2,9 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import SelectWithSearch from 'components/general/SelectWithSearch/SelectWithSearch';
 
-import 'components/general/SelectWithSearch/SelectWithSearch.module.scss';
-import 'App.scss'
-
 const list = ['Bitcoin', 'USDC', 'XRP', 'Cardano']
 let selectedOption = list[0]
 

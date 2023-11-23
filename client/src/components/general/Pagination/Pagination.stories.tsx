@@ -1,10 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useMemo, useState } from 'react';
 
-import Pagination, { PaginationProps } from './Pagination';
-
-import 'components/general/Pagination/Pagination.module.scss';
-import 'App.scss'
+import Pagination, { PaginationProps } from 'components/general/Pagination/Pagination';
 
 function PaginationWrapper({
     isLastPage,

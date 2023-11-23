@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import IconButton from './IconButton';
+import IconButton from 'components/general/IconButton/IconButton';
 
 import confirmIcon from '../../../../public/images/buttons/confirm.svg';
 import editIcon from '../../../../public/images/buttons/edit.svg';
@@ -8,9 +8,6 @@ import plusIcon from '../../../../public/images/buttons/plus.svg';
 import removeIcon from '../../../../public/images/buttons/remove.svg';
 import returnIcon from '../../../../public/images/buttons/return.svg';
 import themeIcon from '../../../../public/images/buttons/theme.svg';
-
-import 'components/general/IconButton/IconButton.module.scss';
-import 'App.scss'
 
 const meta: Meta<typeof IconButton> = {
     title: 'General/IconButton',

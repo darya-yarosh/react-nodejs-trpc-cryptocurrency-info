@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Graphic from './Graphic';
-
-import 'components/general/Graphic/Graphic.module.scss';
-import 'App.scss'
+import Graphic from 'components/general/Graphic/Graphic';
 
 const meta: Meta<typeof Graphic> = {
     title: 'General/Graphic',

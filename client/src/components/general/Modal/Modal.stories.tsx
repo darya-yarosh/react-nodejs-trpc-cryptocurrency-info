@@ -4,9 +4,6 @@ import { useState } from 'react';
 import Modal, { ModalProps } from 'components/general/Modal/Modal';
 import Button from 'components/general/Button/Button';
 
-import 'components/general/Modal/Modal.module.scss';
-import 'App.scss';
-
 function SearchWrapper({
     children
 }: ModalProps) {

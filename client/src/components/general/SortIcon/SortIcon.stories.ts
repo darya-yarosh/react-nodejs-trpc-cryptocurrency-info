@@ -1,10 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import SortIcon from './SortIcon';
+import SortIcon from 'components/general/SortIcon/SortIcon';
 
 import { SortOrder } from 'models/Interface';
-
-import 'App.scss'
 
 const meta: Meta<typeof SortIcon> = {
     title: 'General/SortIcon',

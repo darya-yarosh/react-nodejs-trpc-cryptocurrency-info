@@ -29,3 +29,8 @@
 .wrapper:active .icon {
 	filter: var(--filter-second);
 }
+
+.wrapper:disabled .icon {
+	filter: var(--filter-gray);
+	cursor: not-allowed;
+}

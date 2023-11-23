@@ -80,7 +80,11 @@ function GraphicCard({
 					onChange={handlerUpdateGraphicPeriod}
 				/>
 			</header>
-			<Graphic chartData={chartData} labels={labels} />
+			<Graphic
+				title={'Price'}
+				chartData={chartData}
+				labels={labels}
+			/>
 		</section>
 	);
 }

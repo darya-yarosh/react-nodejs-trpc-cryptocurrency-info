@@ -4,16 +4,17 @@ import Chart, { ChartData } from 'chart.js/auto';
 import styles from 'components/general/Graphic/Graphic.module.scss';
 
 interface GraphicProps {
+	title: string
 	chartData: number[];
 	labels: string[];
 }
 
-function Graphic({ chartData, labels }: GraphicProps) {
+function Graphic({ title, chartData, labels }: GraphicProps) {
 	const formatData = (data: number[]): ChartData => ({
 		labels: labels,
 		datasets: [
 			{
-				label: 'Price',
+				label: title,
 				data: data,
 			},
 		],

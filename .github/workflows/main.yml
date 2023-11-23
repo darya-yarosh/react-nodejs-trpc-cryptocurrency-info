@@ -25,9 +25,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Setup node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v3
       with:
-        node-version: '14'
+        node-version: '20'
     - name: Run tests on client
       run : |
         sudo rm -rf node_modules package-lock.json && npm install
@@ -42,9 +42,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Setup node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v3
       with:
-        node-version: '14'
+        node-version: '20'
     - name: Run tests on server
       run : |
         sudo rm -rf node_modules package-lock.json && npm install
@@ -56,9 +56,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Setup node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v3
       with:
-        node-version: '14'
+        node-version: '20'
     - name: Run server
       run : |
         cd server

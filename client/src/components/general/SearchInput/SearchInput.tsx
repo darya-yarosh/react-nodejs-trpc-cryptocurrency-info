@@ -4,7 +4,7 @@ import searchIcon from 'components/general/SearchInput/search.svg';
 
 import styles from 'components/general/SearchInput/SearchInput.module.scss';
 
-interface SearchInputProps {
+export interface SearchInputProps {
 	value: string;
 	placeholderValue: string;
 	onChange: (value: string) => void;

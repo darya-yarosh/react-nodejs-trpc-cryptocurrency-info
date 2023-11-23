@@ -10,6 +10,7 @@ describe('Portfolio page', () => {
         cy.wait('@requests')
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
+        cy.viewport(1000,660)
     })
 
     it('Buying coins and removing them from the portfolio', () => {

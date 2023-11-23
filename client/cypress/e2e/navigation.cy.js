@@ -8,6 +8,7 @@ describe('App navigation', () => {
         cy.wait('@requests')
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
+        cy.viewport(1000,660)
     })
 
     it('Go to the page with the invalid address and see the error page', () => {

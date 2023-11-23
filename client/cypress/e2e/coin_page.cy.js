@@ -10,6 +10,7 @@ describe('Coin page', () => {
         cy.wait('@requests')
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
+        cy.viewport(1000,660)
     })
 
     it('Adding coin in portfolio favorites and then removing', () => {

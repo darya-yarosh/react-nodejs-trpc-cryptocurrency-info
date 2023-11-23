@@ -78,6 +78,7 @@ describe('Main page', () => {
         cy.wait('@requests')
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
+        cy.viewport(1000,660)
     })
 
     it('Coins searching', () => {

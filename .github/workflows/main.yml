@@ -24,9 +24,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        working-directory: ./client
     - name: Setup node
       uses: actions/setup-node@v3
       with:
+        working-directory: ./client
         node-version: '20'
     - name: Run tests on client
       run : |
@@ -41,9 +44,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        working-directory: ./server
     - name: Setup node
       uses: actions/setup-node@v3
       with:
+        working-directory: ./server
         node-version: '20'
     - name: Run tests on server
       run : |

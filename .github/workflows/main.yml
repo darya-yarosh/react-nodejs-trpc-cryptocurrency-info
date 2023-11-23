@@ -81,6 +81,5 @@ jobs:
       uses: actions/upload-artifact@v3
       if: failure()
       with:
-        working-directory: ./client
         name: cypress-snapshots
-        path: cypress/snapshots
+        path: ./client/cypress/snapshots

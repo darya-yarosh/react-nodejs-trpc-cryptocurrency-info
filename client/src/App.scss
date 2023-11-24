@@ -46,4 +46,6 @@
 	padding: 20px 24px;
 
 	font-family: var(--font-family) !important;
+	font-kerning: none !important;
+    -webkit-font-smoothing: antialiased !important;
 }

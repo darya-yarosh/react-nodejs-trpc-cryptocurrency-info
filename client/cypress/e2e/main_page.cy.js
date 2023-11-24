@@ -79,6 +79,9 @@ describe('Main page', () => {
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
         cy.viewport(1000,660)
+        cy.document()
+            .its("fonts.status")
+            .should("equal", "loaded")
     })
 
     it('Coins searching', () => {

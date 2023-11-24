@@ -9,6 +9,9 @@ describe('App navigation', () => {
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
         cy.viewport(1000,660)
+        cy.document()
+            .its("fonts.status")
+            .should("equal", "loaded")
     })
 
     it('Go to the page with the invalid address and see the error page', () => {

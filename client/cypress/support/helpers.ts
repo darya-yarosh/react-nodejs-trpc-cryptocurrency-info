@@ -11,6 +11,7 @@ function checkIsLoaded() {
             .then(value => {
                 cy.log('Font loading completed')
                 checkIsValidFonts()
+                cy.wait(200)
             }) 
 }
 

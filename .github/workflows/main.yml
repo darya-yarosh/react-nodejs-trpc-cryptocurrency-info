@@ -58,7 +58,6 @@ jobs:
         gsettings set org.gnome.desktop.interface document-font-name 'Segoe UI'
         gsettings set org.gnome.desktop.interface font-name 'Segoe UI'
         gsettings set org.gnome.desktop.interface monospace-font-name 'Segoe UI'
-        gsettings set org.gnome.nautilus.desktop font 'Segoe UI'
     - name: Checkout
       uses: actions/checkout@v3
     - name: Setup node

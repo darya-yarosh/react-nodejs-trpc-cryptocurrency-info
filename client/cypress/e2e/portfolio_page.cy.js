@@ -11,9 +11,14 @@ describe('Portfolio page', () => {
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
         cy.viewport(1000,660)
+        // https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet/ready
+        // The promise will only resolve once the document has completed loading fonts,
+        // layout operations are completed, and no further font loads are needed.
         cy.document()
-            .its("fonts.status")
-            .should("equal", "loaded")
+            .then(document => document.fonts.ready)
+            .then(value => {
+                cy.log('Font loading completed');
+            })
     })
 
     it('Buying coins and removing them from the portfolio', () => {

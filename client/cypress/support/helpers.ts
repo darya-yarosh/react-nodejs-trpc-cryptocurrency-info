@@ -15,7 +15,7 @@ function checkIsLoaded() {
 }
 
 function checkIsValidFonts() {
-    const FONT_STYLES = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
+    const FONT_STYLES = "'Segoe UI', sans-serif";
 
     cy.get('*[class^="app__wrapper"]')
         .should(

@@ -15,7 +15,7 @@ function checkIsLoaded() {
 }
 
 function checkIsValidFonts() {
-    const FONT_STYLES = "'Segoe UI', sans-serif";
+    const FONT_STYLES = '"Segoe UI", sans-serif';
 
     cy.get('*[class^="app__wrapper"]')
         .should(

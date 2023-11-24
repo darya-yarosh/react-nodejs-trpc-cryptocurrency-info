@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { formatPrice, priceToNumber } from '../../src/logic/utils/Helper';
+import { checkFonts } from '../support/helpers';
 
 describe('Transaction page', () => {
     beforeEach(() => {
@@ -10,14 +11,7 @@ describe('Transaction page', () => {
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
         cy.viewport(1000,660)
-        // https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet/ready
-        // The promise will only resolve once the document has completed loading fonts,
-        // layout operations are completed, and no further font loads are needed.
-        cy.document()
-            .then(document => document.fonts.ready)
-            .then(value => {
-                cy.log('Font loading completed');
-            })  
+        checkFonts() 
     })
 
     it('Price update when transaction parameters change', () => {

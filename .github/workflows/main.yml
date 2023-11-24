@@ -17,7 +17,7 @@ on:
 
 jobs:
   client_tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     defaults:
       run:
         working-directory: ./client
@@ -33,7 +33,7 @@ jobs:
         npm install --save --legacy-peer-deps
         npm run test
   server_tests: 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [client_tests]
     defaults:
       run:
@@ -50,7 +50,7 @@ jobs:
         npm install --save --legacy-peer-deps
         npm run test
   cypress_tests:
-    runs-on: ubuntu-22.04
+    runs-on: windows-latest
     needs: [server_tests]
     steps:
     - name: Checkout

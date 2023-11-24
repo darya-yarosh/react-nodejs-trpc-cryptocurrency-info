@@ -86,6 +86,7 @@ describe('Main page', () => {
     it('Coins searching', () => {
         cy.get('*[class^="SearchInput_wrapper"]')
             .should('be.visible')
+            .should('have.attr', 'placeholder', 'Search by name...')
         cy.get('*[class^="SearchInput_wrapper"]')
             .matchImageSnapshot('main-coins_search-filter-empty')
 

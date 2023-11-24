@@ -81,7 +81,7 @@ jobs:
     - name: Run Cypress
       run : |
         cd client
-        npx cypress run
+        npx cypress run --browser edge
     - name: Uploads artifacts
       uses: actions/upload-artifact@v3
       if: failure()

@@ -1,6 +1,6 @@
 body {
 	margin: 0;
-	font-family: 'Segoe UI', sans-serif !important;
+	font-family: var(--font-family);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }

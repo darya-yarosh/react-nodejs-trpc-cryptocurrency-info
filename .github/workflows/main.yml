@@ -17,7 +17,7 @@ on:
 
 jobs:
   client_tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     defaults:
       run:
         working-directory: ./client
@@ -33,7 +33,7 @@ jobs:
         npm install --save --legacy-peer-deps
         npm run test
   server_tests: 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [client_tests]
     defaults:
       run:
@@ -50,14 +50,9 @@ jobs:
         npm install --save --legacy-peer-deps
         npm run test
   cypress_tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [server_tests]
     steps:
-    - name: Change ubuntu default font-family
-      run : |
-        gsettings set org.gnome.desktop.interface document-font-name 'Segoe UI'
-        gsettings set org.gnome.desktop.interface font-name 'Segoe UI'
-        gsettings set org.gnome.desktop.interface monospace-font-name 'Segoe UI'
     - name: Checkout
       uses: actions/checkout@v3
     - name: Setup node
@@ -88,3 +83,4 @@ jobs:
       with:
         name: cypress-snapshots
         path: ./client/cypress/snapshots
+        browser: 

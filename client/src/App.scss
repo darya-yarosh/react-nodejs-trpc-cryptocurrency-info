@@ -22,9 +22,7 @@
 	--filter-third: var(--filter-yellow);
 
 	--box-shadow: 0px 0px 4px 0px black;
-	--font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-		'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-		'Helvetica Neue', sans-serif;
+	--font-family: 'Segoe UI', sans-serif;
 }
 
 .app {
@@ -48,4 +46,6 @@
 	padding: 20px 24px;
 
 	font-family: var(--font-family);
+	font-kerning: none;
+    -webkit-font-smoothing: antialiased;
 }

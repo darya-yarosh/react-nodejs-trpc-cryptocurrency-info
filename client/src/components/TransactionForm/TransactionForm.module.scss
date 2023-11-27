@@ -40,6 +40,10 @@
 	border-radius: 0;
 }
 
+.quantity {
+	font-family: var(--font-family);
+}
+
 .price {
 	text-overflow: ellipsis;
 	overflow: hidden;

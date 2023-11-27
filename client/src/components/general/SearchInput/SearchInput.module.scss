@@ -15,6 +15,7 @@
 
 	font-family: var(--font-family);
 	font-size: 1.2rem;
+	font-weight: 400;
 
 	color: var(--color-font);
 	background-color: var(--color-second);
@@ -24,6 +25,7 @@
 
 .input::placeholder {
 	font-style: italic;
+	font-weight: 400;
 	color: var(--color-first);
 	opacity: 0.5;
 	border-color: var(--color-third);

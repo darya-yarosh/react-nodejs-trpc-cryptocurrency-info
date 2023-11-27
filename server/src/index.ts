@@ -16,9 +16,11 @@ const corsOptions = {
 
 const cors = require('cors');
 
+require('events').defaultMaxListeners = 15;
 const app = express();
 app.use(cors(corsOptions));
 app.use((request, response, next) => {
+	response.setMaxListeners(15);
 	response.setHeader('Access-Control-Allow-Origin', '*');
 	response.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT');
 	response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -42,3 +44,4 @@ const PORT = 4000;
 app.listen(PORT, () => {
 	console.log(`Running on PORT ${PORT}`);
 });
+

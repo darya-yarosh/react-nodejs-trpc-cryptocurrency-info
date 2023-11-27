@@ -90,6 +90,7 @@ td:last-child {
 	align-self: center;
 	margin: 0;
 
+	font-family: var(--font-family);
 	font-weight: 500;
 	color: var(--color-font);
 }
@@ -97,6 +98,8 @@ td:last-child {
 .columnName__withSort {
 	display: flex;
 	align-items: center;
+
+	font-family: var(--font-family);
 }
 
 .columnName__withSort input {

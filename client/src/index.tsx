@@ -7,6 +7,8 @@ import App from 'App';
 import 'reset.scss';
 import 'index.scss';
 
+require('events').defaultMaxListeners = 15;
+
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement!);
 

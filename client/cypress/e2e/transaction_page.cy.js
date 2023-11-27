@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { formatPrice, priceToNumber } from '../../src/logic/utils/Helper';
+import { checkFonts } from '../support/helpers';
 
 describe('Transaction page', () => {
     beforeEach(() => {
@@ -9,6 +10,8 @@ describe('Transaction page', () => {
         cy.wait('@requests')
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
+        cy.viewport(1000,660)
+        checkFonts() 
     })
 
     it('Price update when transaction parameters change', () => {
@@ -39,8 +42,9 @@ describe('Transaction page', () => {
             .type('{del}')
             .should('value', 2)
         cy.get('@quantity')
-            .trigger('blur')
-            .wait(200)
+            .blur()
+        cy.get('@quantity')
+            .should('be.visible')
         cy.get('@quantity')
             .matchImageSnapshot('transaction_quantity-after')
         cy.get('*[class^="TransactionForm_price"]')

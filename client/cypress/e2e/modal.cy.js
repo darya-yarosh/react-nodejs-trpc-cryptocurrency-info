@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { checkFonts } from "../support/helpers"
+
 describe('Modal', () => {
     beforeEach(() => {
         cy.visit(`/portfolio`)
@@ -8,6 +10,8 @@ describe('Modal', () => {
         cy.wait('@requests')
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
+        cy.viewport(1000,660)
+        checkFonts()
     })
 
     it('Close modal by clicking on backdrop', () => {

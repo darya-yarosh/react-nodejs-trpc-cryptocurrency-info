@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import "cypress-real-events/support";
+import { checkFonts } from "../support/helpers";
 
 describe('Coin page', () => {
     beforeEach(() => {
@@ -10,6 +11,8 @@ describe('Coin page', () => {
         cy.wait('@requests')
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
+        cy.viewport(1000,660)
+        checkFonts()
     })
 
     it('Adding coin in portfolio favorites and then removing', () => {

@@ -108,6 +108,7 @@ export default function TransactionForm({
 			<section className={styles.section}>
 				<label>Quantity</label>
 				<input
+					className={styles.quantity}
 					name="quantity"
 					value={quantity}
 					type="number"

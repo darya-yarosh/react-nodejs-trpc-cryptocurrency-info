@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { checkFonts } from "../support/helpers"
+
 describe('App navigation', () => {
     beforeEach(() => {
         cy.visit('/')
@@ -8,6 +10,8 @@ describe('App navigation', () => {
         cy.wait('@requests')
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
+        cy.viewport(1000,660)
+        checkFonts()
     })
 
     it('Go to the page with the invalid address and see the error page', () => {

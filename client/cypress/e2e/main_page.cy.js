@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import "cypress-real-events/support";
+import { checkFonts } from "../support/helpers";
 
 const sortLabel = {
     rank: 'Rank',
@@ -78,10 +79,12 @@ describe('Main page', () => {
         cy.wait('@requests')
             .its('response.statusCode')
             .should('be.oneOf', [200, 304])
+        cy.viewport(1000,660)
+        checkFonts()
     })
 
     it('Coins searching', () => {
-        cy.get('*[class^="SearchInput_wrapper"]')
+        cy.get('input[placeholder="Search by name..."]')
             .should('be.visible')
         cy.get('*[class^="SearchInput_wrapper"]')
             .matchImageSnapshot('main-coins_search-filter-empty')

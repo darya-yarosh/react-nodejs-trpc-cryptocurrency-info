@@ -27,7 +27,7 @@ jobs:
     - name: Setup node
       uses: actions/setup-node@v3
       with:
-        node-version: '20'
+        node-version: '18'
     - name: Run tests on client
       run : |
         npm install --save --legacy-peer-deps
@@ -44,7 +44,7 @@ jobs:
     - name: Setup node
       uses: actions/setup-node@v3
       with:
-        node-version: '20'
+        node-version: '18'
     - name: Run tests on server
       run : |
         npm install --save --legacy-peer-deps
@@ -58,7 +58,7 @@ jobs:
     - name: Setup node
       uses: actions/setup-node@v3
       with:
-        node-version: '20'
+        node-version: '18'
     - name: Run server
       run : |
         cd server

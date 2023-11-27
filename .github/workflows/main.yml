@@ -62,6 +62,7 @@ jobs:
     - name: Run server
       run : |
         cd server
+        node --no-network-family-autoselection
         npm install --save --legacy-peer-deps
         npm start &
         sleep 10 &&
@@ -69,6 +70,7 @@ jobs:
     - name: Run client
       run : |
         cd client
+        node --no-network-family-autoselection
         npm install --save --legacy-peer-deps
         npm start &
         sleep 10 &&
@@ -76,6 +78,7 @@ jobs:
     - name: Run Cypress
       run : |
         cd client
+        node --no-network-family-autoselection
         npx cypress run --browser edge
     - name: Uploads artifacts
       uses: actions/upload-artifact@v3

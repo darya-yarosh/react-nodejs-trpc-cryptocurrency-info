@@ -16,6 +16,7 @@ const corsOptions = {
 
 const cors = require('cors');
 
+require('events').defaultMaxListeners = 15;
 const app = express();
 app.use(cors(corsOptions));
 app.use((request, response, next) => {

@@ -37,9 +37,9 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "jest",
+		"start": "NODE_OPTIONS=--no-network-family-autoselection react-scripts start",
+		"build": "NODE_OPTIONS=--no-network-family-autoselection react-scripts build",
+		"test": "NODE_OPTIONS=--no-network-family-autoselection jest",
 		"eject": "react-scripts eject",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"

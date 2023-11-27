@@ -1,5 +1,8 @@
 # Cryptocurrency Info
 
+Status of Last Deployment:<br>
+<img src="https://github.com/darya-yarosh/react-nodejs-trpc-cryptocurrency-info/actions/workflows/main.yml/badge.svg?branch=master"><br>
+
 ## Netlify DEMO
 
 https://yds-cryptocurrency-info.netlify.app

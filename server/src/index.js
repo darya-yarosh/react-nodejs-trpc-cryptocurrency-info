@@ -43,7 +43,6 @@ var cors = require('cors');
 var app = (0, express_1.default)();
 app.use(cors(corsOptions));
 app.use(function (request, response, next) {
-    response.setMaxListeners(0);
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT');
     response.setHeader('Access-Control-Allow-Headers', 'Content-Type');

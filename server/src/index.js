@@ -43,9 +43,10 @@ var cors = require('cors');
 var app = (0, express_1.default)();
 app.use(cors(corsOptions));
 app.use(function (request, response, next) {
-    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     response.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT');
     response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    response.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
 });
 var createContext = function (_a) {

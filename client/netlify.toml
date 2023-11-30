@@ -1,6 +1,6 @@
 [build]
   base = ""
-  command = "cd server && npm i && cd ../client && npm i && CI=false npm run build"
+  command = "cd server && npm install && cd ../client && npm install --save --legacy-peer-deps && npm run build"
   publish = "client/public/"
 
 [[redirects]]

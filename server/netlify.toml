@@ -6,6 +6,7 @@
   from = "/*"
   status = 200
   to = "/.netlify/functions/src/index/:splat"
+  headers = {X-From = "Netlify"}
 [[headers]]
   for = "/*"
   [headers.values]

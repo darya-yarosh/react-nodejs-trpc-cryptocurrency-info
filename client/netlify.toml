@@ -1,6 +1,6 @@
 [build]
   base = ""
-  command = "cd server && npm i && cd ../client CI=false npm run build"
+  command = "cd server && npm i && cd ../client && CI=false npm run build"
   publish = "client/public/"
 
 [[redirects]]

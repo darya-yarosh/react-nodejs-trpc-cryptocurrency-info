@@ -26,8 +26,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.handler = void 0;
 var express_1 = __importDefault(require("express"));
 var trpcExpress = __importStar(require("@trpc/server/adapters/express"));
+var serverless_http_1 = __importDefault(require("serverless-http"));
 var appRouter_1 = __importDefault(require("./appRouter"));
 /**
  * @param optionsSuccessStatus Provides a status code for successfully resolving OPTIONS requests (for legacy browser support).
@@ -43,7 +45,7 @@ var cors = require('cors');
 var app = (0, express_1.default)();
 app.use(cors(corsOptions));
 app.use(function (request, response, next) {
-    response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT');
     response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     response.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -57,7 +59,4 @@ app.use('/trpc', trpcExpress.createExpressMiddleware({
     router: appRouter_1.default,
     createContext: createContext,
 }));
-var PORT = 4000;
-app.listen(PORT, function () {
-    console.log("Running on PORT ".concat(PORT));
-});
+exports.handler = (0, serverless_http_1.default)(app);

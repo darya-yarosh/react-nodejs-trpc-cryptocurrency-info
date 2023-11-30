@@ -1,5 +1,6 @@
 import express from 'express';
 import * as trpcExpress from '@trpc/server/adapters/express';
+import serverless from "serverless-http";
 
 import appRouter from './appRouter';
 
@@ -19,7 +20,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors(corsOptions));
 app.use((request, response, next) => {
-	response.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+	response.setHeader('Access-Control-Allow-Origin', '*');
 	response.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT');
 	response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 	response.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -38,9 +39,4 @@ app.use(
 	})
 );
 
-const PORT = 4000;
-
-app.listen(PORT, () => {
-	console.log(`Running on PORT ${PORT}`);
-});
-
+export const handler = serverless(app);

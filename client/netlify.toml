@@ -1,6 +1,6 @@
 [build]
   base ="client/"
-  command = "CI= npm run build"
+  command = "CI=false npm run build"
   publish = "public/"
 
 [[redirects]]

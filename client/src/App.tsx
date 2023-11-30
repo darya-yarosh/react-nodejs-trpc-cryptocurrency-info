@@ -64,7 +64,7 @@ export default function App() {
 		trpc.createClient({
 			links: [
 				httpBatchLink({
-					url: 'https://yds-cryptocurrency-server.netlify.app/.netlify/functions/trpc',
+					url: 'https://project-deployment--yds-cryptocurrency-server.netlify.app/trpc',
 				}),
 			],
 		})

@@ -5,4 +5,4 @@
   force = true
   from = "/*"
   status = 200
-  to = "/.netlify/functions/server/src/index/:splat"
+  to = "/server/src/index/:splat"

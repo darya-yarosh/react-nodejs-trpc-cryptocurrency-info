@@ -1,7 +1,7 @@
 [build]
-  base ="client/"
-  command = "CI=false npm run build"
-  publish = "public/"
+  base = ""
+  command = "cd server && npm i && cd ../client CI=false npm run build"
+  publish = "client/public/"
 
 [[redirects]]
   from = "/*"

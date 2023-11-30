@@ -61,7 +61,6 @@ export default function App() {
 	const [queryClient] = useState(() => new QueryClient());
 	
 	const [trpcClient] = useState(() =>
-		// @ts-expect-error
 		trpc.createClient({
 			links: [
 				httpBatchLink({

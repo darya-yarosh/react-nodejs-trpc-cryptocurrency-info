@@ -3,6 +3,6 @@
   node_bundler = "esbuild"
 [[redirects]]
   force = true
-  from = "/trpc/*"
+  from = "/*"
   status = 200
-  to = "/.netlify/functions/trpc/:splat"
+  to = "/.netlify/functions/server/src/index/:splat"

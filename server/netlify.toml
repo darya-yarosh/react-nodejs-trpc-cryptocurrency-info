@@ -4,6 +4,7 @@
   directory = "src/"
 [build]
   base = "server/"
+  command = "npm install"
   functions = "src/"
 [[headers]]
   for = "/*"

@@ -2,12 +2,13 @@
   external_node_modules = ["express"]
   node_bundler = "esbuild"
 [build]
-  functions = 'server/src/'
+  base = "server/"
+  functions = "src/"
 [[redirects]]
   force = true
   from = "/*"
   status = 200
-  to = "server/src/index/:splat"
+  to = "src/index/:splat"
   headers = {X-From = "Netlify"}
 [[headers]]
   for = "/*"

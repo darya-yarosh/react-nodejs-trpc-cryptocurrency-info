@@ -32,7 +32,7 @@ const createContext = ({
 	res: response,
 }: trpcExpress.CreateExpressContextOptions) => ({});
 app.use(
-	'/trpc',
+	'/',
 	trpcExpress.createExpressMiddleware({
 		router: appRouter,
 		createContext,

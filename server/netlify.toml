@@ -1,14 +1,10 @@
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
+  directory = "server/src/"
 [build]
   base = "server/"
   functions = "src/"
-[[redirects]]
-  force = true
-  from = "/trpc/*"
-  status = 200
-  to = "/src/index/:splat"
 [[headers]]
   for = "/*"
   [headers.values]

@@ -6,10 +6,7 @@
   functions = "src/"
 [[redirects]]
   force = true
-  from = "/*"
   status = 200
-  to = "src/index/:splat"
-  headers = {X-From = "Netlify"}
 [[headers]]
   for = "/*"
   [headers.values]

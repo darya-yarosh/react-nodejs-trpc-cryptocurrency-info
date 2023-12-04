@@ -59,11 +59,12 @@ export const router = createBrowserRouter(
 
 export default function App() {
 	const [queryClient] = useState(() => new QueryClient());
+	
 	const [trpcClient] = useState(() =>
 		trpc.createClient({
 			links: [
 				httpBatchLink({
-					url: 'http://localhost:4000/trpc',
+					url: 'https://project-deployment--yds-cryptocurrency-server.netlify.app/trpc',
 				}),
 			],
 		})

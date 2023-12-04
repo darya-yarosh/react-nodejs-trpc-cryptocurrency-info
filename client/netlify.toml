@@ -1,0 +1,9 @@
+[build]
+  base = ""
+  command = "cd server && npm install && cd ../client && npm install --save --legacy-peer-deps && npm run build"
+  publish = "client/build/"
+
+[[redirects]]
+  from = "/*"
+  to = "/client/public/index.html"
+  status = 200

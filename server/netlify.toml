@@ -6,7 +6,9 @@
   functions = "src/"
 [[redirects]]
   force = true
+  from = "/*"
   status = 200
+  to = "/src/index/:splat"
 [[headers]]
   for = "/*"
   [headers.values]

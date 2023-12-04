@@ -23,6 +23,14 @@ export default function FavoriteButton({
 
 	const isFavorite = portfolio.favorites.includes(coinId);
 
+	const iconSVG = useMemo(
+		() =>
+			isFavorite
+				? '/images/favorite/favorite-fill.svg'
+				: '/images/favorite/favorite-unfill.svg',
+		[isFavorite]
+	);
+
 	const handleClick = useMemo(
 		() => (event: React.MouseEvent) => {
 			event.preventDefault();
@@ -33,14 +41,6 @@ export default function FavoriteButton({
 			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[isFavorite]
-	);
-
-	const iconSVG = useMemo(
-		() =>
-			isFavorite
-				? '/images/favorite/favorite-fill.svg'
-				: '/images/favorite/favorite-unfill.svg',
 		[isFavorite]
 	);
 

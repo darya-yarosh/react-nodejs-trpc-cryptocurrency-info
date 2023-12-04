@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import styles from 'components/general/IconButton/IconButton.module.scss';
 
@@ -25,6 +25,10 @@ function IconButton({
 	function setDefaultLogoSrc() {
 		setLogoSrc('/images/imgNotFound.svg');
 	}
+
+	useEffect(() => {
+		setLogoSrc(iconSVG)
+	}, [iconSVG])
 
 	return (
 		<button

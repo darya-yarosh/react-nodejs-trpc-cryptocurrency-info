@@ -1,11 +1,13 @@
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
+[build]
+  functions = 'server/src/'
 [[redirects]]
   force = true
   from = "/*"
   status = 200
-  to = "/src/index/trpc"
+  to = "server/src/index"
   headers = {X-From = "Netlify"}
 [[headers]]
   for = "/*"

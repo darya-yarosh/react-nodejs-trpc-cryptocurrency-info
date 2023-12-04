@@ -32,22 +32,11 @@ const createContext = ({
 	res: response,
 }: trpcExpress.CreateExpressContextOptions) => ({});
 app.use(
-	'/',
+	'/trpc',
 	trpcExpress.createExpressMiddleware({
 		router: appRouter,
 		createContext,
-		responseMeta() {
-			return {
-			  status: 200,
-			  headers: {
-				"Access-Control-Allow-Origin": "*",
-				"Access-Control-Allow-Methods": "POST, GET, PUT",
-				"Access-Control-Allow-Headers": "Content-Type",
-				"Access-Control-Allow-Credentials": "true",
-			  },
-			};
-		  },
 	})
 );
 
-export const handler = serverless(app);
+module.exports.handler = serverless(app);

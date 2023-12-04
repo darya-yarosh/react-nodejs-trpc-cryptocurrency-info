@@ -6,6 +6,10 @@
   base = "server/"
   command = "npm install"
   functions = "src/"
+[[redirects]]
+  to = "/.netlify/functions/api/:splat"
+  from = "/*"
+  status = 200
 [[headers]]
   for = "/*"
   [headers.values]
